@@ -1,0 +1,21 @@
+.bdgreen {border: 2px solid darkseagreen;border-radius: 20px;}
+
+.mg-bl {margin-left: 8%;margin-bottom: 40px;}
+
+.mg-br {margin-right: 8%;margin-bottom: 40px;}
+
+.memo {width: 100%;height:160px;}
+
+img {max-width: 100%;margin: 0;}
+
+#link-title {margin-top:31px;font-size: 40px;font-family: 'Roboto', sans-serif;color:forestgreen;}
+
+.pd-0 {padding: 0;}
+
+.pb-69 {padding-bottom: 67px;}
+
+.link-pd {padding: 15px 0;}
+
+body {padding-bottom: 0;}
+
+footer {position: inherit;}

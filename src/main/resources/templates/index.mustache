@@ -1,0 +1,120 @@
+{{>layout/header}}
+<link rel="stylesheet" href="/css/main.css" />
+<div class="container pb-69">
+    <div class="row">
+        <div class="col-md-offset-1 col-md-10 link-pd">
+            <a href="https://smartstore.naver.com/hulululu">
+                <div class="col-md-12">
+                    <div class="col-md-2 pd-0">
+                        <img class="pull-left" src="/images/hululuuuu.jpeg" width="120" height="120" alt="후루루" title="후루루"/>
+                    </div>
+                    <div class="col-md-8 link-title text-center" id="link-title"><b>Hululuuuu</b></div>
+                </div>
+            </a>
+        </div>
+        <div class="bdgreen col-xs-10 col-md-5 text-center pull-left mg-bl">
+            <h3 class="">최근 수익 상황</h3><br/>
+            <div class="moreList">
+                <a href="/sellList">
+                    <i class="fa fa-plus-square-o fa-2x" aria-hidden="true"></i>
+                </a>
+            </div>
+            <div>
+                <span><h4>최근 한달 수익 : <a text="${oneMonthProfit} + '원'"></a></h4></span>
+                <span><h4>현재 치약 원가 : <a text="${toothPaste?.productCostprice} + '원'"></a></h4></span>
+                <span><h4>치약 재고 : <a text="${toothPaste?.productAmount} + '개'"></a></h4></span>
+            </div><br/>
+            <div>
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th class="col-md-1">판매한 물건</th>
+                        <th class="col-md-1">수익</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr > <!--each="sell : ${sellTop}"-->
+                        <td text="${sell.sellProduct}"></td>
+                        <td text="${sell.sellProfit} + '원'"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="bdgreen col-xs-10 col-md-5 pull-right mg-br">
+            <h3 class="text-center">잉사장님의 지갑 속 상황</h3><br/>
+            <div class="moreList">
+                <a href="#">
+                    <i class="fa fa-plus-square-o fa-2x" aria-hidden="true"></i>
+                </a>
+            </div>
+            <span class="text-center"><h4>현재 잔액 <a text="${nowWallet.walletMoney} + '원'"></a></h4></span><br/>
+            <span class="text-center"><h4>최근 거래일 : <a text="${nowWallet.walletModdate}"></a></h4></span>
+            <br/><br/>
+            <span><h4> 최근 지갑 거래내역 </h4></span>
+            <div>
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th class="col-md-1">잔액</th>
+                        <th class="col-md-1">잔액 변동</th>
+                        <th class="col-md-1">구매한 상품</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr> <!--each="wallet : ${walletTop5}"-->
+                        <td text="${wallet.walletMoney + '원'}"></td>
+                        <td text="${wallet.walletMod}"></td>
+                        <td text="${wallet.walletRecord}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="bdgreen col-xs-10 col-md-5 pull-left mg-bl">
+            <h3 class="text-center">메모장</h3>
+            <div class="moreList">
+                <a href="/memo/memoList">
+                    <i class="fa fa-plus-square-o fa-2x" aria-hidden="true"></i>
+                </a>
+            </div>
+            <br/>
+            <input class="form-control" id="link" name="link" placeholder="구매하고 싶은 상품의 사이트 링크를 적어주세요"><br/>
+            <textarea class="memo" id="content" name="content" placeholder="구매하고싶은 상품의 내용을 적어주세요."></textarea>
+            <div class="pull-right" style="width: 100px; margin:10px 0;">
+                <a class="btn btn-success btn-block" id="getMemo">메모 저장</a>
+            </div>
+        </div>
+        <div class="bdgreen col-xs-10 col-md-5 pull-right mg-br">
+            <h3 class="text-center">최근 구매 목록</h3>
+            <div class="moreList">
+                <a href="/yiying/buyList">
+                    <i class="fa fa-plus-square-o fa-2x" aria-hidden="true"></i>
+                </a>
+            </div><br/>
+            <div>
+                <span class="text-center"><h4>최근 한달 지출 : <a text="${oneMonthSpendMoney} + '원'"></a></h4></span>
+            </div><br/>
+            <div>
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th class="col-md-1">구매한 물품</th>
+                        <th class="col-md-1">가격</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr> <!--each="buy : ${buyTop}"-->
+                        <td text="${buy.yiyingName}"></td>
+                        <td text="${buy.yiyingPrice} + '원'"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <br>
+        </div>
+    </div>
+
+</div>
+
+{{>layout/footer}}
