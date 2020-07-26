@@ -13,12 +13,12 @@
     background-color: white;
 }
 
-.table-bordered th {
+.buy-detail th {
     padding: 14px 30px !important;
     text-align: center;
     background-color: #eff1f8;
 }
 
-.table-bordered td {
+.buy-detail td {
     padding: 14px 30px !important;
 }

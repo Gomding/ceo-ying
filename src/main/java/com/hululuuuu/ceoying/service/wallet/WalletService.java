@@ -111,7 +111,7 @@ public class WalletService {
     public void whenDeleteBuy(Long id) {
 
         Buy buy = buyRepository.getOne(id);
-        int nowWalletMoney = walletRepository.findWalletMoney();
+        int nowWalletMoney = walletRepository.findTop1ByOrderByIdDesc().getMoney();
         int buyMoney = buy.getPrice();
         walletRepository.save(
                 Wallet.builder()
@@ -125,7 +125,7 @@ public class WalletService {
 
     @Transactional
     public void whenUpdateBuy(BuyUpdateRequestDto requestDto, Long id) {
-        int nowWalletMoney = walletRepository.findWalletMoney();
+        int nowWalletMoney = walletRepository.findTop1ByOrderByIdDesc().getMoney();
         int oldBuyMoney = buyRepository.getOne(id).getPrice();
         int newBuyMoney = requestDto.getPrice();
         int diffMoney = oldBuyMoney - newBuyMoney;

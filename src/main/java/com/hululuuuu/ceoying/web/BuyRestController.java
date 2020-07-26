@@ -45,18 +45,23 @@ public class BuyRestController {
     }
 
     @GetMapping("/buy/read/{id}")
-    public BuyResponseDto buyDetail(@PathVariable Long id) {
-        return buyService.findById(id);
+    public ModelAndView buyDetail(@PathVariable Long id) {
+        ModelAndView mav = new ModelAndView();
+        mav.addObject("buy", buyService.findById(id));
+        mav.setViewName("yiying/buy-detail");
+        return mav;
     }
 
     @GetMapping("/buy/{id}")
-    public BuyResponseDto findById(@PathVariable Long id) {
-        return buyService.findById(id);
+    public ModelAndView findById(@PathVariable Long id) {
+        ModelAndView mav = new ModelAndView();
+        mav.addObject("buy", buyService.findById(id));
+        mav.setViewName("yiying/buy-update");
+        return mav;
     }
 
     @GetMapping({"/buy/search", "/buy/search/"})
-    public ModelAndView searchSellList(@RequestParam(value = "start")String start, @RequestParam(value = "end")String end, @PageableDefault Pageable pageable)
-            throws IllegalAccessException, ClassNotFoundException, InstantiationException {
+    public ModelAndView searchSellList(@RequestParam(value = "start")String start, @RequestParam(value = "end")String end, @PageableDefault Pageable pageable) {
         LocalDate startDate = LocalDate.parse(start, DateTimeFormatter.ISO_DATE);
         LocalDate endDate = LocalDate.parse(end, DateTimeFormatter.ISO_DATE);
         ModelAndView mav = new ModelAndView();

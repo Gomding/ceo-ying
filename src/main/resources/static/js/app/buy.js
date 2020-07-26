@@ -38,21 +38,24 @@ var main = {
 
     update : function () {
         var data = {
-            title: $('#title').val(),
-            content: $('#content').val()
+            name: $('#name').val(),
+            price: $('#price').val(),
+            amount: $('#amount').val(),
+            content: $('#content').val(),
+            buydate: $('#buydate').val()
         };
 
         var id = $('#id').val();
 
         $.ajax({
             type: 'PUT',
-            url: '/api/v1/posts/'+id,
+            url: '/buy/'+id,
             dataType: 'json',
             contentType:'application/json; charset=utf-8',
             data: JSON.stringify(data)
         }).done(function() {
             alert('글이 수정되었습니다.');
-            window.location.href = '/';
+            window.location.href = '/buyList';
         }).fail(function (error) {
             alert(JSON.stringify(error));
         });
@@ -63,12 +66,12 @@ var main = {
 
         $.ajax({
             type: 'DELETE',
-            url: '/api/v1/posts/' + id,
+            url: '/buy/' + id,
             dataType: 'json',
             contentType: 'application/json; charset=utf-8'
         }).done(function() {
             alert('글이 삭제되었습니다.');
-            window.location.href='/';
+            window.location.href='/buyList';
         }).fail(function (error) {
             alert(JSON.stringify(error));
         });

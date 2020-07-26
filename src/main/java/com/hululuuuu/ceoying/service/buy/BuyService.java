@@ -45,7 +45,7 @@ public class BuyService {
     }
 
     public BuyResponseDto findById(Long id) {
-        Buy entity = buyRepository.getOne(id);
+        Buy entity = buyRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. id=" + id));
         return new BuyResponseDto(entity);
     }
 
@@ -66,7 +66,7 @@ public class BuyService {
         return new Buy().sum1MonthSpendMoney(oneMonthList);
     }
 
-    public Page<BuyResponseDto> buySearchList(Pageable pageable, LocalDate start, LocalDate end) throws IllegalAccessException, InstantiationException, ClassNotFoundException {
+    public Page<BuyResponseDto> buySearchList(Pageable pageable, LocalDate start, LocalDate end) {
         pageable = PageableDefault.setPageable(pageable);
         Page<Buy> list = buyRepository.findByBuydateBetween(pageable, start, end);
         return list.map(BuyResponseDto::new);

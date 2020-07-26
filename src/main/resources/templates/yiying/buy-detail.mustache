@@ -5,39 +5,39 @@
         <h1>구매 상세 내용</h1>
     </div>
     <div class="table-container">
-        <table class="table table-bordered">
+        <table class="table table-bordered buy-detail">
             <tbody>
             <tr>
                 <th>구매 고유 ID</th>
-                <td th:text="${buy.yiyingId}" id="id"></td>
+                <td id="id">{{buy.id}}</td>
             </tr>
             <tr>
                 <th>구매 상품</th>
-                <td th:text="${buy.yiyingName}" id="name"></td>
+                <td id="name">{{buy.name}}</td>
             </tr>
             <tr>
                 <th>구매 수량</th>
-                <td th:text="${buy.yiyingAmount}" id="amount"></td>
+                <td id="amount">{{buy.amount}}</td>
             </tr>
             <tr>
                 <th>구매 가격</th>
-                <td th:text="${buy.yiyingPrice}" id="price"></td>
+                <td id="price">{{buy.price}}</td>
             </tr>
             <tr>
                 <th>구매 상세 내용</th>
-                <td th:text="${buy.yiyingContent}" id="content"></td>
+                <td id="content">{{buy.content}}</td>
             </tr>
             <tr>
                 <th>구매 날짜</th>
-                <td th:text="${buy.yiyingBuydate}" id="buydate"></td>
+                <td id="buydate">{{buy.buydate}}</td>
             </tr>
             </tbody>
         </table>
         <div class="pull-left">
-            <a href="/yiying/buyList" class="btn btn-default">목록으로</a>
+            <a href="/buyList" class="btn btn-default">목록으로</a>
         </div>
         <div class="pull-right">
-            <button type="button" class="form-control btn btn-primary" id="get">수정하기</button>
+            <a href="/buy/{{buy.id}}" class="form-control btn btn-primary" id="get">수정하기</a>
         </div>
 
     </div>
