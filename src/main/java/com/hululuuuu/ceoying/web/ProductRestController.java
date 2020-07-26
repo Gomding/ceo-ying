@@ -20,7 +20,7 @@ public class ProductRestController {
     @GetMapping("/products/save")
     public ModelAndView productForm() {
         ModelAndView mav = new ModelAndView();
-        mav.setViewName("product/productForm");
+        mav.setViewName("product-save");
         return mav;
     }
 

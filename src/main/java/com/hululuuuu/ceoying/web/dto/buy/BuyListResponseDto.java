@@ -9,6 +9,7 @@ import java.time.LocalDate;
 @Getter
 public class BuyListResponseDto {
 
+    private Long id;
     private String name;  // 구매한 상품의 이름
     private int price;   // 구매한 상품의 가격
     private int amount;   // 구매한 물품 수량
@@ -17,6 +18,7 @@ public class BuyListResponseDto {
     private LocalDate buydate;
 
     public BuyListResponseDto(Buy entity) {
+        this.id = entity.getId();
         this.name = entity.getName();
         this.price = entity.getPrice();
         this.amount = entity.getAmount();

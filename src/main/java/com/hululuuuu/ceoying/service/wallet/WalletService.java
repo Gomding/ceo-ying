@@ -12,6 +12,7 @@ import com.hululuuuu.ceoying.web.dto.buy.BuyUpdateRequestDto;
 import com.hululuuuu.ceoying.web.dto.sell.SellSaveRequestDto;
 import com.hululuuuu.ceoying.web.dto.sell.SellUpdateRequestDto;
 import com.hululuuuu.ceoying.web.dto.wallet.WalletListResponseDto;
+import com.hululuuuu.ceoying.web.dto.wallet.WalletSaveRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,6 +36,11 @@ public class WalletService {
 
     public int nowWallet() {
         return walletRepository.findWalletMoney();
+    }
+
+    @Transactional
+    public Long saveWallet(WalletSaveRequestDto requestDto) {
+        return walletRepository.save(requestDto.toEntity()).getId();
     }
 
     @Transactional
@@ -89,7 +95,7 @@ public class WalletService {
 
     @Transactional
     public void whenSaveBuy(BuySaveRequestDto requestDto) {
-        int nowWalletMoney = walletRepository.findWalletMoney();
+        int nowWalletMoney = walletRepository.findTop1ByOrderByIdDesc().getMoney();
         int buyMoney = requestDto.getPrice();
         walletRepository.save(
                 Wallet.builder()

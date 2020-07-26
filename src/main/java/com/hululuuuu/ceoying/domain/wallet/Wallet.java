@@ -18,7 +18,7 @@ public class Wallet extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
-    private int id;
+    private Long id;
 
     @Column(nullable = false)
     private int money;

@@ -1,34 +1,36 @@
 var main = {
     init : function () {
         var _this = this;
-        $('#btn-save').on('click', function () {
+        $('#btn-saveBuy').on('click', function () {
             _this.save();
         });
 
-        $('#btn-update').on('click', function () {
+        $('#btn-updateBuy').on('click', function () {
             _this.update();
         });
 
-        $('#btn-delete').on('click', function () {
+        $('#btn-deleteBuy').on('click', function () {
             _this.delete();
         })
     },
     save : function () {
         var data = {
-            title: $('#title').val(),
-            author: $('#author').val(),
-            content: $('#content').val()
+            name: $('#name').val(),
+            price: $('#price').val(),
+            amount: $('#amount').val(),
+            content: $('#content').val(),
+            buydate: $('#buydate').val()
         };
 
         $.ajax({
             type: 'POST',
-            url: '/api/v1/posts',
+            url: '/buy',
             dataType: 'json',
             contentType:'application/json; charset=utf-8',
             data: JSON.stringify(data)
         }).done(function() {
             alert('글이 등록되었습니다.');
-            window.location.href = '/';
+            window.location.href = '/buyList';
         }).fail(function (error) {
             alert(JSON.stringify(error));
         });

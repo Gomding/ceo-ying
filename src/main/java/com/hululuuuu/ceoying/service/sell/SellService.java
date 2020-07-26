@@ -26,11 +26,11 @@ public class SellService {
     private final SellRepository sellRepository;
 
     // 전체 판매 리스트 + 페이징
-    public Page<SellResponseDto> findSellList(Pageable pageable) throws IllegalAccessException, InstantiationException, ClassNotFoundException {
+    public Page<SellListResponseDto> findSellList(Pageable pageable) throws IllegalAccessException, InstantiationException, ClassNotFoundException {
         pageable = PageableDefault.setPageable(pageable);
         Page<Sell> list =  sellRepository.findAllDateDesc(pageable);
 
-        return TypeTranslator.domainPageToDTOPage(list, "SellResponseDto");
+        return TypeTranslator.domainPageToDTOPage(list, "com.hululuuuu.ceoying.web.dto.sell.SellListResponseDto;");
     }
 
     // 판매 생성 메서드

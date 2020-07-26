@@ -3,8 +3,6 @@ package com.hululuuuu.ceoying.service.buy;
 import com.hululuuuu.ceoying.domain.yiying.Buy;
 import com.hululuuuu.ceoying.domain.yiying.BuyRepository;
 import com.hululuuuu.ceoying.myComponent.PageableDefault;
-import com.hululuuuu.ceoying.myComponent.TypeTranslator;
-import com.hululuuuu.ceoying.web.dto.buy.BuyListResponseDto;
 import com.hululuuuu.ceoying.web.dto.buy.BuyResponseDto;
 import com.hululuuuu.ceoying.web.dto.buy.BuySaveRequestDto;
 import com.hululuuuu.ceoying.web.dto.buy.BuyUpdateRequestDto;
@@ -23,11 +21,11 @@ public class BuyService {
 
     private final BuyRepository buyRepository;
 
-    public Page<BuyListResponseDto> findBuyList(Pageable pageable) throws IllegalAccessException, InstantiationException, ClassNotFoundException {
+    public Page<BuyResponseDto> findBuyList(Pageable pageable) {
         pageable = PageableDefault.setPageable(pageable);
-        Page<Buy> list = buyRepository.findAllDesc(pageable);
+        Page<Buy> list = buyRepository.findAllByOrderByBuydateDesc(pageable);
 
-        return TypeTranslator.domainPageToDTOPage(list, "BuyListResponseDto");
+        return list.map(BuyResponseDto::new);
     }
 
     public List<Buy> findTop5() {
@@ -35,7 +33,7 @@ public class BuyService {
     }
 
     @Transactional
-    public Long createBuyList(BuySaveRequestDto requestDto) {
+    public Long saveBuy(BuySaveRequestDto requestDto) {
 
         return buyRepository.save(requestDto.toEntity()).getId();
 
@@ -68,11 +66,10 @@ public class BuyService {
         return new Buy().sum1MonthSpendMoney(oneMonthList);
     }
 
-    public Page<BuyListResponseDto> buySearchList(Pageable pageable, LocalDate start, LocalDate end) throws IllegalAccessException, InstantiationException, ClassNotFoundException {
+    public Page<BuyResponseDto> buySearchList(Pageable pageable, LocalDate start, LocalDate end) throws IllegalAccessException, InstantiationException, ClassNotFoundException {
         pageable = PageableDefault.setPageable(pageable);
         Page<Buy> list = buyRepository.findByBuydateBetween(pageable, start, end);
-
-        return TypeTranslator.domainPageToDTOPage(list, "BuyListResponseDto");
+        return list.map(BuyResponseDto::new);
     }
 
 }

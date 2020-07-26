@@ -2,9 +2,9 @@ package com.hululuuuu.ceoying.service.product;
 
 import com.hululuuuu.ceoying.domain.product.Product;
 import com.hululuuuu.ceoying.domain.product.ProductRepository;
-import com.hululuuuu.ceoying.domain.sell.Sell;
 import com.hululuuuu.ceoying.myComponent.PageableDefault;
 import com.hululuuuu.ceoying.myComponent.TypeTranslator;
+import com.hululuuuu.ceoying.web.dto.product.ProductListResponseDto;
 import com.hululuuuu.ceoying.web.dto.product.ProductResponseDto;
 import com.hululuuuu.ceoying.web.dto.product.ProductSaveRequestDto;
 import com.hululuuuu.ceoying.web.dto.product.ProductUpdateRequestDto;
@@ -23,13 +23,11 @@ public class ProductService {
 
     private final ProductRepository productRepository;
 
-    public Page<ProductResponseDto> findAllForPaging(Pageable pageable) throws IllegalAccessException, InstantiationException, ClassNotFoundException {
+    public Page<ProductListResponseDto> findAllForPaging(Pageable pageable) throws IllegalAccessException, InstantiationException, ClassNotFoundException {
         pageable = PageableDefault.setPageable(pageable);
-        //return productRepository.findAllModifiedDateDesc(pageable);
-
         Page<Product> list = productRepository.findAllModifiedDateDesc(pageable);
 
-        return TypeTranslator.domainPageToDTOPage(list, "ProductResponseDto");
+        return TypeTranslator.domainPageToDTOPage(list, "com.hululuuuu.ceoying.web.dto.product.ProductListResponseDto");
     }
 
     @Transactional

@@ -10,7 +10,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.time.LocalDate;
 
 @NoArgsConstructor
-@Setter
 @Getter
 public class BuySaveRequestDto {
 
@@ -18,7 +17,6 @@ public class BuySaveRequestDto {
     private int price;   // 구매한 상품의 가격
     private int amount;   // 구매한 물품 수량
     private String content;
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate buydate;
 
     @Builder

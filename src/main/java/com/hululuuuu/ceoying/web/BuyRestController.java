@@ -32,16 +32,16 @@ public class BuyRestController {
     @GetMapping("/buy/save")
     public ModelAndView buyForm() {
         ModelAndView mav = new ModelAndView();
-        mav.setViewName("yiying/buyForm");
+        mav.setViewName("yiying/buy-save");
         return mav;
     }
 
     @PostMapping("/buy")
-    public Long saveBuy(BuySaveRequestDto requestDto) {
+    public Long saveBuy(@RequestBody BuySaveRequestDto requestDto) {
 
         walletService.whenSaveBuy(requestDto);
 
-        return buyService.createBuyList(requestDto);
+        return buyService.saveBuy(requestDto);
     }
 
     @GetMapping("/buy/read/{id}")

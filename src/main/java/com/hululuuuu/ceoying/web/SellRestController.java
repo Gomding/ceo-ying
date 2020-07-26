@@ -34,7 +34,7 @@ public class SellRestController {
     @GetMapping("/sells/save")
     public ModelAndView sellForm() {
         ModelAndView mav = new ModelAndView();
-        mav.setViewName("sell/sellForm");
+        mav.setViewName("sell-save");
         return mav;
     }
 

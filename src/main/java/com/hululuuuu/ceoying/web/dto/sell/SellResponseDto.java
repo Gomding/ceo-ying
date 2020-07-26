@@ -10,6 +10,7 @@ import java.time.LocalDate;
 @Getter
 public class SellResponseDto {
 
+    private Long id;
     private String name;        // 구매자
     private String product;      // 판매 상품
     private int amount;         // 판매 수량
@@ -19,6 +20,7 @@ public class SellResponseDto {
     LocalDate selldate;         // 판매 날짜
 
     public SellResponseDto(Sell entity) {
+        this.id = entity.getId();
         this.name = entity.getName();
         this.product = entity.getProduct();
         this.amount = entity.getAmount();

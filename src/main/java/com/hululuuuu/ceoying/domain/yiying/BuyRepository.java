@@ -14,8 +14,7 @@ public interface BuyRepository extends JpaRepository<Buy, Long> {
 
     List<Buy> findTop5ByOrderByBuydateDesc();
 
-    @Query(nativeQuery=true, value="select b from Buy b where b.buydate order by desc")
-    Page<Buy> findAllDesc(Pageable pageable);
+    Page<Buy> findAllByOrderByBuydateDesc(Pageable pageable);
 
 
     List<Buy> findByBuydateBetween(LocalDate start, LocalDate end);

@@ -1,0 +1,43 @@
+{{>layout/header}}
+
+<div class="container">
+    <div class="page-header">
+        <h1>구매 내역 등록</h1>
+    </div>
+    <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+        <div class="panel panel-success">
+            <div class="panel-body">
+                <form id="buy-form">
+                    <div class="form-group">
+                        <label>상품명</label>
+                        <input type="text" class="form-control" id="name" name="name" placeholder="상품이름" autofocus/>
+                    </div>
+                    <div class="form-group">
+                        <label>수량</label>
+                        <input type="text" class="form-control" id="amount" name="amount" placeholder="구매수량"/>
+                    </div>
+                    <div class="form-group">
+                        <label>가격</label>
+                        <input type="text" class="form-control" id="price" name="price" placeholder="구매가격"/>
+                    </div>
+                    <div class="form-group">
+                        <label>구매 날짜</label>
+                        <input type="date" class="form-control" id="buydate" name="buydate"/>
+                    </div>
+                    <div class="form-group">
+                        <label>구매 상세 내역</label>
+                        <textarea id="content" name="content" class="buy-content" placeholder="구매 상세 내용을 적어주세요."></textarea>
+                    </div>
+                </form>
+                <div class="pull-left">
+                    <a href="/buyList" class="btn btn-default">목록으로</a>
+                </div>
+                <div class="pull-right">
+                    <button type="button" class="form-control btn btn-primary" id="btn-saveBuy">등록</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{>layout/footer}}

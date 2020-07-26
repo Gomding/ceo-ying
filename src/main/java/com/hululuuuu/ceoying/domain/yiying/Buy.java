@@ -12,7 +12,6 @@ import java.util.List;
 
 @NoArgsConstructor
 @Entity
-@Table
 @Getter
 public class Buy extends BaseTimeEntity {
 
@@ -21,7 +20,7 @@ public class Buy extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;      // 구매 고유 아이디
 
-    @Column(nullable = false)
+    @Column
     private String name;  // 구매한 상품의 이름
 
     @Column(nullable = false)

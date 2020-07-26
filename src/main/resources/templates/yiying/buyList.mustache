@@ -1,0 +1,76 @@
+{{>layout/header}}
+<div class="container conHeight">
+    <div class="page-header">
+        <h1>구매 목록</h1>
+    </div>
+    <div class="pull-left searchBuy">
+        <input type="date" class="" id="start" name="start"/> ~
+        <input type="date" class="" id="end" name="end"/>
+        <button id="searchBuy" type="button" class="btn btn-default">검색</button>
+    </div>
+    <div class="pull-right" style="margin:10px 0;">
+        <a href="/buy/save" class="btn btn-success btn-block"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>구매내역 등록</a>
+    </div>
+    <br/><br/><br/>
+
+    <div id="mainHide">
+        <table class="table table-bordered table-hover text-center">
+            <thead>
+            <tr>
+                <th class="col-md-1 bl-none">#</th>
+                <th class="col-md-2">구매한 물품</th>
+                <th class="col-md-2">수량</th>
+                <th class="col-md-2">가격</th>
+                <th class="col-md-2">구매 날짜</th>
+                <th class="col-md-1 br-none">삭제</th>
+            </tr>
+            </thead>
+            <tbody>
+            {{#buyList}}
+            <tr class="text-center">
+                <td class="bl-none">{{id}}</td>
+                <td><a href="/buy/read/{{id}}">{{name}}</a></td>
+                <td>{{amount}}</td>
+                <td>{{price}}</td>
+                <td>{{buydate}}</td>
+                <td class="br-none" style="padding: 12px 12px;">
+                    <button type="button" class="deleteBtn btn btn-default" aria-label="deleteBtn">
+                        <input id="delete-btnbuy" value="{{id}}" type="hidden"/>
+                        <span class="fa fa-remove"></span>
+                    </button>
+                </td>
+            </tr>
+            {{/buyList}}
+            </tbody>
+        </table>
+    </div>
+
+    <nav aria-label="Page navigation" style="text-align: center;">
+        <ul class="pagination" th:with="startNumber=${T(Math).floor(buyList.number/10)}*10+1,
+                                    endNumber=(${buyList.totalPages} > ${startNumber}+9) ? ${startNumber}+9 : ${buyList.totalPages}">
+            <li><a href="/yiying/buyList?page=1">&laquo;</a></li>
+            <li th:style="${buyList.first} ? 'display:none'">
+                <a th:href="@{/yiying/buyList(page=${buyList.number})}">&lsaquo;</a>
+            </li>
+            <li th:each="page :${#numbers.sequence(startNumber, endNumber)}"
+                th:class="(${page} == ${buyList.number}+1) ? 'active'">
+                <a th:href="@{/yiying/buyList(page=${page})}" th:text="${page}">
+                    <span class="sr-only"></span>
+                </a>
+            </li>
+            <li th:style="${buyList.last} ? 'display:none'">
+                <a th:href="@{/yiying/buyList(page=${buyList.number}+2)}">&rsaquo;</a>
+            </li>
+            <li>
+                <a th:href="@{/yiying/buyList(page=${buyList.totalPages})}">&raquo;</a>
+            </li>
+
+        </ul>
+    </nav>
+
+</div>
+<!--buy.js 추가-->
+<script src="/js/app/buy.js"></script>
+
+
+{{>layout/footer}}

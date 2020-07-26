@@ -11,11 +11,13 @@ import com.hululuuuu.ceoying.service.wallet.WalletService;
 import com.hululuuuu.ceoying.web.dto.product.ProductResponseDto;
 import com.hululuuuu.ceoying.web.dto.sell.SellListResponseDto;
 import com.hululuuuu.ceoying.web.dto.wallet.WalletListResponseDto;
+import com.hululuuuu.ceoying.web.dto.wallet.WalletSaveRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -30,6 +32,14 @@ public class IndexController {
     @GetMapping({"/", "/main"})
     public ModelAndView index() {
 
+        WalletSaveRequestDto requestDto = WalletSaveRequestDto.builder()
+                .money(0)
+                .record("0")
+                .statement("개설")
+                .statementDate(LocalDate.now())
+                .build();
+
+        walletService.saveWallet(requestDto);
         ModelAndView mav = new ModelAndView();
         List<Buy> buyTop5 = buyService.findTop5();
         List<SellListResponseDto> sellTop3 = sellService.findTop3();
