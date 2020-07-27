@@ -11,6 +11,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Getter
 public class WalletSaveRequestDto {
+
     private int money;
     private String record;
     private String statement;

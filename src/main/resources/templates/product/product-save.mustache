@@ -1,5 +1,97 @@
 {{>layout/header}}
 
-
+<div class="container">
+    <div class="page-header">
+        <h1>상품 등록</h1>
+    </div>
+    <br/><br/>
+    <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+        <div class="panel panel-success">
+            <div class="panel-body">
+                <form id="any-form">
+                    <div>
+                        <label>상품 이름</label>
+                        <input type="text" class="form-control" id="name" name="name" placeholder="상품이름" autofocus/>
+                    </div>
+                    <div>
+                        <label>재고</label>
+                        <input type="text" class="form-control" id="amount" name="amount" placeholder="재고수량"/>
+                    </div>
+                    <div>
+                        <label>가격</label>
+                        <input type="text" class="form-control" id="price" name="price" placeholder="판매가격"/>
+                    </div>
+                    <div>
+                        <label>원가</label>
+                        <input type="text" class="form-control" id="costprice" name="costprice" placeholder="원가"/>
+                        <button class="btn btn-primary pull-right" type="button" data-toggle="collapse" data-target="#mod-container" aria-expanded="false" aria-controls="mod-container">원가수정</button>
+                    </div><br/>
+                    <div class="mod-container collapse" id="mod-container">
+                        <div class="pull-left col-md-6">
+                            <label>상품가격(대만돈)</label>
+                            <input class="form-control" id="newPrice" type="text"/>
+                        </div>
+                        <div class="pull-right col-md-6">
+                            <label>상품개수</label>
+                            <input class="form-control" id="newAmount" type="text" readonly/>
+                        </div>
+                        <div class="pull-left col-md-6">
+                            <label>환율</label>
+                            <input class="form-control" id="trans" type="text"/>
+                        </div>
+                        <div class="pull-right col-md-6">
+                            <label>해외배송비</label>
+                            <input class="form-control" id="priceDeliver" type="text"/>
+                        </div>
+                    </div>
+                    <br/><br/>
+                    <div>
+                        <label>유통기한</label>
+                        <input type="date" class="form-control" id="sellByDate" name="sellByDate"/>
+                    </div>
+                    <br/><br/>
+                    <div class="pull-left">
+                        <a href="/productList" class="btn btn-default">목록으로</a>
+                    </div>
+                    <div class="pull-right">
+                        <button type="button" id="btn-saveProduct" class="form-control btn btn-primary">작성 완료</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
 {{>layout/footer}}
+
+<script>
+    $('#amount').on("propertychange change keyup paste input", function() {
+        $('#newAmount').val($('#amount').val());
+    });
+</script>
+
+<script>
+
+    function calcCostPrice(newPrice, newAmount, trans, priceDeliver) {
+
+        var newSum = ((Number(newPrice) * Number(newAmount)) + Number(priceDeliver)) * Number(trans);
+
+        return Math.ceil(Number(newSum)) / Number(newAmount);
+    }
+
+    $("#newPrice, #newAmount, #trans, #priceDeliver").on("propertychange change keyup paste input", function() {
+        var newPrice = $("#newPrice").val();
+        var newAmount = $("#newAmount").val();
+        var trans = $("#trans").val();
+        var priceDeliver = $("#priceDeliver").val();
+
+        if(!newPrice || !newAmount || !trans || !priceDeliver) {
+            return;
+        }
+
+        var newVal = calcCostPrice(newPrice, newAmount, trans, priceDeliver);
+
+        $("#costprice").val(newVal);
+
+    });
+</script>

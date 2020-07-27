@@ -12,4 +12,6 @@ thead { background-color: #FAFAFA}
 .table-bordered tbody tr td {padding: 12px 5px !important;}
 .moreList {position:absolute;top:18px;right: 18px;}
 .moreList a i {color: black;}
+.pb-69 {padding-bottom: 67px;}
+#any-form > div {margin: 15px 0;}
 footer{position:fixed;bottom:0;width:100%;height:50px;background-color:#2BBBAD;padding:20px 0;text-align:center;box-sizing:border-box;color:#ffffff;}

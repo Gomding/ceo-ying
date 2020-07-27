@@ -4,7 +4,6 @@ package com.hululuuuu.ceoying.service.sell;
 import com.hululuuuu.ceoying.domain.sell.Sell;
 import com.hululuuuu.ceoying.domain.sell.SellRepository;
 import com.hululuuuu.ceoying.myComponent.PageableDefault;
-import com.hululuuuu.ceoying.myComponent.TypeTranslator;
 import com.hululuuuu.ceoying.web.dto.sell.SellListResponseDto;
 import com.hululuuuu.ceoying.web.dto.sell.SellResponseDto;
 import com.hululuuuu.ceoying.web.dto.sell.SellSaveRequestDto;
@@ -26,11 +25,10 @@ public class SellService {
     private final SellRepository sellRepository;
 
     // 전체 판매 리스트 + 페이징
-    public Page<SellListResponseDto> findSellList(Pageable pageable) throws IllegalAccessException, InstantiationException, ClassNotFoundException {
+    public Page<SellResponseDto> findAll(Pageable pageable) {
         pageable = PageableDefault.setPageable(pageable);
         Page<Sell> list =  sellRepository.findAllDateDesc(pageable);
-
-        return TypeTranslator.domainPageToDTOPage(list, "com.hululuuuu.ceoying.web.dto.sell.SellListResponseDto;");
+        return list.map(SellResponseDto::new);
     }
 
     // 판매 생성 메서드
@@ -81,10 +79,9 @@ public class SellService {
     }
 
     // 판매 검색(날짜 기준)
-    public Page<SellListResponseDto> searchSellList(Pageable pageable, LocalDate start, LocalDate end) throws IllegalAccessException, InstantiationException, ClassNotFoundException {
+    public Page<SellResponseDto> searchSellList(Pageable pageable, LocalDate start, LocalDate end) {
         pageable = PageableDefault.setPageable(pageable);
         Page<Sell> list = sellRepository.findBySelldateBetween(pageable, start, end);
-
-        return TypeTranslator.domainPageToDTOPage(list, "SellListResponseDto");
+        return list.map(SellResponseDto::new);
     }
 }

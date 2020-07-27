@@ -1,5 +1,115 @@
 {{>layout/header}}
 
-
+<div class="container">
+    <div class="page-header">
+        <h1>판매 내역 수정</h1>
+    </div>
+    <br/><br/>
+    <input id="id" type="hidden" value="{{sell.id}}"/>
+    <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+        <div class="panel panel-success">
+            <div class="panel-body">
+                <div>
+                    <label>구매자 아이디</label>
+                    <input type="text" class="form-control" id="name" name="name" value="{{sell.name}}" placeholder="구매자" autofocus/>
+                </div>
+                <div>
+                    <label>판매한 상품</label>
+                    <input type="text" class="form-control" id="product" name="product" value="{{sell.product}}" placeholder="상품명"/>
+                </div>
+                <div>
+                    <label>판매 수량</label>
+                    <input type="text" class="form-control" id="amount" name="amount" value="{{sell.amount}}" placeholder="판매수량"/>
+                </div>
+                <div>
+                    <label>판매 금액</label>
+                    <input type="text" class="form-control" id="price" name="price" value="{{sell.price}}" placeholder="판매 금액"/>
+                </div>
+                <div>
+                    <label>결제수단</label>
+                    <select class="form-control" id="mofSelect" name="mofSelect">
+                        <option value="3.74">신용카드</option>
+                        <option value="1.65">계좌이체</option>
+                        <option value="1">무통장입금</option>
+                        <option value="3.85">휴대폰결제</option>
+                        <option value="3.74">기타</option>
+                    </select>
+                    <span id="commission"></span>
+                    <input type="hidden" id="mof" name="mof" value="{{sell.methodOfPayment}}"/>
+                </div>
+                <div>
+                    <label>수익</label>
+                    <input type="text" class="form-control" id="profit" name="profit" value="{{sell.profit}}" placeholder="수익" readonly/>
+                </div>
+                <div>
+                    <label>판매 날짜</label>
+                    <input type="date" class="form-control" id="selldate" name="selldate" value="{{sell.selldate}}"/>
+                </div>
+                <br/><br/>
+                <div class="pull-left">
+                    <a href="/sell/sellList" class="btn btn-default">목록으로</a>
+                </div>
+                <div class="pull-right">
+                    <button class="form-control btn btn-primary" id="btn-updateSell">수정 완료</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 {{>layout/footer}}
+
+<script>
+
+    function calcProfit(commission, price) {
+
+        var commission = Number(commission);
+        var price = Number(price);
+        var deliverPrice = Number(3500);
+        var naverComm = Math.round((price / 100) * 2);
+
+        var mofComm = Math.round(((price + deliverPrice) / 100) * commission);
+
+        return price - (naverComm + mofComm);
+
+    }
+
+    $("#mofSelect").change(function() {
+
+        var commission = $(this).val();
+
+        if(commission == "") {
+            $("#commission").text("");
+            $("#profit").val(0);
+            return;
+        }
+
+        var price = $("#price").val();
+
+        $("#commission").text(commission + "%");
+
+        $("#methodOfPayment").val($(this).find(":selected").text());
+
+        var newVal = calcProfit(commission, price);
+
+        $("#profit").val(newVal);
+
+    });
+
+    $("#price").on("propertychange change keyup paste input", function() {
+
+        var commission = $("#mofSelect :selected").val();
+
+        var price = $(this).val();
+
+        if(!$("#methodOfPayment").val()) {
+            return;
+        }
+
+        var newVal = calcProfit(commission, price);
+
+        $("#profit").val(newVal);
+
+    });
+
+</script>

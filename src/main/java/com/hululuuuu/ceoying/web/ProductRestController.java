@@ -25,7 +25,7 @@ public class ProductRestController {
     }
 
     @PostMapping("/products")
-    public Long saveProduct(ProductSaveRequestDto requestDto) {
+    public Long saveProduct(@RequestBody ProductSaveRequestDto requestDto) {
         return productService.saveProduct(requestDto);
     }
 
@@ -35,9 +35,9 @@ public class ProductRestController {
     }
 
     @GetMapping("/productList")
-    public ModelAndView productList(@PageableDefault Pageable pageable) throws IllegalAccessException, ClassNotFoundException, InstantiationException {
+    public ModelAndView productList(@PageableDefault Pageable pageable) {
         ModelAndView mav = new ModelAndView();
-        mav.addObject("productList", productService.findAllForPaging(pageable));
+        mav.addObject("productList", productService.findAll(pageable));
         mav.setViewName("product/productList");
         return mav;
     }

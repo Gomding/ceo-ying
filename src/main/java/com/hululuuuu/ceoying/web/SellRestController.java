@@ -24,31 +24,11 @@ public class SellRestController {
     private final ProductService productService;
 
     @GetMapping("/sellList")
-    public ModelAndView sellList(@PageableDefault Pageable pageable) throws IllegalAccessException, ClassNotFoundException, InstantiationException {
+    public ModelAndView sellList(@PageableDefault Pageable pageable) {
         ModelAndView mav = new ModelAndView();
-        mav.addObject("sellList", sellService.findSellList(pageable));
+        mav.addObject("sellList", sellService.findAll(pageable));
         mav.setViewName("sell/sellList");
         return mav;
-    }
-
-    @GetMapping("/sells/save")
-    public ModelAndView sellForm() {
-        ModelAndView mav = new ModelAndView();
-        mav.setViewName("sell-save");
-        return mav;
-    }
-
-    @PostMapping("/sells")
-    public Long saveSell(SellSaveRequestDto requestDto) {
-        walletService.whenSaveSell(requestDto);
-        productService.updateAmountSaveSell(requestDto);
-
-        return sellService.createSell(requestDto);
-    }
-
-    @GetMapping("/sells/{id}")
-    public SellResponseDto findById(@PathVariable Long id) {
-         return sellService.sellFindById(id);
     }
 
     @GetMapping({"/sells/search", "/sells/search"})
@@ -59,6 +39,26 @@ public class SellRestController {
         mav.addObject("sellList", sellService.searchSellList(pageable, startDate, endDate));
         mav.setViewName("sell/sellList");
         return mav;
+    }
+
+    @GetMapping("/sells/save")
+    public ModelAndView sellForm() {
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("sell/sell-save");
+        return mav;
+    }
+
+    @PostMapping("/sells")
+    public Long saveSell(@RequestBody SellSaveRequestDto requestDto) {
+        walletService.whenSaveSell(requestDto);
+        productService.updateAmountSaveSell(requestDto);
+
+        return sellService.createSell(requestDto);
+    }
+
+    @GetMapping("/sells/{id}")
+    public SellResponseDto findById(@PathVariable Long id) {
+        return sellService.sellFindById(id);
     }
 
     @PutMapping("/sells/{id}")

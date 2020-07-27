@@ -1,5 +1,111 @@
 {{>layout/header}}
 
-
+<div class="container">
+    <div class="page-header">
+        <h1>상품 수정</h1>
+    </div>
+    <br/><br/>
+    <input id="id" type="hidden" value="{{product.id}}"/>
+    <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+        <div class="panel panel-success">
+            <div class="panel-body">
+                <div id="product-form">
+                    <div>
+                        <label>상품 이름</label>
+                        <input type="text" class="form-control" id="name" name="name" value="{{product.name}}" placeholder="상품이름" autofocus/>
+                    </div>
+                    <div>
+                        <label>재고</label>
+                        <input type="text" class="form-control" id="amount" name="amount" value="{{product.amount}}" placeholder="재고수량"/>
+                    </div>
+                    <div>
+                        <label>가격</label>
+                        <input type="text" class="form-control" id="price" name="price" value="{{product.price}}" placeholder="판매가격"/>
+                    </div>
+                    <div>
+                        <label>원가</label><br>
+                        <input type="text" class="form-control pull-left" id="costprice" name="costprice" value="{{product.costprice}}" style="width:80%;" laceholder="원가" readonly/>
+                        <button class="btn btn-primary pull-right" type="button" data-toggle="collapse" data-target="#mod-container" aria-expanded="false" aria-controls="mod-container">원가수정</button>
+                    </div><br/>
+                    <div class="mod-container collapse" id="mod-container">
+                        <div class="pull-left col-md-6">
+                            <label>현재 원가</label>
+                            <input class="form-control" type="text" id="oldPrice" value="{{product.costprice}}" readonly/>
+                        </div>
+                        <div class="pull-right col-md-6">
+                            <label>현재 재고</label>
+                            <input class="form-control" type="text" id="oldAmount" value="{{product.amount}}" readonly/>
+                        </div>
+                        <div class="pull-left col-md-6">
+                            <label>새 상품가격</label>
+                            <input class="form-control" id="newPrice" type="text"/>
+                        </div>
+                        <div class="pull-right col-md-6">
+                            <label>새 상품개수</label>
+                            <input class="form-control" id="newAmount" type="text"/>
+                        </div>
+                        <div class="pull-left col-md-6">
+                            <label>환율</label>
+                            <input class="form-control" id="trans" type="text"/>
+                        </div>
+                        <div class="pull-right col-md-6">
+                            <label>배송비</label>
+                            <input class="form-control" id="priceDeliver" type="text"/>
+                        </div>
+                    </div>
+                    <div>
+                        <label>유통기한</label>
+                        <input type="date" class="form-control" id="sellByDate" name="sellByDate"/>
+                    </div>
+                    <br/><br/>
+                    <div class="pull-left">
+                        <a href="/productList" class="btn btn-default">목록으로</a>
+                    </div>
+                    <div class="pull-right">
+                        <button class="form-control btn btn-success" id="btn-updateProduct">수정 완료</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 {{>layout/footer}}
+
+<script>
+
+    $('#newAmount').on('propertychange change keyup paste input', function() {
+        $('#amount').val(Number($('#oldAmount').val()) + Number($('#newAmount').val()));
+    });
+
+</script>
+
+<script>
+
+    function calcCostPrice(newProduct, newAmount, trans, priceDeliver) {
+
+        var oldProduct = $("#oldPrice").val();
+        var oldAmount = $("#oldAmount").val();
+
+        var oldSum = Number(oldProduct) * Number(oldAmount);
+        var newSum = ((Number(newProduct) * Number(newAmount)) + Number(priceDeliver)) * Number(trans);
+
+        return Math.ceil((Number(oldSum) + Number(newSum)) / (Number(oldAmount) + Number(newAmount)));
+    }
+
+    $("#newProduct, #newAmount, #trans, #priceDeliver").on("propertychange change keyup paste input", function() {
+        var newProduct = $("#newProduct").val();
+        var newAmount = $("#newAmount").val();
+        var trans = $("#trans").val();
+        var priceDeliver = $("#priceDeliver").val();
+
+        if(!newProduct || !newAmount || !trans || !priceDeliver) {
+            return;
+        }
+
+        var newVal = calcCostPrice(newProduct, newAmount, trans, priceDeliver);
+
+        $("#costprice").val(newVal);
+
+    });
+</script>

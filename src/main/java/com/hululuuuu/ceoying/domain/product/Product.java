@@ -58,8 +58,4 @@ public class Product extends BaseTimeEntity {
         this.amount += amount;
     }
 
-    public void updateProductAmountAfterUpdateSell(int nowAmount, int oldAmount) {
-        this.amount += (oldAmount - nowAmount);
-    }
-
 }

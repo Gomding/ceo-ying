@@ -3,7 +3,6 @@ package com.hululuuuu.ceoying.service.product;
 import com.hululuuuu.ceoying.domain.product.Product;
 import com.hululuuuu.ceoying.domain.product.ProductRepository;
 import com.hululuuuu.ceoying.myComponent.PageableDefault;
-import com.hululuuuu.ceoying.myComponent.TypeTranslator;
 import com.hululuuuu.ceoying.web.dto.product.ProductListResponseDto;
 import com.hululuuuu.ceoying.web.dto.product.ProductResponseDto;
 import com.hululuuuu.ceoying.web.dto.product.ProductSaveRequestDto;
@@ -23,11 +22,10 @@ public class ProductService {
 
     private final ProductRepository productRepository;
 
-    public Page<ProductListResponseDto> findAllForPaging(Pageable pageable) throws IllegalAccessException, InstantiationException, ClassNotFoundException {
+    public Page<ProductResponseDto> findAll(Pageable pageable) {
         pageable = PageableDefault.setPageable(pageable);
         Page<Product> list = productRepository.findAllModifiedDateDesc(pageable);
-
-        return TypeTranslator.domainPageToDTOPage(list, "com.hululuuuu.ceoying.web.dto.product.ProductListResponseDto");
+        return list.map(ProductResponseDto::new);
     }
 
     @Transactional

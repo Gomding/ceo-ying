@@ -45,7 +45,7 @@ public class WalletService {
 
     @Transactional
     public void whenSaveSell(SellSaveRequestDto requestDto) {
-        int nowWalletMoney = walletRepository.findWalletMoney();
+        int nowWalletMoney = walletRepository.findTop1ByOrderByIdDesc().getMoney();
         int sellMoney = requestDto.getProfit();
         walletRepository.save(
                 Wallet.builder()
@@ -59,7 +59,7 @@ public class WalletService {
 
     @Transactional
     public void whenUpdateSell(SellUpdateRequestDto requestDto, Long id) {
-        int nowWalletMoney = walletRepository.findWalletMoney();
+        int nowWalletMoney = walletRepository.findTop1ByOrderByIdDesc().getMoney();
         int oldSellMoney = sellRepository.getOne(id).getProfit();
         int newSellMoney = requestDto.getProfit();
         int diffMoney = oldSellMoney - newSellMoney;
@@ -81,7 +81,7 @@ public class WalletService {
     public void whenDeleteSell(Long id) {
 
         Sell sell = sellRepository.getOne(id);
-        int nowWalletMoney = walletRepository.findWalletMoney();
+        int nowWalletMoney = walletRepository.findTop1ByOrderByIdDesc().getMoney();
         int sellMoney = sell.getProfit();
         walletRepository.save(
                 Wallet.builder()

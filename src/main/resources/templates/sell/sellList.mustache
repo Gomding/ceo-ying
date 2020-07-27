@@ -1,5 +1,81 @@
 {{>layout/header}}
 
+<div class="container pb-69 conHeight">
+    <div class="page-header">
+        <h1>판매 목록</h1>
+    </div>
+    <div class="pull-left searchSell">
+        <input type="date" class="" id="start" name="start"/> ~
+        <input type="date" class="" id="end" name="end"/>
+        <button id="searchSell" type="button" class="btn btn-default">검색</button>
+    </div>
+    <div class="pull-right" style="margin:10px 0;">
+        <a href="/sells/save" class="btn btn-success btn-block"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>판매내역 등록</a>
+    </div>
+    <br/><br/><br/>
+
+    <div id="mainHide">
+        <table class="table table-bordered table-hover">
+            <thead>
+            <tr>
+                <th class="col-md-1 bl-none">#</th>
+                <th class="col-md-1">구매자</th>
+                <th class="col-md-2">판매 상품</th>
+                <th class="col-md-2">판매 금액</th>
+                <th class="col-md-2">실제 수익</th>
+                <th class="col-md-1">수량</th>
+                <th class="col-md-1">결제 수단</th>
+                <th class="col-md-2">판매 날짜</th>
+                <th class="col-md-1 br-none">삭제</th>
+            </tr>
+            </thead>
+            <tbody>
+            {{#sellList}}
+            <tr class="text-center">
+                <td class="bl-none">{{id}}</td>
+                <td><a href="'/sells/{{id}}">{{name}}</a></td>
+                <td>{{product}}</td>
+                <td>{{price}}</td>
+                <td>{{profit}}</td>
+                <td>{{amount}}</td>
+                <td>{{methodOfPayment}}</td>
+                <td>{{selldate}}</td>
+                <td class="br-none" style="padding: 12px 12px !important;">
+                    <button type="button" id="btn-deleteSell" class="deleteBtn btn btn-default" aria-label="deleteBtn">
+                        <input class="sell_id" id="id" value="{{id}}" type="hidden"/>
+                        <span class="fa fa-remove"></span>
+                    </button>
+                </td>
+            </tr>
+            {{/sellList}}
+            </tbody>
+        </table>
+    </div>
+
+    <nav aria-label="Page navigation" style="text-align: center;">
+        <ul class="pagination" th:with="startNumber=${T(Math).floor(sellList.number/10)}*10+1,
+                                    endNumber=(${sellList.totalPages} > ${startNumber}+9) ? ${startNumber}+9 : ${sellList.totalPages}">
+            <li><a href="/sell/sellList?page=1">&laquo;</a></li>
+            <li th:style="${sellList.first} ? 'display:none'">
+                <a th:href="@{/sell/sellList(page=${sellList.number})}">&lsaquo;</a>
+            </li>
+            <li th:each="page :${#numbers.sequence(startNumber, endNumber)}"
+                th:class="(${page} == ${sellList.number}+1) ? 'active'">
+                <a th:href="@{/sell/sellList(page=${page})}" th:text="${page}">
+                    <span class="sr-only"></span>
+                </a>
+            </li>
+            <li th:style="${sellList.last} ? 'display:none'">
+                <a th:href="@{/sell/sellList(page=${sellList.number}+2)}">&rsaquo;</a>
+            </li>
+            <li>
+                <a th:href="@{/sell/sellList(page=${sellList.totalPages})}">&raquo;</a>
+            </li>
+
+        </ul>
+    </nav>
+
+</div>
 
 
 {{>layout/footer}}

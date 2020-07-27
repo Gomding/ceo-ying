@@ -19,7 +19,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -58,7 +57,7 @@ public class BuyApiControllerTest {
     @Test
     public void buy_등록된다() throws Exception{
         //given
-        String name = "name";
+        String name = "김씨";
         int price = 1000;
         int amount = 10;
         String content = "content";
