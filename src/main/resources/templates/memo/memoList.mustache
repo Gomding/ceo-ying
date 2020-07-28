@@ -1,5 +1,71 @@
 {{>layout/header}}
 
+<div class="container pb-69 conHeight">
+    <div class="page-header">
+        <h1>메모 목록</h1>
+    </div>
+    <div class="memoList-container">
+        {{#memo}}
+        <div class="memo-container col-md-offset-3 col-md-6 mr-25per">
+            <br/>
+            <h4>{{id}} 번 메모</h4><br/>
+            <div>
+                <button type="button" id="btn-deleteMemo" class="deleteBtn btn btn-default" aria-label="deleteBtn">
+                    <input class="memo_id" id="id" name="id" value="{{id}}" type="hidden"/>
+                    <i class="fa fa-times" aria-hidden="true"></i>
+                </button>
+            </div>
+            <table class="table table-hover">
+                <tbody>
+                <tr style="background-color: #FAFAFA">
+                    <th>링크</th>
+                </tr>
+                <tr>
+                    <td><a href="{{link}}">{{link}}</a></td>
+                </tr>
+                <tr style="background-color: #FAFAFA">
+                    <th>상세내용</th>
+                </tr>
+                <tr>
+                    <td id="content">{{content}}</td>
+                </tr>
+                <tr style="background-color: #FAFAFA">
+                    <th>작성 날짜</th>
+                </tr>
+                <tr>
+                    <td id="createDate">{{createDate}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        {{/memo}}
+    </div>
 
+    <nav aria-label="Page navigation" style="text-align: center;">
+        <ul class="pagination" th:with="startNumber=${T(Math).floor(memoList.number/10)}*10+1,
+                                    endNumber=(${memoList.totalPages} > ${startNumber}+9) ? ${startNumber}+9 : ${memoList.totalPages}">
+            <li><a href="/memo/memoList?page=1">&laquo;</a></li>
+            <li th:style="${memoList.first} ? 'display:none'">
+                <a th:href="@{/memo/memoList(page=${memoList.number})}">&lsaquo;</a>
+            </li>
+            <li th:each="page :${#numbers.sequence(startNumber, endNumber)}"
+                th:class="(${page} == ${memoList.number}+1) ? 'active'">
+                <a th:href="@{/memo/memoList(page=${page})}" th:text="${page}">
+                    <span class="sr-only"></span>
+                </a>
+            </li>
+            <li th:style="${memoList.last} ? 'display:none'">
+                <a th:href="@{/memo/memoList(page=${memoList.number}+2)}">&rsaquo;</a>
+            </li>
+            <li>
+                <a th:href="@{/memo/memoList(page=${memoList.totalPages})}">&raquo;</a>
+            </li>
+
+        </ul>
+    </nav>
+
+</div>
 
 {{>layout/footer}}
+
+<link rel="stylesheet" href="/css/memo.css" />

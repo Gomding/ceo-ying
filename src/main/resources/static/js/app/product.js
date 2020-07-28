@@ -16,23 +16,21 @@ var main = {
     save : function () {
         var data = {
             name: $('#name').val(),
-            product: $('#product').val(),
-            price: $('#price').val(),
             amount: $('#amount').val(),
-            methodOfPayment: $('#methodOfPayment').val(),
-            profit: $('#profit').val(),
-            selldate: $('#selldate').val()
+            price: $('#price').val(),
+            costprice: $('#costprice').val(),
+            sellByDate: $('#sellByDate').val()
         };
 
         $.ajax({
             type: 'POST',
-            url: '/sells',
+            url: '/products',
             dataType: 'json',
             contentType:'application/json; charset=utf-8',
             data: JSON.stringify(data)
         }).done(function() {
             alert('글이 등록되었습니다.');
-            window.location.href = '/sellList';
+            window.location.href = '/productList';
         }).fail(function (error) {
             alert(JSON.stringify(error));
         });
@@ -41,25 +39,23 @@ var main = {
     update : function () {
         var data = {
             name: $('#name').val(),
-            product: $('#product').val(),
-            price: $('#price').val(),
             amount: $('#amount').val(),
-            methodOfPayment: $('#methodOfPayment').val(),
-            profit: $('#profit').val(),
-            selldate: $('#selldate').val()
+            price: $('#price').val(),
+            costprice: $('#costprice').val(),
+            sellByDate: $('#sellByDate').val()
         };
 
         var id = $('#id').val();
 
         $.ajax({
             type: 'PUT',
-            url: '/sells/'+id,
+            url: '/products/'+id,
             dataType: 'json',
             contentType:'application/json; charset=utf-8',
             data: JSON.stringify(data)
         }).done(function() {
             alert('글이 수정되었습니다.');
-            window.location.href = '/sellList';
+            window.location.href = '/productList';
         }).fail(function (error) {
             alert(JSON.stringify(error));
         });
@@ -70,12 +66,12 @@ var main = {
 
         $.ajax({
             type: 'DELETE',
-            url: '/sells/' + id,
+            url: '/products/' + id,
             dataType: 'json',
             contentType: 'application/json; charset=utf-8'
         }).done(function() {
             alert('글이 삭제되었습니다.');
-            window.location.href='/sellList';
+            window.location.href='/productList';
         }).fail(function (error) {
             alert(JSON.stringify(error));
         });

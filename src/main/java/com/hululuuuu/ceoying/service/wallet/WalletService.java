@@ -34,8 +34,8 @@ public class WalletService {
                 .collect(Collectors.toList());
     }
 
-    public int nowWallet() {
-        return walletRepository.findWalletMoney();
+    public Wallet nowWallet() {
+        return walletRepository.findTop1ByOrderByIdDesc();
     }
 
     @Transactional

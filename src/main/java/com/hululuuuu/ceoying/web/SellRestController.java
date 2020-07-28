@@ -57,8 +57,11 @@ public class SellRestController {
     }
 
     @GetMapping("/sells/{id}")
-    public SellResponseDto findById(@PathVariable Long id) {
-        return sellService.sellFindById(id);
+    public ModelAndView findById(@PathVariable Long id) {
+        ModelAndView mav = new ModelAndView();
+        mav.addObject("sell", sellService.sellFindById(id));
+        mav.setViewName("sell/sell-update");
+        return mav;
     }
 
     @PutMapping("/sells/{id}")

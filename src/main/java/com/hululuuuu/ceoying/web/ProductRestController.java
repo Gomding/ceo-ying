@@ -20,7 +20,7 @@ public class ProductRestController {
     @GetMapping("/products/save")
     public ModelAndView productForm() {
         ModelAndView mav = new ModelAndView();
-        mav.setViewName("product-save");
+        mav.setViewName("product/product-save");
         return mav;
     }
 
@@ -30,14 +30,17 @@ public class ProductRestController {
     }
 
     @GetMapping("/products/{id}")
-    public ProductResponseDto updateProduct(@PathVariable Long id) {
-         return productService.findById(id);
+    public ModelAndView updateProduct(@PathVariable Long id) {
+        ModelAndView mav = new ModelAndView();
+        mav.addObject("product", productService.findById(id));
+        mav.setViewName("product/product-update");
+        return mav;
     }
 
     @GetMapping("/productList")
     public ModelAndView productList(@PageableDefault Pageable pageable) {
         ModelAndView mav = new ModelAndView();
-        mav.addObject("productList", productService.findAll(pageable));
+        mav.addObject("product", productService.findAll(pageable));
         mav.setViewName("product/productList");
         return mav;
     }
@@ -50,7 +53,7 @@ public class ProductRestController {
             mav.setViewName("redirect:/product/productList");
         }
         else {
-            mav.addObject("productList", productService.searchProductList(pageable, productName));
+            mav.addObject("product", productService.searchProductList(pageable, productName));
             mav.setViewName("product/productList");
         }
         return mav;

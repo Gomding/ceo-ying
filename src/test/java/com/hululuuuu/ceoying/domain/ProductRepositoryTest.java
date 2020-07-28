@@ -27,7 +27,7 @@ public class ProductRepositoryTest {
     }
 
     @Test
-    public void 구매글저장_불러오기() {
+    public void 상품저장_불러오기() {
         //given
         String name = "name";
         int price = 1000;

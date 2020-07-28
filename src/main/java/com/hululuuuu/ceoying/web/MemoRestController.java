@@ -17,7 +17,7 @@ public class MemoRestController {
     @GetMapping("/memoList")
     public ModelAndView getMemoList(@PageableDefault(size = 5) Pageable pageable) {
         ModelAndView mav = new ModelAndView();
-        mav.addObject("memoList", memoService.findMemoList(pageable));
+        mav.addObject("memo", memoService.findMemoList(pageable));
         mav.setViewName("memo/memoList");
         return mav;
     }

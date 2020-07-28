@@ -1,0 +1,31 @@
+.memoList-container {
+    min-height: 500px;
+}
+
+.memo-container {
+    border: 2px solid #f0ad4e;
+    border-radius: 20px;
+    margin-top:30px;
+    padding: 10px 40px;
+
+}
+
+body {
+    padding-bottom: 0;
+}
+
+footer {
+    position: inherit;
+}
+
+.pb-69 {padding-bottom: 67px;}
+
+.deleteBtn {
+    position: absolute;
+    top: 30px;
+    right: 30px;
+}
+
+.mr-25per {
+    margin-right: 25%;
+}

@@ -22,7 +22,7 @@ public class BuyRestController {
     private final WalletService walletService;
 
     @GetMapping("/buyList")
-    public ModelAndView buyList(@PageableDefault Pageable pageable) throws IllegalAccessException, ClassNotFoundException, InstantiationException {
+    public ModelAndView buyList(@PageableDefault Pageable pageable) {
         ModelAndView mav = new ModelAndView();
         mav.addObject("buyList", buyService.findBuyList(pageable));
         mav.setViewName("yiying/buyList");
