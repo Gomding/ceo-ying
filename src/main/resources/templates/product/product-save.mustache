@@ -75,7 +75,7 @@
 
         var newSum = ((Number(newPrice) * Number(newAmount)) + Number(priceDeliver)) * Number(trans);
 
-        return Math.ceil(Number(newSum)) / Number(newAmount);
+        return Math.ceil((Number(newSum)) / Number(newAmount));
     }
 
     $("#newPrice, #newAmount, #trans, #priceDeliver").on("propertychange change keyup paste input", function() {

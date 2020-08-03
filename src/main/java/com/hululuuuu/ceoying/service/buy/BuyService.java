@@ -21,6 +21,7 @@ public class BuyService {
 
     private final BuyRepository buyRepository;
 
+    @Transactional(readOnly = true)
     public Page<BuyResponseDto> findBuyList(Pageable pageable) {
         pageable = PageableDefault.setPageable(pageable);
         Page<Buy> list = buyRepository.findAllByOrderByBuydateDesc(pageable);
@@ -28,6 +29,7 @@ public class BuyService {
         return list.map(BuyResponseDto::new);
     }
 
+    @Transactional(readOnly = true)
     public List<Buy> findTop5() {
         return buyRepository.findTop5ByOrderByBuydateDesc();
     }
@@ -44,6 +46,7 @@ public class BuyService {
         buyRepository.deleteById(id);
     }
 
+    @Transactional(readOnly = true)
     public BuyResponseDto findById(Long id) {
         Buy entity = buyRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. id=" + id));
         return new BuyResponseDto(entity);
@@ -60,12 +63,14 @@ public class BuyService {
         return id;
     }
 
+    @Transactional(readOnly = true)
     public int sum1MonthSpendMoney() {
         List<Buy> oneMonthList =
                 buyRepository.findByBuydateBetween(LocalDate.now().minusMonths(1), LocalDate.now().plusDays(1));
         return new Buy().sum1MonthSpendMoney(oneMonthList);
     }
 
+    @Transactional(readOnly = true)
     public Page<BuyResponseDto> buySearchList(Pageable pageable, LocalDate start, LocalDate end) {
         pageable = PageableDefault.setPageable(pageable);
         Page<Buy> list = buyRepository.findByBuydateBetween(pageable, start, end);

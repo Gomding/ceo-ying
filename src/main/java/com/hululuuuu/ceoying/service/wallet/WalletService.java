@@ -28,12 +28,14 @@ public class WalletService {
     private final BuyRepository buyRepository;
     private final SellRepository sellRepository;
 
+    @Transactional(readOnly = true)
     public List<WalletListResponseDto> findTop5() {
         return walletRepository.findTop5().stream()
                 .map(WalletListResponseDto::new)
                 .collect(Collectors.toList());
     }
 
+    @Transactional(readOnly = true)
     public Wallet nowWallet() {
         return walletRepository.findTop1ByOrderByIdDesc();
     }

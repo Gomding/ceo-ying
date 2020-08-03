@@ -1,12 +1,15 @@
 package com.hululuuuu.ceoying.web;
 
 
+import com.hululuuuu.ceoying.domain.Pages;
 import com.hululuuuu.ceoying.service.product.ProductService;
 import com.hululuuuu.ceoying.web.dto.product.ProductResponseDto;
 import com.hululuuuu.ceoying.web.dto.product.ProductSaveRequestDto;
 import com.hululuuuu.ceoying.web.dto.product.ProductUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -38,22 +41,26 @@ public class ProductRestController {
     }
 
     @GetMapping("/productList")
-    public ModelAndView productList(@PageableDefault Pageable pageable) {
+    public ModelAndView productList(@PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable) {
         ModelAndView mav = new ModelAndView();
-        mav.addObject("product", productService.findAll(pageable));
+        Page<ProductResponseDto> productList = productService.findAll(pageable);
+        mav.addObject("productList", productList);
+        mav.addObject("pages", new Pages(productList));
         mav.setViewName("product/productList");
         return mav;
     }
 
     @GetMapping({"/products/search", "/products/search/"})
-    public ModelAndView searchProductList(@PageableDefault Pageable pageable, @RequestParam("productName")String productName) {
+    public ModelAndView searchProductList(@PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable, @RequestParam("productName")String productName) {
         ModelAndView mav = new ModelAndView();
 
         if (productName.equals("") || productName.isEmpty()) {
             mav.setViewName("redirect:/product/productList");
         }
         else {
-            mav.addObject("product", productService.searchProductList(pageable, productName));
+            Page<ProductResponseDto> productList = productService.searchProductList(pageable, productName);
+            mav.addObject("productList", productList);
+            mav.addObject("pages", new Pages(productList));
             mav.setViewName("product/productList");
         }
         return mav;

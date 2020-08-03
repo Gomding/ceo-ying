@@ -25,6 +25,7 @@ public class SellService {
     private final SellRepository sellRepository;
 
     // 전체 판매 리스트 + 페이징
+    @Transactional(readOnly = true)
     public Page<SellResponseDto> findAll(Pageable pageable) {
         pageable = PageableDefault.setPageable(pageable);
         Page<Sell> list =  sellRepository.findAllDateDesc(pageable);
@@ -67,18 +68,21 @@ public class SellService {
     }
 
     // id 로 판매의 상세정보 가져오기 - > 수정폼에 사용
+    @Transactional(readOnly = true)
     public SellResponseDto sellFindById(Long id) {
         Sell entity = sellRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. id=" + id));
         return new SellResponseDto(entity);
     }
 
     // 최근 1달 판매 검색
+    @Transactional(readOnly = true)
     public int sum1MonthProfit() {
         List<Sell> sell = sellRepository.findBySelldateBetween(LocalDate.now().minusMonths(1), LocalDate.now().plusDays(1));
         return new Sell().sum1MonthProfit(sell);
     }
 
     // 판매 검색(날짜 기준)
+    @Transactional(readOnly = true)
     public Page<SellResponseDto> searchSellList(Pageable pageable, LocalDate start, LocalDate end) {
         pageable = PageableDefault.setPageable(pageable);
         Page<Sell> list = sellRepository.findBySelldateBetween(pageable, start, end);

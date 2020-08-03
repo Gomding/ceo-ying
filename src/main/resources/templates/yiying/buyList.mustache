@@ -46,24 +46,26 @@
     </div>
 
     <nav aria-label="Page navigation" style="text-align: center;">
-        <ul class="pagination" th:with="startNumber=${T(Math).floor(buyList.number/10)}*10+1,
-                                    endNumber=(${buyList.totalPages} > ${startNumber}+9) ? ${startNumber}+9 : ${buyList.totalPages}">
-            <li><a href="/yiying/buyList?page=1">&laquo;</a></li>
-            <li th:style="${buyList.first} ? 'display:none'">
-                <a th:href="@{/yiying/buyList(page=${buyList.number})}">&lsaquo;</a>
+        <ul class="pagination">
+            <li><a href="/buyList?page=1">&laquo;</a></li>
+
+            <li class="prevPage">
+                <a href="/buyList?page={{pages.prevPage}}">&lsaquo;</a>
             </li>
-            <li th:each="page :${#numbers.sequence(startNumber, endNumber)}"
-                th:class="(${page} == ${buyList.number}+1) ? 'active'">
-                <a th:href="@{/yiying/buyList(page=${page})}" th:text="${page}">
+            {{#pages.pageNums}}
+            <li id="page{{page}}" class="">
+                <a href="/buyList?page={{page}}">{{page}}
                     <span class="sr-only"></span>
                 </a>
             </li>
-            <li th:style="${buyList.last} ? 'display:none'">
-                <a th:href="@{/yiying/buyList(page=${buyList.number}+2)}">&rsaquo;</a>
+            {{/pages.pageNums}}
+            <li class="nextPage">
+                <a href="/buyList?page={{pages.nextPage}}">&rsaquo;</a>
             </li>
             <li>
-                <a th:href="@{/yiying/buyList(page=${buyList.totalPages})}">&raquo;</a>
+                <a href="/buyList?page={{buyList.totalPages}}">&raquo;</a>
             </li>
+            <input type="hidden" id="lastPage" value="{{buyList.totalPages}}"/>
 
         </ul>
     </nav>

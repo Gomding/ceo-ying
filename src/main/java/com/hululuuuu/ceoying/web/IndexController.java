@@ -9,11 +9,13 @@ import com.hululuuuu.ceoying.service.wallet.WalletService;
 import com.hululuuuu.ceoying.web.dto.product.ProductResponseDto;
 import com.hululuuuu.ceoying.web.dto.sell.SellListResponseDto;
 import com.hululuuuu.ceoying.web.dto.wallet.WalletListResponseDto;
+import com.hululuuuu.ceoying.web.dto.wallet.WalletSaveRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -27,6 +29,13 @@ public class IndexController {
 
     @GetMapping({"/", "/main"})
     public ModelAndView index() {
+
+        walletService.saveWallet(WalletSaveRequestDto.builder()
+                .money(1000000)
+                .record("+1000000")
+                .statement("시작금")
+                .statementDate(LocalDate.now())
+                .build());
 
         ModelAndView mav = new ModelAndView();
         List<Buy> buyTop5 = buyService.findTop5();
@@ -44,7 +53,7 @@ public class IndexController {
         mav.addObject("toothPaste", toothPaste);
         mav.addObject("nowWallet", walletMoney);
         mav.addObject("walletTop5", wallet);
-        mav.setViewName("index");
+        mav.setViewName("main");
         return mav;
     }
 

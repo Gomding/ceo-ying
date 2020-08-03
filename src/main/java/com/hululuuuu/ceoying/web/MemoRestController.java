@@ -1,9 +1,13 @@
 package com.hululuuuu.ceoying.web;
 
+import com.hululuuuu.ceoying.domain.Pages;
 import com.hululuuuu.ceoying.service.memo.MemoService;
+import com.hululuuuu.ceoying.web.dto.memo.MemoResponseDto;
 import com.hululuuuu.ceoying.web.dto.memo.MemoSaveRequestDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -15,9 +19,11 @@ public class MemoRestController {
     private final MemoService memoService;
 
     @GetMapping("/memoList")
-    public ModelAndView getMemoList(@PageableDefault(size = 5) Pageable pageable) {
+    public ModelAndView getMemoList(@PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC, size = 5) Pageable pageable) {
         ModelAndView mav = new ModelAndView();
-        mav.addObject("memo", memoService.findMemoList(pageable));
+        Page<MemoResponseDto> memoList = memoService.findMemoList(pageable);
+        mav.addObject("memoList", memoList);
+        mav.addObject("pages", new Pages(memoList));
         mav.setViewName("memo/memoList");
         return mav;
     }

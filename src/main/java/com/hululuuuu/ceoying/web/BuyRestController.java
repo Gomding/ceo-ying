@@ -1,12 +1,15 @@
 package com.hululuuuu.ceoying.web;
 
+import com.hululuuuu.ceoying.domain.Pages;
 import com.hululuuuu.ceoying.service.buy.BuyService;
 import com.hululuuuu.ceoying.service.wallet.WalletService;
 import com.hululuuuu.ceoying.web.dto.buy.BuyResponseDto;
 import com.hululuuuu.ceoying.web.dto.buy.BuySaveRequestDto;
 import com.hululuuuu.ceoying.web.dto.buy.BuyUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -22,9 +25,11 @@ public class BuyRestController {
     private final WalletService walletService;
 
     @GetMapping("/buyList")
-    public ModelAndView buyList(@PageableDefault Pageable pageable) {
+    public ModelAndView buyList(@PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable) {
         ModelAndView mav = new ModelAndView();
-        mav.addObject("buyList", buyService.findBuyList(pageable));
+        Page<BuyResponseDto> buyList = buyService.findBuyList(pageable);
+        mav.addObject("buyList", buyList);
+        mav.addObject("pages", new Pages(buyList));
         mav.setViewName("yiying/buyList");
         return mav;
     }
@@ -61,11 +66,15 @@ public class BuyRestController {
     }
 
     @GetMapping({"/buy/search", "/buy/search/"})
-    public ModelAndView searchSellList(@RequestParam(value = "start")String start, @RequestParam(value = "end")String end, @PageableDefault Pageable pageable) {
+    public ModelAndView searchSellList(@RequestParam(value = "start")String start,
+                                       @RequestParam(value = "end")String end,
+                                       @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable) {
         LocalDate startDate = LocalDate.parse(start, DateTimeFormatter.ISO_DATE);
         LocalDate endDate = LocalDate.parse(end, DateTimeFormatter.ISO_DATE);
         ModelAndView mav = new ModelAndView();
-        mav.addObject("buyList", buyService.buySearchList(pageable, startDate, endDate));
+        Page<BuyResponseDto> buyList = buyService.buySearchList(pageable, startDate, endDate);
+        mav.addObject("buyList", buyList);
+        mav.addObject("pages", new Pages(buyList));
         mav.setViewName("yiying/buyList");
         return mav;
     }

@@ -19,6 +19,7 @@ public class ProductService {
 
     private final ProductRepository productRepository;
 
+    @Transactional(readOnly = true)
     public Page<ProductResponseDto> findAll(Pageable pageable) {
         pageable = PageableDefault.setPageable(pageable);
         Page<Product> list = productRepository.findAllModifiedDateDesc(pageable);
@@ -30,6 +31,7 @@ public class ProductService {
         return productRepository.save(requestDto.toEntity()).getId();
     }
 
+    @Transactional(readOnly = true)
     public ProductResponseDto findById(Long id) {
         Product entity = productRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. id=" + id));
 
@@ -57,6 +59,7 @@ public class ProductService {
 
     }
 
+    @Transactional(readOnly = true)
     public ProductResponseDto findByName(String productName) {
         Product entity = productRepository.findByName(productName);
         if(entity == null) {
@@ -83,10 +86,11 @@ public class ProductService {
         product.updateProductAmount(oldAmount - requestDto.getAmount());
     }
 
-    @Transactional
-    public Page<Product> searchProductList(Pageable pageable, String productName) {
+    @Transactional(readOnly = true)
+    public Page<ProductResponseDto> searchProductList(Pageable pageable, String productName) {
         pageable = PageableDefault.setPageable(pageable);
-        return productRepository.findAllName(pageable, productName);
+        Page<Product> list = productRepository.findAllName(pageable, productName);
+        return list.map(ProductResponseDto::new);
     }
 
 }
