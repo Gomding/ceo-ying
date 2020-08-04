@@ -95,7 +95,7 @@ public class SellApiControllerTest {
                 .selldate(selldate)
                 .build();
 
-        String url = "http://localhost:" + port + "/sells";
+        String url = "http://localhost:" + port + "/manage/sells";
 
         //when
         ResponseEntity<Long> responseEntity = restTemplate.postForEntity(url, requestDto, Long.class);
@@ -148,7 +148,7 @@ public class SellApiControllerTest {
                 .selldate(selldate)
                 .build();
 
-        String url = "http://localhost:" + port + "/sells/" + updatedId;
+        String url = "http://localhost:" + port + "/manage/sells/" + updatedId;
 
         HttpEntity<SellUpdateRequestDto> requestEntity = new HttpEntity<>(requestDto);
 

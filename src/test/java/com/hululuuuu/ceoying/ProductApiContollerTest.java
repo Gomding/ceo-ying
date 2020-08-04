@@ -60,7 +60,7 @@ public class ProductApiContollerTest {
                 .sellByDate(sellByDate)
                 .build();
 
-        String url = "http://localhost:" + port + "/products";
+        String url = "http://localhost:" + port + "/manage/products";
 
         //when
         ResponseEntity<Long> responseEntity = restTemplate.postForEntity(url, requestDto, Long.class);
@@ -108,7 +108,7 @@ public class ProductApiContollerTest {
                 .sellByDate(sellByDate)
                 .build();
 
-        String url = "http://localhost:" + port + "/products/" + updatedId;
+        String url = "http://localhost:" + port + "/manage/products/" + updatedId;
 
         HttpEntity<ProductUpdateRequestDto> requestEntity = new HttpEntity<>(requestDto);
 

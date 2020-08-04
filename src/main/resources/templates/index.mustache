@@ -15,8 +15,14 @@
     <div class="login-container">
         <a href="/main"><img class="main-img" src="/images/hululuuu_circle.png"></a>
         <div class="btn-container">
-            <button type="button" class="naver btn btn-success">네이버 로그인</button>
-            <button type="button" class="google btn btn-default">구글 로그인</button>
+            {{^userName}}
+                <button type="button" class="naver btn btn-success">네이버 로그인</button>
+                <a href="/oauth2/authorization/google" role="button" class="google btn btn-default">구글 로그인</a>
+            {{/userName}}
+            {{#userName}}
+                <button id="user" class="btn btn-default">{{userName}} 님 환영합니다.</button>
+                <a href="/logout" role="button" class="btn btn-info active">Logout</a>
+            {{/userName}}
         </div>
     </div>
 </div>

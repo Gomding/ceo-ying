@@ -9,7 +9,7 @@
         <button id="searchBuy" type="button" class="btn btn-default">검색</button>
     </div>
     <div class="pull-right" style="margin:10px 0;">
-        <a href="/buy/save" class="btn btn-success btn-block"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>구매내역 등록</a>
+        <a href="/manage/buy/save" class="btn btn-success btn-block"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>구매내역 등록</a>
     </div>
     <br/><br/><br/>
 
@@ -29,7 +29,7 @@
             {{#buyList}}
             <tr class="text-center">
                 <td class="bl-none">{{id}}</td>
-                <td><a href="/buy/read/{{id}}">{{name}}</a></td>
+                <td><a href="/manage/buy/read/{{id}}">{{name}}</a></td>
                 <td>{{amount}}</td>
                 <td>{{price}}</td>
                 <td>{{buydate}}</td>

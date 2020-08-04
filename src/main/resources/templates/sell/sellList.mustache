@@ -10,7 +10,7 @@
         <button id="searchSell" type="button" class="btn btn-default">검색</button>
     </div>
     <div class="pull-right" style="margin:10px 0;">
-        <a href="/sells/save" class="btn btn-success btn-block"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>판매내역 등록</a>
+        <a href="/manage/sells/save" class="btn btn-success btn-block"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>판매내역 등록</a>
     </div>
     <br/><br/><br/>
 
@@ -33,7 +33,7 @@
             {{#sellList}}
             <tr class="text-center">
                 <td class="bl-none">{{id}}</td>
-                <td><a href="'/sells/{{id}}">{{name}}</a></td>
+                <td><a href="/manage/sells/{{id}}">{{name}}</a></td>
                 <td>{{product}}</td>
                 <td>{{price}}</td>
                 <td>{{profit}}</td>

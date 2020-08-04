@@ -71,7 +71,7 @@ public class BuyApiControllerTest {
                 .buydate(buydate)
                 .build();
 
-        String url = "http://localhost:" + port + "/buy";
+        String url = "http://localhost:" + port + "/manage/buy";
 
         //when
         ResponseEntity<Long> responseEntity = restTemplate.postForEntity(url, requestDto, Long.class);

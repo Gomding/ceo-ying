@@ -31,6 +31,19 @@
             </div>
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" style="color: black;">
                 <ul class="nav navbar-nav navbar-right">
+                    {{#userName}}
+                        <li>
+                            <a class="menuList">{{userName}} 님</a>
+                        </li>
+                        <li>
+                            <a href="/logout" class="menuList">로그아웃</a>
+                        </li>
+                    {{/userName}}
+                    {{^userName}}
+                        <li>
+                            <a class="menuList" href="/">로그인</a>
+                        </li>
+                    {{/userName}}
                     <li>
                         <a href="/memoList" class="menuList"><i class="fa fa-list-alt" aria-hidden="true"></i> 메모 목록</a>
                     </li>

@@ -49,7 +49,7 @@ public class MemoApiController {
                 .name(name)
                 .build();
 
-        String url = "http://localhost:" + port + "/memo";
+        String url = "http://localhost:" + port + "/manage/memo";
 
         ResponseEntity<Long> responseEntity = restTemplate.postForEntity(url, requestDto, Long.class);
 

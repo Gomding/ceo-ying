@@ -17,7 +17,7 @@ var main = {
 
         $.ajax({
             type: 'POST',
-            url: '/memo',
+            url: '/manage/memo',
             dataType: 'json',
             contentType:'application/json; charset=utf-8',
             data: JSON.stringify(data)
@@ -35,7 +35,7 @@ var main = {
 
         $.ajax({
             type: 'DELETE',
-            url: '/memo/' + id,
+            url: '/manage/memo/' + id,
             dataType: 'json',
             contentType: 'application/json; charset=utf-8'
         }).done(function() {

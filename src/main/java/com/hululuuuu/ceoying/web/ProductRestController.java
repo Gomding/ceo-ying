@@ -16,23 +16,24 @@ import org.springframework.web.servlet.ModelAndView;
 
 @RequiredArgsConstructor
 @RestController
+
 public class ProductRestController {
 
     private final ProductService productService;
 
-    @GetMapping("/products/save")
+    @GetMapping("/manage/products/save")
     public ModelAndView productForm() {
         ModelAndView mav = new ModelAndView();
         mav.setViewName("product/product-save");
         return mav;
     }
 
-    @PostMapping("/products")
+    @PostMapping("/manage/products")
     public Long saveProduct(@RequestBody ProductSaveRequestDto requestDto) {
         return productService.saveProduct(requestDto);
     }
 
-    @GetMapping("/products/{id}")
+    @GetMapping("/manage/products/{id}")
     public ModelAndView updateProduct(@PathVariable Long id) {
         ModelAndView mav = new ModelAndView();
         mav.addObject("product", productService.findById(id));
@@ -66,14 +67,14 @@ public class ProductRestController {
         return mav;
     }
 
-    @PutMapping("/products/{id}")
+    @PutMapping("/manage/products/{id}")
     public Long updateProduct(@PathVariable("id")Long id, @RequestBody ProductUpdateRequestDto requestDto) {
 
         return productService.updateProduct(requestDto, id);
 
     }
 
-    @DeleteMapping("/products/{id}")
+    @DeleteMapping("/manage/products/{id}")
     public Long deleteProduct(@PathVariable("id")Long id) {
         productService.deleteProduct(id);
         return id;

@@ -28,12 +28,12 @@ public class MemoRestController {
         return mav;
     }
 
-    @PostMapping("/memo")
+    @PostMapping("/manage/memo")
     public Long createMemo(@RequestBody MemoSaveRequestDto requestDto) {
         return memoService.saveMemo(requestDto);
     }
 
-    @DeleteMapping("/memo/{id}")
+    @DeleteMapping("/manage/memo/{id}")
     public Long deleteMemo(@PathVariable("id")Long id) {
         memoService.deleteMemo(id);
         return id;

@@ -1,5 +1,6 @@
 package com.hululuuuu.ceoying.web;
 
+import com.hululuuuu.ceoying.config.auth.dto.SessionUser;
 import com.hululuuuu.ceoying.domain.Pages;
 import com.hululuuuu.ceoying.service.product.ProductService;
 import com.hululuuuu.ceoying.service.sell.SellService;
@@ -15,6 +16,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpSession;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -25,6 +27,7 @@ public class SellRestController {
     private final SellService sellService;
     private final WalletService walletService;
     private final ProductService productService;
+    private final HttpSession httpSession;
 
     @GetMapping("/sellList")
     public ModelAndView sellList(@PageableDefault(sort = {"id", "selldate"}, direction = Sort.Direction.DESC) Pageable pageable) {
@@ -50,21 +53,21 @@ public class SellRestController {
         return mav;
     }
 
-    @GetMapping("/sells/save")
+    @GetMapping("/manage/sells/save")
     public ModelAndView sellForm() {
         ModelAndView mav = new ModelAndView();
         mav.setViewName("sell/sell-save");
         return mav;
     }
 
-    @PostMapping("/sells")
+    @PostMapping("/manage/sells")
     public Long saveSell(@RequestBody SellSaveRequestDto requestDto) {
         walletService.whenSaveSell(requestDto);
         productService.updateAmountSaveSell(requestDto);
         return sellService.createSell(requestDto);
     }
 
-    @GetMapping("/sells/{id}")
+    @GetMapping("/manage/sells/{id}")
     public ModelAndView findById(@PathVariable Long id) {
         ModelAndView mav = new ModelAndView();
         mav.addObject("sell", sellService.sellFindById(id));
@@ -72,7 +75,7 @@ public class SellRestController {
         return mav;
     }
 
-    @PutMapping("/sells/{id}")
+    @PutMapping("/manage/sells/{id}")
     public Long updateSell(@PathVariable("id")Long id, @RequestBody SellUpdateRequestDto requestDto) {
         productService.updateAmountUpdateSell(requestDto, sellService.sellFindById(id).getAmount());
         walletService.whenUpdateSell(requestDto, id);
@@ -80,7 +83,7 @@ public class SellRestController {
         return id;
     }
 
-    @DeleteMapping("/sells/{id}")
+    @DeleteMapping("/manage/sells/{id}")
     public Long deleteSell(@PathVariable("id")Long id) {
         productService.updateAmountDeleteSell(sellService.sellFindById(id));
         walletService.whenDeleteSell(id);

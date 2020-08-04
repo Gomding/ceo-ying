@@ -34,14 +34,14 @@ public class BuyRestController {
         return mav;
     }
 
-    @GetMapping("/buy/save")
+    @GetMapping("/manage/buy/save")
     public ModelAndView buyForm() {
         ModelAndView mav = new ModelAndView();
         mav.setViewName("yiying/buy-save");
         return mav;
     }
 
-    @PostMapping("/buy")
+    @PostMapping("/manage/buy")
     public Long saveBuy(@RequestBody BuySaveRequestDto requestDto) {
 
         walletService.whenSaveBuy(requestDto);
@@ -49,7 +49,7 @@ public class BuyRestController {
         return buyService.saveBuy(requestDto);
     }
 
-    @GetMapping("/buy/read/{id}")
+    @GetMapping("/manage/buy/read/{id}")
     public ModelAndView buyDetail(@PathVariable Long id) {
         ModelAndView mav = new ModelAndView();
         mav.addObject("buy", buyService.findById(id));
@@ -57,7 +57,7 @@ public class BuyRestController {
         return mav;
     }
 
-    @GetMapping("/buy/{id}")
+    @GetMapping("/manage/buy/{id}")
     public ModelAndView findById(@PathVariable Long id) {
         ModelAndView mav = new ModelAndView();
         mav.addObject("buy", buyService.findById(id));
@@ -79,14 +79,14 @@ public class BuyRestController {
         return mav;
     }
 
-    @DeleteMapping("/buy/{id}")
+    @DeleteMapping("/manage/buy/{id}")
     public Long deleteBuy(@PathVariable("id")Long id) {
         walletService.whenDeleteBuy(id);
         buyService.deleteBuy(id);
         return id;
     }
 
-    @PutMapping("/buy/{id}")
+    @PutMapping("/manage/buy/{id}")
     public Long updateBuy(@PathVariable("id") Long id, @RequestBody BuyUpdateRequestDto requestDto) {
         walletService.whenUpdateBuy(requestDto, id);
         return buyService.updateBuy(requestDto, id);

@@ -9,7 +9,7 @@
         <a id="searchProduct" type="button" class="btn btn-default"><i class="fa fa-search"></i></a>
     </div>
     <div class="pull-right" style="width: 100px; margin:10px 0;">
-        <a href="/products/save" class="btn btn-success btn-block"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>상품 등록</a>
+        <a href="/manage/products/save" class="btn btn-success btn-block"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>상품 등록</a>
     </div>
     <br/><br/><br/>
 
@@ -30,7 +30,7 @@
             {{#productList}}
             <tr class="text-center">
                 <td class="bl-none">{{id}}</td>
-                <td><a href="/products/{{id}}">{{name}}</a></td>
+                <td><a href="/manage/products/{{id}}">{{name}}</a></td>
                 <td>{{amount}}</td>
                 <td>{{price}}</td>
                 <td>{{costprice}}</td>
