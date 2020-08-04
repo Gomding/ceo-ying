@@ -1,5 +1,6 @@
 package com.hululuuuu.ceoying.web;
 
+import com.hululuuuu.ceoying.config.auth.LoginUser;
 import com.hululuuuu.ceoying.config.auth.dto.SessionUser;
 import com.hululuuuu.ceoying.domain.wallet.Wallet;
 import com.hululuuuu.ceoying.domain.yiying.Buy;
@@ -16,7 +17,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpSession;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -28,10 +28,9 @@ public class MainController {
     private final SellService sellService;
     private final ProductService productService;
     private final WalletService walletService;
-    private final HttpSession httpSession;
 
     @GetMapping("/main")
-    public ModelAndView main() {
+    public ModelAndView main(@LoginUser SessionUser user) {
 
         walletService.saveWallet(WalletSaveRequestDto.builder()
                 .money(1000000)
@@ -41,7 +40,6 @@ public class MainController {
                 .build());
 
         ModelAndView mav = new ModelAndView();
-        SessionUser user = (SessionUser) httpSession.getAttribute("user");
         if (user != null) {
             mav.addObject("userName", user.getName());
         }

@@ -16,7 +16,7 @@
         <a href="/main"><img class="main-img" src="/images/hululuuu_circle.png"></a>
         <div class="btn-container">
             {{^userName}}
-                <button type="button" class="naver btn btn-success">네이버 로그인</button>
+                <a href="/oauth2/authorization/naver" role="button" class="naver btn btn-success">네이버 로그인</a>
                 <a href="/oauth2/authorization/google" role="button" class="google btn btn-default">구글 로그인</a>
             {{/userName}}
             {{#userName}}

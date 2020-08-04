@@ -1,5 +1,7 @@
 package com.hululuuuu.ceoying.web;
 
+import com.hululuuuu.ceoying.config.auth.LoginUser;
+import com.hululuuuu.ceoying.config.auth.dto.SessionUser;
 import com.hululuuuu.ceoying.domain.Pages;
 import com.hululuuuu.ceoying.service.memo.MemoService;
 import com.hululuuuu.ceoying.web.dto.memo.MemoResponseDto;
@@ -19,9 +21,12 @@ public class MemoRestController {
     private final MemoService memoService;
 
     @GetMapping("/memoList")
-    public ModelAndView getMemoList(@PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC, size = 5) Pageable pageable) {
+    public ModelAndView getMemoList(@PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC, size = 5) Pageable pageable, @LoginUser SessionUser user) {
         ModelAndView mav = new ModelAndView();
         Page<MemoResponseDto> memoList = memoService.findMemoList(pageable);
+        if (user != null) {
+            mav.addObject("userName", user.getName());
+        }
         mav.addObject("memoList", memoList);
         mav.addObject("pages", new Pages(memoList));
         mav.setViewName("memo/memoList");

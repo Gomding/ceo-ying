@@ -1,6 +1,8 @@
 package com.hululuuuu.ceoying.web;
 
 
+import com.hululuuuu.ceoying.config.auth.LoginUser;
+import com.hululuuuu.ceoying.config.auth.dto.SessionUser;
 import com.hululuuuu.ceoying.domain.Pages;
 import com.hululuuuu.ceoying.service.product.ProductService;
 import com.hululuuuu.ceoying.web.dto.product.ProductResponseDto;
@@ -16,14 +18,16 @@ import org.springframework.web.servlet.ModelAndView;
 
 @RequiredArgsConstructor
 @RestController
-
 public class ProductRestController {
 
     private final ProductService productService;
 
     @GetMapping("/manage/products/save")
-    public ModelAndView productForm() {
+    public ModelAndView productForm(@LoginUser SessionUser user) {
         ModelAndView mav = new ModelAndView();
+        if (user != null) {
+            mav.addObject("userName", user.getName());
+        }
         mav.setViewName("product/product-save");
         return mav;
     }
@@ -34,17 +38,23 @@ public class ProductRestController {
     }
 
     @GetMapping("/manage/products/{id}")
-    public ModelAndView updateProduct(@PathVariable Long id) {
+    public ModelAndView updateProduct(@PathVariable Long id, @LoginUser SessionUser user) {
         ModelAndView mav = new ModelAndView();
+        if (user != null) {
+            mav.addObject("userName", user.getName());
+        }
         mav.addObject("product", productService.findById(id));
         mav.setViewName("product/product-update");
         return mav;
     }
 
     @GetMapping("/productList")
-    public ModelAndView productList(@PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable) {
+    public ModelAndView productList(@PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable, @LoginUser SessionUser user) {
         ModelAndView mav = new ModelAndView();
         Page<ProductResponseDto> productList = productService.findAll(pageable);
+        if (user != null) {
+            mav.addObject("userName", user.getName());
+        }
         mav.addObject("productList", productList);
         mav.addObject("pages", new Pages(productList));
         mav.setViewName("product/productList");
@@ -52,9 +62,11 @@ public class ProductRestController {
     }
 
     @GetMapping({"/products/search", "/products/search/"})
-    public ModelAndView searchProductList(@PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable, @RequestParam("productName")String productName) {
+    public ModelAndView searchProductList(@PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable, @RequestParam("productName")String productName, @LoginUser SessionUser user) {
         ModelAndView mav = new ModelAndView();
-
+        if (user != null) {
+            mav.addObject("userName", user.getName());
+        }
         if (productName.equals("") || productName.isEmpty()) {
             mav.setViewName("redirect:/product/productList");
         }

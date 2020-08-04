@@ -1,23 +1,19 @@
 package com.hululuuuu.ceoying.web;
 
+import com.hululuuuu.ceoying.config.auth.LoginUser;
 import com.hululuuuu.ceoying.config.auth.dto.SessionUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpSession;
-
 @RequiredArgsConstructor
 @Controller
 public class IndexController {
 
-    private final HttpSession httpSession;
-
     @GetMapping("/")
-    public ModelAndView index() {
+    public ModelAndView index(@LoginUser SessionUser user) {
         ModelAndView mav = new ModelAndView();
-        SessionUser user = (SessionUser) httpSession.getAttribute("user");
         if (user != null) {
             mav.addObject("userName", user.getName());
         }

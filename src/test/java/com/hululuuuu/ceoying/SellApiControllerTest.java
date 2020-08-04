@@ -1,5 +1,6 @@
 package com.hululuuuu.ceoying;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hululuuuu.ceoying.domain.product.Product;
 import com.hululuuuu.ceoying.domain.product.ProductRepository;
 import com.hululuuuu.ceoying.domain.sell.Sell;
@@ -16,16 +17,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
 
 import java.time.LocalDate;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -45,6 +51,20 @@ public class SellApiControllerTest {
 
     @Autowired
     private WalletRepository walletRepository;
+
+    @Autowired
+    private WebApplicationContext context;
+
+    private MockMvc mvc;
+
+    @Before
+    public void setup() {
+        mvc = MockMvcBuilders
+                .webAppContextSetup(context)
+                .apply(springSecurity())
+                .build();
+    }
+
 
     @Before
     public void saveMoney() throws Exception {
@@ -75,6 +95,7 @@ public class SellApiControllerTest {
     }
 
     @Test
+    @WithMockUser(roles = "ADMIN")
     public void 판매내역_저장된다() throws Exception{
         //given
         String name = "김씨";
@@ -98,14 +119,16 @@ public class SellApiControllerTest {
         String url = "http://localhost:" + port + "/manage/sells";
 
         //when
-        ResponseEntity<Long> responseEntity = restTemplate.postForEntity(url, requestDto, Long.class);
+        mvc.perform(post(url)
+        .contentType(MediaType.APPLICATION_JSON_UTF8)
+        .content(new ObjectMapper().writeValueAsString(requestDto)))
+                .andExpect(status().isOk());
+
 
         //then
-        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertThat(responseEntity.getBody()).isGreaterThan(0L);
-
         List<Sell> all = sellRepository.findAll();
         Sell sell = all.get(0);
+
         assertThat(sell.getAmount()).isEqualTo(amount);
         assertThat(sell.getName()).isEqualTo(name);
         assertThat(sell.getMethodOfPayment()).isEqualTo(methodOfPayment);
@@ -113,7 +136,8 @@ public class SellApiControllerTest {
     }
 
     @Test
-    public void 판매내역_수정된다() {
+    @WithMockUser(roles = "ADMIN")
+    public void 판매내역_수정된다() throws Exception{
         //given
         String name = "김씨";
         String product = "치약";
@@ -150,15 +174,13 @@ public class SellApiControllerTest {
 
         String url = "http://localhost:" + port + "/manage/sells/" + updatedId;
 
-        HttpEntity<SellUpdateRequestDto> requestEntity = new HttpEntity<>(requestDto);
-
         //when
-        ResponseEntity<Long> responseEntity = restTemplate.exchange(url, HttpMethod.PUT, requestEntity, Long.class);
+        mvc.perform(put(url)
+        .contentType(MediaType.APPLICATION_JSON_UTF8)
+        .content(new ObjectMapper().writeValueAsString(requestDto)))
+                .andExpect(status().isOk());
 
         //then
-        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertThat(responseEntity.getBody()).isGreaterThan(0L);
-
         List<Sell> all = sellRepository.findAll();
         Sell sell = all.get(0);
         assertThat(sell.getAmount()).isEqualTo(expectedAmount);

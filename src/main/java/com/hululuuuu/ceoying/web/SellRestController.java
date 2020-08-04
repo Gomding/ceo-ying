@@ -1,5 +1,6 @@
 package com.hululuuuu.ceoying.web;
 
+import com.hululuuuu.ceoying.config.auth.LoginUser;
 import com.hululuuuu.ceoying.config.auth.dto.SessionUser;
 import com.hululuuuu.ceoying.domain.Pages;
 import com.hululuuuu.ceoying.service.product.ProductService;
@@ -27,11 +28,13 @@ public class SellRestController {
     private final SellService sellService;
     private final WalletService walletService;
     private final ProductService productService;
-    private final HttpSession httpSession;
 
     @GetMapping("/sellList")
-    public ModelAndView sellList(@PageableDefault(sort = {"id", "selldate"}, direction = Sort.Direction.DESC) Pageable pageable) {
+    public ModelAndView sellList(@PageableDefault(sort = {"id", "selldate"}, direction = Sort.Direction.DESC) Pageable pageable, @LoginUser SessionUser user) {
         ModelAndView mav = new ModelAndView();
+        if (user != null) {
+            mav.addObject("userName", user.getName());
+        }
         Page<SellResponseDto> sellList = sellService.findAll(pageable);
         mav.addObject("sellList", sellList);
         mav.addObject("pages", new Pages(sellList));
@@ -42,10 +45,14 @@ public class SellRestController {
     @GetMapping({"/sells/search", "/sells/search"})
     public ModelAndView searchSellList(@RequestParam(value = "start")String start,
                                        @RequestParam(value = "end")String end,
-                                       @PageableDefault(sort = {"id", "selldate"}, direction = Sort.Direction.DESC) Pageable pageable) {
+                                       @PageableDefault(sort = {"id", "selldate"}, direction = Sort.Direction.DESC) Pageable pageable,
+                                       @LoginUser SessionUser user) {
         LocalDate startDate = LocalDate.parse(start, DateTimeFormatter.ISO_DATE);
         LocalDate endDate = LocalDate.parse(end, DateTimeFormatter.ISO_DATE);
         ModelAndView mav = new ModelAndView();
+        if (user != null) {
+            mav.addObject("userName", user.getName());
+        }
         Page<SellResponseDto> sellList = sellService.searchSellList(pageable, startDate, endDate);
         mav.addObject("sellList", sellList);
         mav.addObject("pages", new Pages(sellList));
@@ -54,8 +61,11 @@ public class SellRestController {
     }
 
     @GetMapping("/manage/sells/save")
-    public ModelAndView sellForm() {
+    public ModelAndView sellForm(@LoginUser SessionUser user) {
         ModelAndView mav = new ModelAndView();
+        if (user != null) {
+            mav.addObject("userName", user.getName());
+        }
         mav.setViewName("sell/sell-save");
         return mav;
     }
@@ -68,8 +78,11 @@ public class SellRestController {
     }
 
     @GetMapping("/manage/sells/{id}")
-    public ModelAndView findById(@PathVariable Long id) {
+    public ModelAndView findById(@PathVariable Long id, @LoginUser SessionUser user) {
         ModelAndView mav = new ModelAndView();
+        if (user != null) {
+            mav.addObject("userName", user.getName());
+        }
         mav.addObject("sell", sellService.sellFindById(id));
         mav.setViewName("sell/sell-update");
         return mav;

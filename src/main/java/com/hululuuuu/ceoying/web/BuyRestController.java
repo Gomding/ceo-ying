@@ -1,5 +1,7 @@
 package com.hululuuuu.ceoying.web;
 
+import com.hululuuuu.ceoying.config.auth.LoginUser;
+import com.hululuuuu.ceoying.config.auth.dto.SessionUser;
 import com.hululuuuu.ceoying.domain.Pages;
 import com.hululuuuu.ceoying.service.buy.BuyService;
 import com.hululuuuu.ceoying.service.wallet.WalletService;
@@ -25,9 +27,12 @@ public class BuyRestController {
     private final WalletService walletService;
 
     @GetMapping("/buyList")
-    public ModelAndView buyList(@PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable) {
+    public ModelAndView buyList(@PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable, @LoginUser SessionUser user) {
         ModelAndView mav = new ModelAndView();
         Page<BuyResponseDto> buyList = buyService.findBuyList(pageable);
+        if (user != null) {
+            mav.addObject("userName", user.getName());
+        }
         mav.addObject("buyList", buyList);
         mav.addObject("pages", new Pages(buyList));
         mav.setViewName("yiying/buyList");
@@ -35,17 +40,18 @@ public class BuyRestController {
     }
 
     @GetMapping("/manage/buy/save")
-    public ModelAndView buyForm() {
+    public ModelAndView buyForm(@LoginUser SessionUser user) {
         ModelAndView mav = new ModelAndView();
+        if (user != null) {
+            mav.addObject("userName", user.getName());
+        }
         mav.setViewName("yiying/buy-save");
         return mav;
     }
 
     @PostMapping("/manage/buy")
     public Long saveBuy(@RequestBody BuySaveRequestDto requestDto) {
-
         walletService.whenSaveBuy(requestDto);
-
         return buyService.saveBuy(requestDto);
     }
 
@@ -58,8 +64,11 @@ public class BuyRestController {
     }
 
     @GetMapping("/manage/buy/{id}")
-    public ModelAndView findById(@PathVariable Long id) {
+    public ModelAndView findById(@PathVariable Long id, @LoginUser SessionUser user) {
         ModelAndView mav = new ModelAndView();
+        if (user != null) {
+            mav.addObject("userName", user.getName());
+        }
         mav.addObject("buy", buyService.findById(id));
         mav.setViewName("yiying/buy-update");
         return mav;
