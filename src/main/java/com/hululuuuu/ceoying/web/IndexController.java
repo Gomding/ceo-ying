@@ -27,8 +27,15 @@ public class IndexController {
     private final ProductService productService;
     private final WalletService walletService;
 
-    @GetMapping({"/", "/main"})
+    @GetMapping("/")
     public ModelAndView index() {
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("index");
+        return mav;
+    }
+
+    @GetMapping("/main")
+    public ModelAndView main() {
 
         walletService.saveWallet(WalletSaveRequestDto.builder()
                 .money(1000000)

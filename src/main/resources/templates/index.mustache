@@ -1,126 +1,28 @@
-{{>layout/header}}
-<link rel="stylesheet" href="/css/main.css" />
-<div class="container pb-69">
-    <div class="row">
-        <div class="col-md-offset-1 col-md-10 link-pd">
-            <a href="https://smartstore.naver.com/hulululu">
-                <div class="col-md-12">
-                    <div class="col-md-2 pd-0">
-                        <img class="pull-left" src="/images/hululuuuu.jpeg" width="120" height="120" alt="후루루" title="후루루"/>
-                    </div>
-                    <div class="col-md-8 link-title text-center" id="link-title"><b>Hululuuuu</b></div>
-                </div>
-            </a>
-        </div>
-        <div class="bdgreen col-xs-10 col-md-5 text-center pull-left mg-bl">
-            <h3 class="">최근 수익 상황</h3><br/>
-            <div class="moreList">
-                <a href="/sellList">
-                    <i class="fa fa-plus-square-o fa-2x" aria-hidden="true"></i>
-                </a>
-            </div>
-            <div>
-                <span><h4>최근 한달 수익 : <a>{{oneMonthProfit}} 원</a></h4></span>
-                <span><h4>현재 치약 원가 : <a>{{#toothpaste}}{{profit}}{{/toothpaste}}</a></h4></span>
-                <span><h4>치약 재고 : <a>{{#toothpaste}}{{amount}}{{/toothpaste}}</a></h4></span>
-            </div><br/>
-            <div>
-                <table class="table table-hover">
-                    <thead>
-                    <tr>
-                        <th class="col-md-1">판매한 물건</th>
-                        <th class="col-md-1">수익</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {{#sellTop}}
-                    <tr >
-                        <td>{{product}}</td>
-                        <td>{{profit}}</td>
-                    </tr>
-                    {{/sellTop}}
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        <div class="bdgreen col-xs-10 col-md-5 pull-right mg-br">
-            <h3 class="text-center">잉사장님의 지갑 속 상황</h3><br/>
-            <div class="moreList">
-                <a href="#">
-                    <i class="fa fa-plus-square-o fa-2x" aria-hidden="true"></i>
-                </a>
-            </div>
-            <span class="text-center"><h4>현재 잔액 <a>{{#nowWallet}}{{money}}{{/nowWallet}}</a></h4></span><br/>
-            <span class="text-center"><h4>최근 거래일 : <a>{{#nowWallet}}{{statementDate}}{{/nowWallet}}</a></h4></span>
-            <br/><br/>
-            <span><h4> 최근 지갑 거래내역 </h4></span>
-            <div>
-                <table class="table table-hover">
-                    <thead>
-                    <tr>
-                        <th class="col-md-1">잔액</th>
-                        <th class="col-md-1">잔액 변동</th>
-                        <th class="col-md-1">구매한 상품</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {{#walletTop5}}
-                    <tr>
-                        <td>{{money}}</td>
-                        <td>{{statement}}</td>
-                        <td>{{record}}</td>
-                    </tr>
-                    {{/walletTop5}}
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        <div class="bdgreen col-xs-10 col-md-5 pull-left mg-bl">
-            <h3 class="text-center">메모장</h3>
-            <div class="moreList">
-                <a href="/memoList">
-                    <i class="fa fa-plus-square-o fa-2x" aria-hidden="true"></i>
-                </a>
-            </div>
-            <br/>
-            <input class="form-control" id="link" name="link" placeholder="구매하고 싶은 상품의 사이트 링크를 적어주세요"><br/>
-            <textarea class="memo" id="content" name="content" placeholder="구매하고싶은 상품의 내용을 적어주세요."></textarea>
-            <div class="pull-right" style="width: 100px; margin:10px 0;">
-                <button type="button" class="btn btn-success btn-block" id="btn-saveMemo">메모 저장</button>
-            </div>
-        </div>
-        <div class="bdgreen col-xs-10 col-md-5 pull-right mg-br">
-            <h3 class="text-center">최근 구매 목록</h3>
-            <div class="moreList">
-                <a href="/buyList">
-                    <i class="fa fa-plus-square-o fa-2x" aria-hidden="true"></i>
-                </a>
-            </div><br/>
-            <div>
-                <span class="text-center"><h4>최근 한달 지출 : <a>{{oneMonthSpendMoney}}</a></h4></span>
-            </div><br/>
-            <div>
-                <table class="table table-hover">
-                    <thead>
-                    <tr>
-                        <th class="col-md-1">구매한 물품</th>
-                        <th class="col-md-1">가격</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {{#buyTop}}
-                    <tr>
-                        <td>{{name}}</td>
-                        <td>{{price}}</td>
-                    </tr>
-                    {{/buyTop}}
-                    </tbody>
-                </table>
-            </div>
-            <br>
+<!DOCTYPE HTML>
+<html lang="ko">
+<head>
+    <title>잉사장</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="/css/index.css?ver=1" />
+    <link rel="stylesheet" href="/css/bootstrap.min.css" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+</head>
+<body>
+
+<div>
+    <img class="background" src="/images/coffee.jpg">
+    <div class="login-container">
+        <a href="/main"><img class="main-img" src="/images/hululuuu_circle.png"></a>
+        <div class="btn-container">
+            <button type="button" class="naver btn btn-success">네이버 로그인</button>
+            <button type="button" class="google btn btn-default">구글 로그인</button>
         </div>
     </div>
-
 </div>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
-{{>layout/footer}}
+</body>
+</html>
+

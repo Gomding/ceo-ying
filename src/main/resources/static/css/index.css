@@ -1,0 +1,36 @@
+.login-container {
+    position: absolute;
+    width: 262px;
+    left:60%;
+    top:17%;
+}
+
+.main-img {
+    max-width: 100%;
+    height: auto;
+}
+
+.background {
+    max-width: 120%;
+    max-height: 140%;
+    bottom: 0;
+    left: 0;
+    margin: auto;
+    overflow: auto;
+    position: fixed;
+    right: 0;
+    top: 0;
+}
+
+.btn-container {
+    margin-top:5px;
+}
+
+.google {
+    float:right;
+    width:130px;
+}
+
+.naver {
+    width:130px;
+}
