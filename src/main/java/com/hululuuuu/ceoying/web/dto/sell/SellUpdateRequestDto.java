@@ -1,5 +1,7 @@
 package com.hululuuuu.ceoying.web.dto.sell;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,7 +20,7 @@ public class SellUpdateRequestDto {
     private String methodOfPayment;         // 결제수단
     private int profit;         // 수익
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonSerialize(using = ToStringSerializer.class)
     private LocalDate selldate; // 판매 날짜
 
     @Builder

@@ -1,5 +1,7 @@
 package com.hululuuuu.ceoying.web.dto.wallet;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import com.hululuuuu.ceoying.domain.wallet.Wallet;
 import lombok.Builder;
 import lombok.Getter;
@@ -14,6 +16,8 @@ public class WalletSaveRequestDto {
     private int money;
     private String record;
     private String statement;
+
+    @JsonSerialize(using = ToStringSerializer.class)
     private LocalDate statementDate;
 
     @Builder

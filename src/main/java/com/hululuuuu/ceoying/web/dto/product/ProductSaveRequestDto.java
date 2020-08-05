@@ -1,5 +1,7 @@
 package com.hululuuuu.ceoying.web.dto.product;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import com.hululuuuu.ceoying.domain.product.Product;
 import lombok.Builder;
 import lombok.Getter;
@@ -16,6 +18,8 @@ public class ProductSaveRequestDto {
     private int amount;  // 제품 재고
     private int price;   // 제품 가격
     private int costprice;   // 제품 원가
+
+    @JsonSerialize(using = ToStringSerializer.class)
     private LocalDate sellByDate; // 유통기한
 
     @Builder
