@@ -40,6 +40,7 @@ dependencies {
     compile 'org.projectlombok:lombok'
     implementation 'com.h2database:h2'
     compile 'org.modelmapper:modelmapper:2.3.8'
+    compile 'org.mariadb.jdbc:mariadb-java-client'
     testImplementation('org.springframework.boot:spring-boot-starter-test')
     testImplementation('org.springframework.security:spring-security-test')
 
