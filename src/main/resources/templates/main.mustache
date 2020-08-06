@@ -21,7 +21,7 @@
             </div>
             <div>
                 <span><h4>최근 한달 수익 : <a>{{oneMonthProfit}} 원</a></h4></span>
-                <span><h4>현재 치약 원가 : <a>{{#toothPaste}}{{profit}}{{/toothPaste}} 원</a></h4></span>
+                <span><h4>현재 치약 원가 : <a>{{#toothPaste}}{{costprice}}{{/toothPaste}} 원</a></h4></span>
                 <span><h4>치약 재고 : <a>{{#toothPaste}}{{amount}}{{/toothPaste}} 개</a></h4></span>
             </div><br/>
             <div>
@@ -50,7 +50,7 @@
                     <i class="fa fa-plus-square-o fa-2x" aria-hidden="true"></i>
                 </a>
             </div>
-            <span class="text-center"><h4>현재 잔액 <a>{{#nowWallet}}{{money}}{{/nowWallet}}</a></h4></span><br/>
+            <span class="text-center"><h4>현재 잔액 <a>{{#nowWallet}}{{money}} 원{{/nowWallet}}</a></h4></span><br/>
             <span class="text-center"><h4>최근 거래일 : <a>{{#nowWallet}}{{statementDate}}{{/nowWallet}}</a></h4></span>
             <br/><br/>
             <span><h4> 최근 지갑 거래내역 </h4></span>
@@ -66,7 +66,7 @@
                     <tbody>
                     {{#walletTop5}}
                         <tr>
-                            <td>{{money}}</td>
+                            <td>{{money}}원</td>
                             <td>{{statement}}</td>
                             <td>{{record}}</td>
                         </tr>
@@ -97,7 +97,7 @@
                 </a>
             </div><br/>
             <div>
-                <span class="text-center"><h4>최근 한달 지출 : <a>{{oneMonthSpendMoney}}</a></h4></span>
+                <span class="text-center"><h4>최근 한달 지출 : <a>{{oneMonthSpendMoney}} 원</a></h4></span>
             </div><br/>
             <div>
                 <table class="table table-hover">
@@ -111,7 +111,7 @@
                     {{#buyTop}}
                         <tr>
                             <td>{{name}}</td>
-                            <td>{{price}}</td>
+                            <td>{{price}}원</td>
                         </tr>
                     {{/buyTop}}
                     </tbody>
