@@ -57,6 +57,7 @@ public class MainController {
         mav.addObject("buyTop", buyTop5);
         mav.addObject("sellTop", sellTop3);
         mav.addObject("toothPaste", toothPaste);
+        mav.addObject("smallToothPaste", smallToothPaste);
         mav.addObject("nowWallet", walletMoney);
         mav.addObject("walletTop5", wallet);
         mav.setViewName("main");
