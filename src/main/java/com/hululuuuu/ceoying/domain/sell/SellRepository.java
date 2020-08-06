@@ -12,7 +12,7 @@ import java.util.List;
 @Repository
 public interface SellRepository extends JpaRepository<Sell, Long> {
 
-    @Query("select s from sell s order by s.selldate desc")
+    @Query("select s from Sell s order by s.selldate desc")
     Page<Sell> findAllDateDesc(Pageable pageable);
 
     List<Sell> findTop3ByOrderBySelldateDesc();
