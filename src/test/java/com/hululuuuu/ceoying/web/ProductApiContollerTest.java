@@ -1,4 +1,4 @@
-package com.hululuuuu.ceoying;
+package com.hululuuuu.ceoying.web;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hululuuuu.ceoying.domain.product.Product;

@@ -1,5 +1,7 @@
 body {padding-bottom: 0 !important; background: #f8f8f8;}
 
-footer {position: inherit; !important;}
+.product-container {
+    margin-bottom: 66px;
+}
 
-.searchProduct { position: relative; top:13px;}
+footer {position: inherit; !important;}

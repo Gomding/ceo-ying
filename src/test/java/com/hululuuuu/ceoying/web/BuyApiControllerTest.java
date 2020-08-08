@@ -1,4 +1,4 @@
-package com.hululuuuu.ceoying;
+package com.hululuuuu.ceoying.web;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hululuuuu.ceoying.domain.wallet.Wallet;
@@ -103,9 +103,12 @@ public class BuyApiControllerTest {
         //then
         List<Buy> all = buyRepository.findAll();
         Buy buy = all.get(0);
+        Wallet wallet = walletRepository.findAll().get(1);
         assertThat(buy.getAmount()).isEqualTo(amount);
         assertThat(buy.getName()).isEqualTo(name);
         assertThat(buy.getContent()).isEqualTo(content);
+        assertThat(wallet.getStatementDate()).isEqualTo(LocalDate.now());
+        assertThat(wallet.getStatement()).isEqualTo("- " + price + "원");
 
     }
 
@@ -130,11 +133,12 @@ public class BuyApiControllerTest {
 
         String expertedName = "박씨";
         int expectedAmount = 5;
+        int expectedPrice = 2000;
         String expectedContent = "expectedContent";
 
         BuyUpdateRequestDto requestDto = BuyUpdateRequestDto.builder()
                 .name(expertedName)
-                .price(price)
+                .price(expectedPrice)
                 .amount(expectedAmount)
                 .content(expectedContent)
                 .buydate(buydate)
@@ -151,9 +155,12 @@ public class BuyApiControllerTest {
         //then
         List<Buy> all = buyRepository.findAll();
         Buy buy = all.get(0);
+        Wallet wallet = walletRepository.findAll().get(1);
         assertThat(buy.getAmount()).isEqualTo(expectedAmount);
         assertThat(buy.getName()).isEqualTo(expertedName);
         assertThat(buy.getContent()).isEqualTo(expectedContent);
+        assertThat(wallet.getStatementDate()).isEqualTo(LocalDate.now());
+        assertThat(wallet.getRecord()).isEqualTo(expertedName + " 구매 수정");
 
     }
 

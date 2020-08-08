@@ -1,4 +1,4 @@
-package com.hululuuuu.ceoying;
+package com.hululuuuu.ceoying.web;
 
 import com.hululuuuu.ceoying.domain.yiying.Buy;
 import com.hululuuuu.ceoying.domain.yiying.BuyRepository;

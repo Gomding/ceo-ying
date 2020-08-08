@@ -18,3 +18,9 @@
 .buy-detail td {
     padding: 14px 30px !important;
 }
+
+.buy-container {
+    margin-bottom: 20px;
+}
+
+footer {position: inherit; !important;}

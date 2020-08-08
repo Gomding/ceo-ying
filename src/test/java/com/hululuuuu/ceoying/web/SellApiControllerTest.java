@@ -1,4 +1,4 @@
-package com.hululuuuu.ceoying;
+package com.hululuuuu.ceoying.web;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hululuuuu.ceoying.domain.product.Product;
@@ -128,10 +128,12 @@ public class SellApiControllerTest {
         //then
         List<Sell> all = sellRepository.findAll();
         Sell sell = all.get(0);
-
+        Wallet wallet = walletRepository.findAll().get(1);
         assertThat(sell.getAmount()).isEqualTo(amount);
         assertThat(sell.getName()).isEqualTo(name);
         assertThat(sell.getMethodOfPayment()).isEqualTo(methodOfPayment);
+        assertThat(wallet.getStatementDate()).isEqualTo(LocalDate.now());
+        assertThat(wallet.getStatement()).isEqualTo("+ " + profit + "원");
 
     }
 
@@ -160,12 +162,13 @@ public class SellApiControllerTest {
         Long updatedId = saveSell.getId();
         String expertedName = "박씨";
         int expectedAmount = 5;
+        int expectedPrice = 30000;
         String expertedMethodOfPayment = "무통장입금";
 
         SellUpdateRequestDto requestDto = SellUpdateRequestDto.builder()
                 .name(expertedName)
                 .product(product)
-                .price(price)
+                .price(expectedPrice)
                 .amount(expectedAmount)
                 .methodOfPayment(expertedMethodOfPayment)
                 .profit(price)
@@ -183,9 +186,12 @@ public class SellApiControllerTest {
         //then
         List<Sell> all = sellRepository.findAll();
         Sell sell = all.get(0);
+        Wallet wallet = walletRepository.findAll().get(1);
         assertThat(sell.getAmount()).isEqualTo(expectedAmount);
         assertThat(sell.getName()).isEqualTo(expertedName);
         assertThat(sell.getMethodOfPayment()).isEqualTo(expertedMethodOfPayment);
+        assertThat(wallet.getStatementDate()).isEqualTo(LocalDate.now());
+        assertThat(wallet.getRecord()).isEqualTo(product + " 판매 수정");
 
 
     }
