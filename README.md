@@ -23,6 +23,27 @@
 
 **패키지 내용**
 
+**Web**
+
+* Request 와 Response를 위한 DTO 와 Controller 로 구성되어 있습니다.
+
+**service**
+* 트랜잭션과 도메인간의 순서를 보장하는 Service 가 있습니다.
+* [Service Layer에 대한 오해](https://parkadd.tistory.com/13?category=913964)
+   
+* walletService
+  - findTop5() : 최근 입출금 내역 5개를 가져옵니다.
+  - nowWallet() : 가장 최근 Wallet 객체를 가져옵니다.
+  - saveWallet() : WalletSaveRequestDto 객체의 값을 DB에 insert합니다.
+  - whenSaveSell() : 판매내역 저장 시 계좌에 판매 내용과 판매 금액을 입금합니다.
+  - whenUpdateSell() : 판매내역 수정 시 계좌에 수정 시 발생한 차액을 기록합니다.
+  - whenDeleteSell() : 판매내역 삭제 시 계좌에 입금 금액을 취소합니다.
+  - whenSaveBuy() : 구매내역 저장 시 계좌에 구매 내용과 구매 금액을 출금합니다.
+  - whenUpdateBuy() : 구매내역 수정 시 계좌에 수정시 발생한 차액을 기록합니다.
+  - whenDeleteBuy() : 구매내역 삭제 시 계좌에 출금 금액을 취소합니다.
+
+**Domain**
+* 각각의 Entity들이 있습니다.
 * Buy : 구매 상품
   - id(PK)
   - name : 구매한 상품 이름
@@ -70,17 +91,6 @@
   - nextPage : 다음 페이지번호
   - prevPage : 이전 페이지번호
   - pageNums : 현재 위치한 페이지의 시작부터 끝까지의 번호리스트 (ex. 1 ~ 10 / 11 ~ 20 / 21 ~ 30 )
-
-**Web**
-
-* Request 와 Response를 위한 DTO 와 Controller 로 구성되어 있습니다.
-
-**service**
-* 트랜잭션과 도메인간의 순서를 보장하는 Service 가 있습니다.
-* [Service Layer에 대한 오해](https://parkadd.tistory.com/13?category=913964)
-
-**Domain**
-* 각각의 Entity들이 있습니다.
 
 **config**
 * 각종 설정관련 클래스가 있습니다.
