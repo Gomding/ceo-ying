@@ -45,12 +45,12 @@ public class MainController {
         }
         List<Buy> buyTop5 = buyService.findTop5();
         List<SellListResponseDto> sellTop3 = sellService.findTop3();
-        ProductResponseDto toothPaste = productService.findByName("치약");
-        ProductResponseDto smallToothPaste = productService.findByName("작은치약");
+        ProductResponseDto toothPaste = productService.findByProductName("치약");
+        ProductResponseDto smallToothPaste = productService.findByProductName("작은치약");
         List<WalletListResponseDto> wallet = walletService.findTop5();
         Wallet walletMoney = walletService.nowWallet();
         int oneMonthProfit = sellService.sum1MonthProfit();
-        int oneMonthSpendMoney = buyService.sum1MonthSpendMoney();
+        int oneMonthSpendMoney = buyService.lastMonthSpendMoney();
 
         mav.addObject("oneMonthProfit", oneMonthProfit);
         mav.addObject("oneMonthSpendMoney", oneMonthSpendMoney);

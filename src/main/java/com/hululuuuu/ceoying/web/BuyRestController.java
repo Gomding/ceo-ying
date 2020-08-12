@@ -27,12 +27,26 @@ public class BuyRestController {
     private final WalletService walletService;
 
     @GetMapping("/buyList")
-    public ModelAndView buyList(@PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable, @LoginUser SessionUser user) {
+    public ModelAndView buyList(@PageableDefault Pageable pageable, @LoginUser SessionUser user) {
         ModelAndView mav = new ModelAndView();
         Page<BuyResponseDto> buyList = buyService.findBuyList(pageable);
         if (user != null) {
             mav.addObject("userName", user.getName());
         }
+        mav.addObject("buyList", buyList);
+        mav.addObject("pages", new Pages(buyList));
+        mav.setViewName("yiying/buyList");
+        return mav;
+    }
+
+    @GetMapping({"/buy/search", "/buy/search/"})
+    public ModelAndView searchBuyList(@RequestParam(value = "start")String start,
+                                      @RequestParam(value = "end")String end,
+                                      @PageableDefault Pageable pageable) {
+        LocalDate startDate = LocalDate.parse(start, DateTimeFormatter.ISO_DATE);
+        LocalDate endDate = LocalDate.parse(end, DateTimeFormatter.ISO_DATE);
+        ModelAndView mav = new ModelAndView();
+        Page<BuyResponseDto> buyList = buyService.findBuySearchList(pageable, startDate, endDate);
         mav.addObject("buyList", buyList);
         mav.addObject("pages", new Pages(buyList));
         mav.setViewName("yiying/buyList");
@@ -56,7 +70,7 @@ public class BuyRestController {
     }
 
     @GetMapping("/manage/buy/read/{id}")
-    public ModelAndView buyDetail(@PathVariable Long id) {
+    public ModelAndView readBuy(@PathVariable Long id) {
         ModelAndView mav = new ModelAndView();
         mav.addObject("buy", buyService.findById(id));
         mav.setViewName("yiying/buy-detail");
@@ -64,27 +78,13 @@ public class BuyRestController {
     }
 
     @GetMapping("/manage/buy/{id}")
-    public ModelAndView findById(@PathVariable Long id, @LoginUser SessionUser user) {
+    public ModelAndView updateBuyForm(@PathVariable Long id, @LoginUser SessionUser user) {
         ModelAndView mav = new ModelAndView();
         if (user != null) {
             mav.addObject("userName", user.getName());
         }
         mav.addObject("buy", buyService.findById(id));
         mav.setViewName("yiying/buy-update");
-        return mav;
-    }
-
-    @GetMapping({"/buy/search", "/buy/search/"})
-    public ModelAndView searchSellList(@RequestParam(value = "start")String start,
-                                       @RequestParam(value = "end")String end,
-                                       @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable) {
-        LocalDate startDate = LocalDate.parse(start, DateTimeFormatter.ISO_DATE);
-        LocalDate endDate = LocalDate.parse(end, DateTimeFormatter.ISO_DATE);
-        ModelAndView mav = new ModelAndView();
-        Page<BuyResponseDto> buyList = buyService.buySearchList(pageable, startDate, endDate);
-        mav.addObject("buyList", buyList);
-        mav.addObject("pages", new Pages(buyList));
-        mav.setViewName("yiying/buyList");
         return mav;
     }
 

@@ -22,6 +22,37 @@ public class ProductRestController {
 
     private final ProductService productService;
 
+    @GetMapping("/productList")
+    public ModelAndView productList(@PageableDefault Pageable pageable, @LoginUser SessionUser user) {
+        ModelAndView mav = new ModelAndView();
+        Page<ProductResponseDto> productList = productService.findProductList(pageable);
+        if (user != null) {
+            mav.addObject("userName", user.getName());
+        }
+        mav.addObject("productList", productList);
+        mav.addObject("pages", new Pages(productList));
+        mav.setViewName("product/productList");
+        return mav;
+    }
+
+    @GetMapping({"/products/search", "/products/search/"})
+    public ModelAndView searchProductList(@PageableDefault Pageable pageable, @RequestParam("productName")String productName, @LoginUser SessionUser user) {
+        ModelAndView mav = new ModelAndView();
+        if (user != null) {
+            mav.addObject("userName", user.getName());
+        }
+        if (productName.equals("") || productName.isEmpty()) {
+            mav.setViewName("redirect:/product/productList");
+        }
+        else {
+            Page<ProductResponseDto> productList = productService.searchProductList(pageable, productName);
+            mav.addObject("productList", productList);
+            mav.addObject("pages", new Pages(productList));
+            mav.setViewName("product/productList");
+        }
+        return mav;
+    }
+
     @GetMapping("/manage/products/save")
     public ModelAndView productForm(@LoginUser SessionUser user) {
         ModelAndView mav = new ModelAndView();
@@ -38,44 +69,13 @@ public class ProductRestController {
     }
 
     @GetMapping("/manage/products/{id}")
-    public ModelAndView updateProduct(@PathVariable Long id, @LoginUser SessionUser user) {
+    public ModelAndView updateProductForm(@PathVariable Long id, @LoginUser SessionUser user) {
         ModelAndView mav = new ModelAndView();
         if (user != null) {
             mav.addObject("userName", user.getName());
         }
         mav.addObject("product", productService.findById(id));
         mav.setViewName("product/product-update");
-        return mav;
-    }
-
-    @GetMapping("/productList")
-    public ModelAndView productList(@PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable, @LoginUser SessionUser user) {
-        ModelAndView mav = new ModelAndView();
-        Page<ProductResponseDto> productList = productService.findAll(pageable);
-        if (user != null) {
-            mav.addObject("userName", user.getName());
-        }
-        mav.addObject("productList", productList);
-        mav.addObject("pages", new Pages(productList));
-        mav.setViewName("product/productList");
-        return mav;
-    }
-
-    @GetMapping({"/products/search", "/products/search/"})
-    public ModelAndView searchProductList(@PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable, @RequestParam("productName")String productName, @LoginUser SessionUser user) {
-        ModelAndView mav = new ModelAndView();
-        if (user != null) {
-            mav.addObject("userName", user.getName());
-        }
-        if (productName.equals("") || productName.isEmpty()) {
-            mav.setViewName("redirect:/product/productList");
-        }
-        else {
-            Page<ProductResponseDto> productList = productService.searchProductList(pageable, productName);
-            mav.addObject("productList", productList);
-            mav.addObject("pages", new Pages(productList));
-            mav.setViewName("product/productList");
-        }
         return mav;
     }
 

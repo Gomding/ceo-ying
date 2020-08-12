@@ -53,7 +53,7 @@ public class Buy extends BaseTimeEntity {
         this.buydate = buydate;
     }
 
-    public int sum1MonthSpendMoney(List<Buy> oneMonthList) {
+    public int lastMonthSpendMoney(List<Buy> oneMonthList) {
 
         int sum = 0;
         for (Buy buy : oneMonthList) {

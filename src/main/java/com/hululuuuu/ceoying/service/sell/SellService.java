@@ -26,7 +26,7 @@ public class SellService {
 
     // 전체 판매 리스트 + 페이징
     @Transactional(readOnly = true)
-    public Page<SellResponseDto> findAll(Pageable pageable) {
+    public Page<SellResponseDto> findSellList(Pageable pageable) {
         pageable = PageableDefault.setPageable(pageable);
         Page<Sell> list =  sellRepository.findAllDateDesc(pageable);
         return list.map(SellResponseDto::new);

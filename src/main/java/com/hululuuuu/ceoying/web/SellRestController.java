@@ -30,12 +30,12 @@ public class SellRestController {
     private final ProductService productService;
 
     @GetMapping("/sellList")
-    public ModelAndView sellList(@PageableDefault(sort = {"id", "selldate"}, direction = Sort.Direction.DESC) Pageable pageable, @LoginUser SessionUser user) {
+    public ModelAndView sellList(@PageableDefault Pageable pageable, @LoginUser SessionUser user) {
         ModelAndView mav = new ModelAndView();
         if (user != null) {
             mav.addObject("userName", user.getName());
         }
-        Page<SellResponseDto> sellList = sellService.findAll(pageable);
+        Page<SellResponseDto> sellList = sellService.findSellList(pageable);
         mav.addObject("sellList", sellList);
         mav.addObject("pages", new Pages(sellList));
         mav.setViewName("sell/sellList");
@@ -45,7 +45,7 @@ public class SellRestController {
     @GetMapping({"/sells/search", "/sells/search"})
     public ModelAndView searchSellList(@RequestParam(value = "start")String start,
                                        @RequestParam(value = "end")String end,
-                                       @PageableDefault(sort = {"id", "selldate"}, direction = Sort.Direction.DESC) Pageable pageable,
+                                       @PageableDefault Pageable pageable,
                                        @LoginUser SessionUser user) {
         LocalDate startDate = LocalDate.parse(start, DateTimeFormatter.ISO_DATE);
         LocalDate endDate = LocalDate.parse(end, DateTimeFormatter.ISO_DATE);
@@ -78,7 +78,7 @@ public class SellRestController {
     }
 
     @GetMapping("/manage/sells/{id}")
-    public ModelAndView findById(@PathVariable Long id, @LoginUser SessionUser user) {
+    public ModelAndView updateSellForm(@PathVariable Long id, @LoginUser SessionUser user) {
         ModelAndView mav = new ModelAndView();
         if (user != null) {
             mav.addObject("userName", user.getName());
