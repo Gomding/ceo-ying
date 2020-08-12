@@ -34,7 +34,7 @@ public class Product extends BaseTimeEntity {
     @Column
     private int costprice;   // 제품 원가
 
-    @Column(nullable = false)
+    @Column
     private LocalDate sellByDate;
 
     @Builder

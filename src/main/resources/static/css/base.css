@@ -1,4 +1,4 @@
-body {padding-top: 47px; padding-bottom: 67px}
+body {padding-top: 47px;}
 .conHeight {min-height: 700px;}
 @media (max-width: 991px) {  body{padding-top: 93px;}  .conHeight{min-height: 1623px;} }
 .menuList {color: black !important;}
