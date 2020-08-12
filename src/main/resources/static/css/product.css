@@ -4,4 +4,15 @@ body {padding-bottom: 0 !important; background: #f8f8f8;}
     margin-bottom: 66px;
 }
 
+#searchProduct {
+    padding: 2px 6px;
+    border: none;
+    position: relative;
+    right: 38px;
+}
+
+.searchIcon {
+    font-size: 22px;
+}
+
 footer {position: inherit; !important;}
