@@ -32,12 +32,12 @@ public class MainController {
     @GetMapping("/main")
     public ModelAndView main(@LoginUser SessionUser user) {
 
-        walletService.saveWallet(WalletSaveRequestDto.builder()
+        /*walletService.saveWallet(WalletSaveRequestDto.builder()
                 .money(1000000)
                 .record("+1000000")
                 .statement("시작금")
                 .statementDate(LocalDate.now())
-                .build());
+                .build());*/
 
         ModelAndView mav = new ModelAndView();
         if (user != null) {
