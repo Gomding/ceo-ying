@@ -22,8 +22,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.time.LocalDate;
@@ -130,8 +129,6 @@ public class ProductApiContollerTest {
 
         String url = "http://localhost:" + port + "/manage/products/" + updatedId;
 
-        HttpEntity<ProductUpdateRequestDto> requestEntity = new HttpEntity<>(requestDto);
-
         //when
         mvc.perform(put(url)
             .contentType(MediaType.APPLICATION_JSON_UTF8)
@@ -144,6 +141,39 @@ public class ProductApiContollerTest {
         assertThat(one.getName()).isEqualTo(expertedName);
         assertThat(one.getPrice()).isEqualTo(expertedPrice);
         assertThat(one.getAmount()).isEqualTo(expertedAmount);
+
+    }
+
+    @Test
+    @WithMockUser(roles = "ADMIN")
+    public void product_삭제된다() throws Exception {
+        //given
+        String name = "김씨";
+        int price = 1000;
+        int amount = 10;
+        int costPrice = 888;
+        LocalDate sellByDate = LocalDate.now();
+
+        Product product = productRepository.save(Product.builder()
+                .name(name)
+                .price(price)
+                .amount(amount)
+                .costprice(costPrice)
+                .sellByDate(sellByDate)
+                .build());
+
+        Long savedId = product.getId();
+
+        String url = "http://localhost:" + port + "/manage/products/" + savedId;
+
+        //when
+        mvc.perform(delete(url)
+        .contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(status().isOk());
+
+        List<Product> productList = productRepository.findAll();
+
+        assertThat(productList.size()).isEqualTo(0);
 
     }
 

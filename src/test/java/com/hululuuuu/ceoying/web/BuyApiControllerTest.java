@@ -27,8 +27,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
@@ -161,6 +160,39 @@ public class BuyApiControllerTest {
         assertThat(buy.getContent()).isEqualTo(expectedContent);
         assertThat(wallet.getStatementDate()).isEqualTo(LocalDate.now());
         assertThat(wallet.getRecord()).isEqualTo(expertedName + " 구매 수정");
+
+    }
+
+    @Test
+    @WithMockUser(roles = "ADMIN")
+    public void buy_삭제된다() throws Exception{
+        //give
+        String name = "김씨";
+        int price = 1000;
+        int amount = 10;
+        String content = "content";
+        LocalDate buydate = LocalDate.now();
+
+        Buy savedBuy = buyRepository.save(Buy.builder()
+                .name(name)
+                .price(price)
+                .amount(amount)
+                .content(content)
+                .buydate(buydate)
+                .build());
+
+        Long savedId = savedBuy.getId();
+
+        String url = "http://localhost:" + port + "/manage/buy/" + savedId;
+
+        //when
+        mvc.perform(delete(url)
+                        .contentType(MediaType.APPLICATION_JSON_UTF8))
+                        .andExpect(status().isOk());
+
+        //then
+        List<Buy> buyList = buyRepository.findAll();
+        assertThat(buyList.size()).isEqualTo(0);
 
     }
 

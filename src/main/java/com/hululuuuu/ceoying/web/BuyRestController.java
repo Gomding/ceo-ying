@@ -89,7 +89,7 @@ public class BuyRestController {
     }
 
     @DeleteMapping("/manage/buy/{id}")
-    public Long deleteBuy(@PathVariable("id")Long id) {
+    public Long deleteBuy(@PathVariable("id") Long id) {
         walletService.whenDeleteBuy(id);
         buyService.deleteBuy(id);
         return id;

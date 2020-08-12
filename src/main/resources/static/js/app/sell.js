@@ -10,7 +10,8 @@ var main = {
         });
 
         $('#btn-deleteSell').on('click', function () {
-            _this.delete();
+            var id = $(this).children(".id").val();
+            _this.delete(id);
         })
     },
     save : function () {
@@ -65,8 +66,7 @@ var main = {
         });
     },
 
-    delete : function () {
-        var id = $('#id').val();
+    delete : function (id) {
 
         $.ajax({
             type: 'DELETE',

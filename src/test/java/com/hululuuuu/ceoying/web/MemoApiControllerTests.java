@@ -23,6 +23,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -86,6 +87,36 @@ public class MemoApiControllerTests {
         assertThat(memo.getContent()).isEqualTo(content);
         assertThat(memo.getLink()).isEqualTo(link);
         assertThat(memo.getName()).isEqualTo(name);
+
+    }
+
+    @Test
+    @WithMockUser(roles = "ADMIN")
+    public void memo_삭제된다() throws Exception {
+        //save
+        String link = "aa";
+        String content = "aaa";
+        String name = "김씨";
+
+        Memo memo = memoRepository.save(Memo.builder()
+        .link(link)
+        .content(content)
+        .name(name)
+        .build());
+
+        Long savedId = memo.getId();
+
+        String url = "http://localhost:" + port + "/manage/memo/" + savedId;
+
+        //when
+        mvc.perform(delete(url)
+                .contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(status().isOk());
+
+        //then
+        List<Memo> memoList = memoRepository.findAll();
+
+        assertThat(memoList.size()).isEqualTo(0);
 
     }
 

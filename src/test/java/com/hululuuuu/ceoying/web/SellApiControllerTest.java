@@ -29,8 +29,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
@@ -193,6 +192,44 @@ public class SellApiControllerTest {
         assertThat(wallet.getStatementDate()).isEqualTo(LocalDate.now());
         assertThat(wallet.getRecord()).isEqualTo(product + " 판매 수정");
 
+
+    }
+
+    @Test
+    @WithMockUser(roles = "ADMIN")
+    public void sell_삭제된다() throws Exception {
+        //given
+        String name = "김씨";
+        String product = "치약";
+        int price = 13000;
+        int amount = 4;
+        String methodOfPayment = "카드결제";
+        int profit = 9;
+        LocalDate selldate = LocalDate.now();
+
+        Sell saveSell = sellRepository.save(Sell.builder()
+                .name(name)
+                .product(product)
+                .price(price)
+                .amount(amount)
+                .methodOfPayment(methodOfPayment)
+                .profit(profit)
+                .selldate(selldate)
+                .build());
+
+        Long savedId = saveSell.getId();
+
+        String url = "http://localhost:" + port + "/manage/sells/" + savedId;
+
+        //when
+        mvc.perform(delete(url)
+        .contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(status().isOk());
+
+        //then
+        List<Sell> sellList = sellRepository.findAll();
+
+        assertThat(sellList.size()).isEqualTo(0);
 
     }
 
