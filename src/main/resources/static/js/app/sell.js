@@ -9,7 +9,7 @@ var main = {
             _this.update();
         });
 
-        $('#btn-deleteSell').on('click', function () {
+        $('.btn-deleteSell').on('click', function () {
             var id = $(this).children(".id").val();
             _this.delete(id);
         })

@@ -5,7 +5,7 @@ var main = {
             _this.save();
         });
 
-        $('#btn-deleteMemo').on('click', function () {
+        $('.btn-deleteMemo').on('click', function () {
             var id = $(this).children(".id").val();
             _this.delete(id);
         })
