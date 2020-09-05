@@ -12,6 +12,10 @@ var main = {
         $('.btn-deleteBuy').on('click', function () {
             var id = $(this).children(".id").val();
             _this.delete(id);
+        });
+
+        $('#searchBuy').on('click', function() {
+            _this.search();
         })
     },
     save : function () {
@@ -75,6 +79,13 @@ var main = {
         }).fail(function (error) {
             alert(JSON.stringify(error));
         });
+    },
+
+    search : function() {
+        var start = $('#start').val();
+        var end = $('#end').val();
+
+        location.href = "/buy/search?start=" + start + "&end=" + end;
     }
 };
 

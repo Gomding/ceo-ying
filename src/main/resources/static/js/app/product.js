@@ -12,7 +12,7 @@ var main = {
         $('.btn-deleteProduct').on('click', function () {
             var id = $(this).children('.id').val();
             _this.delete(id);
-        })
+        });
     },
     save : function () {
         var data = {

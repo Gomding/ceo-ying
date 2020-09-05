@@ -64,7 +64,7 @@ public class WalletService {
         int nowWalletMoney = walletRepository.findTop1ByOrderByIdDesc().getMoney();
         int oldSellMoney = sellRepository.getOne(id).getProfit();
         int newSellMoney = requestDto.getProfit();
-        int diffMoney = oldSellMoney - newSellMoney;
+        int diffMoney = newSellMoney - oldSellMoney;
 
         if (diffMoney != 0) {   // 돈이 변하지 않으면 계좌 내역을 생성할 필요가 없음
 
@@ -130,7 +130,7 @@ public class WalletService {
         int nowWalletMoney = walletRepository.findTop1ByOrderByIdDesc().getMoney();
         int oldBuyMoney = buyRepository.getOne(id).getPrice();
         int newBuyMoney = requestDto.getPrice();
-        int diffMoney = oldBuyMoney - newBuyMoney;
+        int diffMoney = newBuyMoney - oldBuyMoney;
 
         if (diffMoney != 0) {
 
