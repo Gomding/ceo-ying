@@ -53,10 +53,15 @@ public class SellRestController {
         if (user != null) {
             mav.addObject("userName", user.getName());
         }
-        Page<SellResponseDto> sellList = sellService.searchSellList(pageable, startDate, endDate);
-        mav.addObject("sellList", sellList);
-        mav.addObject("pages", new Pages(sellList));
-        mav.setViewName("sell/sellList");
+        if (start.isEmpty() || start.equals("") || end.isEmpty() || end.equals("")) {
+            mav.setViewName("redirect:/sellList");
+        }
+        else {
+            Page<SellResponseDto> sellList = sellService.searchSellList(pageable, startDate, endDate);
+            mav.addObject("sellList", sellList);
+            mav.addObject("pages", new Pages(sellList));
+            mav.setViewName("sell/sellList");
+        }
         return mav;
     }
 

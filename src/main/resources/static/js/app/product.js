@@ -13,6 +13,10 @@ var main = {
             var id = $(this).children('.id').val();
             _this.delete(id);
         });
+
+        $('#searchProduct').on('click', function() {
+            _this.search();
+        });
     },
     save : function () {
         var data = {
@@ -75,6 +79,12 @@ var main = {
         }).fail(function (error) {
             alert(JSON.stringify(error));
         });
+    },
+
+    search : function() {
+        var productName = $('#inputName').val();
+
+        location.href = "/products/search?productName=" + productName;
     }
 };
 

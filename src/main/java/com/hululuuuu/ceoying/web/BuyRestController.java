@@ -11,7 +11,6 @@ import com.hululuuuu.ceoying.web.dto.buy.BuyUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -46,10 +45,15 @@ public class BuyRestController {
         LocalDate startDate = LocalDate.parse(start, DateTimeFormatter.ISO_DATE);
         LocalDate endDate = LocalDate.parse(end, DateTimeFormatter.ISO_DATE);
         ModelAndView mav = new ModelAndView();
-        Page<BuyResponseDto> buyList = buyService.findBuySearchList(pageable, startDate, endDate);
-        mav.addObject("buyList", buyList);
-        mav.addObject("pages", new Pages(buyList));
-        mav.setViewName("yiying/buyList");
+        if (start.isEmpty() || start.equals("") || end.isEmpty() || end.equals("")) {
+            mav.setViewName("redirect:/buyList");
+        }
+        else {
+            Page<BuyResponseDto> buyList = buyService.findBuySearchList(pageable, startDate, endDate);
+            mav.addObject("buyList", buyList);
+            mav.addObject("pages", new Pages(buyList));
+            mav.setViewName("yiying/buyList");
+        }
         return mav;
     }
 

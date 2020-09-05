@@ -89,7 +89,7 @@ public class ProductService {
     @Transactional(readOnly = true)
     public Page<ProductResponseDto> searchProductList(Pageable pageable, String productName) {
         pageable = PageableDefault.setPageable(pageable);
-        Page<Product> list = productRepository.findAllName(pageable, productName);
+        Page<Product> list = productRepository.findByName(pageable, productName);
         return list.map(ProductResponseDto::new);
     }
 

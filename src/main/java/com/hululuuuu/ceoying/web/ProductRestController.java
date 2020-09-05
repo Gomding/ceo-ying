@@ -36,13 +36,13 @@ public class ProductRestController {
     }
 
     @GetMapping({"/products/search", "/products/search/"})
-    public ModelAndView searchProductList(@PageableDefault Pageable pageable, @RequestParam("productName")String productName, @LoginUser SessionUser user) {
+    public ModelAndView searchProductList(@RequestParam("productName")String productName, @PageableDefault Pageable pageable,  @LoginUser SessionUser user) {
         ModelAndView mav = new ModelAndView();
         if (user != null) {
             mav.addObject("userName", user.getName());
         }
         if (productName.equals("") || productName.isEmpty()) {
-            mav.setViewName("redirect:/product/productList");
+            mav.setViewName("redirect:/productList");
         }
         else {
             Page<ProductResponseDto> productList = productService.searchProductList(pageable, productName);

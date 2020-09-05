@@ -16,7 +16,7 @@ var main = {
 
         $('#searchBuy').on('click', function() {
             _this.search();
-        })
+        });
     },
     save : function () {
         var data = {

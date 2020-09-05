@@ -15,6 +15,5 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     @Query("select p from Product p order by p.modifiedDate desc ")
     Page<Product> findAllModifiedDateDesc(Pageable pageable);
 
-    @Query("select p from Product p where p.name = ?2")
-    Page<Product> findAllName(Pageable pageable, String name);
+    Page<Product> findByName(Pageable pageable, String name);
 }
