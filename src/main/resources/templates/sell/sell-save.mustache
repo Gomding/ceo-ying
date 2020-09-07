@@ -26,6 +26,10 @@
                         <input type="text" class="form-control" id="price" name="price" placeholder="판매 금액"/>
                     </div>
                     <div class="form-group">
+                        <label>배송비</label>
+                        <input type="text" class="form-control" id="deliverPrice" name="deliverPrice" placeholder="판매 금액"/>
+                    </div>
+                    <div class="form-group">
                         <label>결제수단</label>
                         <select class="form-control" id="mofSelect" name="mofSelect">
                             <option value="">결제수단 선택</option>
@@ -63,16 +67,17 @@
 
 <script>
 
-    function calcProfit(commission, price) {
+    function calcProfit(commission, price, deliver) {
 
         var commission = Number(commission);
         var price = Number(price);
+        var deliver = Number(deliver);
         var deliverPrice = Number(3500);
         var naverComm = Math.round((price / 100) * 2);
 
         var mofComm = Math.round(((price + deliverPrice) / 100) * commission);
 
-        return price - (naverComm + mofComm);
+        return price + 3500 - (naverComm + mofComm) - deliver;
 
     }
 
@@ -88,27 +93,30 @@
 
         var price = $("#price").val();
 
+        var deliver = $("#deliverPrice").val();
+
         $("#commission").text(commission + "%");
 
         $("#methodOfPayment").val($(this).find(":selected").text());
 
-        var newVal = calcProfit(commission, price);
+        var newVal = calcProfit(commission, price, deliver);
 
         $("#profit").val(newVal);
 
     });
 
-    $("#price").on("propertychange change keyup paste input", function() {
+    $("#price, #deliverPrice").on("propertychange change keyup paste input", function() {
 
         var commission = $("#mofSelect :selected").val();
 
-        var price = $(this).val();
+        var price = $("#price").val();
+        var deliver = $("#deliverPrice").val();
 
         if(!$("#methodOfPayment").val()) {
             return;
         }
 
-        var newVal = calcProfit(commission, price);
+        var newVal = calcProfit(commission, price, deliver);
 
         $("#profit").val(newVal);
 
