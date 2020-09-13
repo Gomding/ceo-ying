@@ -14,12 +14,7 @@
         </div>
 
         <div class="bdgreen col-xs-10 col-md-5 text-center pull-left mg-bl">
-            <h3 class="">현재 재고 상황</h3><br/>
-            <div class="moreList">
-                <a href="/sellList">
-                    <i class="fa fa-plus-square-o fa-2x" aria-hidden="true"></i>
-                </a>
-            </div>
+            <br>
             <div>
                 <table class="table table-hover" style="font-size: 16px;">
                     <thead style="background-color: white !important;">
@@ -32,14 +27,14 @@
                     <tbody>
                     {{#product}}
                         <tr >
-                            <td style="border: none;">{{name}}</td>
-                            <td style="border: none; color: #337ab7; font-size: 20px;">{{amount}}
+                            <td style="border: none; padding-top: 12px;">{{name}}</td>
+                            <td style="border: none; color: #337ab7; font-size: 20px; padding-top: 12px;">{{amount}}
                                 <span style="color: #776677; font-size: 14px;">개</span></td>
-                            <td style="border: none;">{{sellByDate}}</td>
+                            <td style="border: none; padding-top: 12px;">{{sellByDate}}</td>
                         </tr>
                     {{/product}}
                     </tbody>
-                </table>
+                </table><br>
             </div>
         </div>
         <div class="bdgreen col-xs-10 col-md-5 pull-right mg-br">
@@ -83,9 +78,6 @@
             </div>
             <div>
                 <span><h4>최근 한달 수익 : <a>{{oneMonthProfit}} 원</a></h4></span>
-                <span><h4>현재 치약 원가 : <a>{{#toothPaste}}{{costprice}}{{/toothPaste}} 원</a></h4></span>
-                <span><h4>치약 재고 : <a>{{#toothPaste}}{{amount}}{{/toothPaste}} 개</a></h4></span>
-                <span><h4>작은 치약 재고 : <a>{{#smallToothPaste}}{{amount}} 개{{/smallToothPaste}}</a></h4></span>
             </div><br/>
             <div>
                 <table class="table table-hover">
