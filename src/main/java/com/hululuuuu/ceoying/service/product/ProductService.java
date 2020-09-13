@@ -13,6 +13,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @RequiredArgsConstructor
 @Service
 public class ProductService {
@@ -66,6 +69,33 @@ public class ProductService {
             return new ProductResponseDto();
         }
         return new ProductResponseDto(entity);
+    }
+
+    @Transactional(readOnly = true)
+    public List<ProductResponseDto> findMainProduct() {
+
+        List<ProductResponseDto> mainList = new ArrayList<>();
+
+        try {
+
+            Product toothPaste_200 = productRepository.findByName("치약200g");
+            Product toothPaste_250 = productRepository.findByName("치약250g");
+            Product toothPaste_50 = productRepository.findByName("치약50g");
+            Product toothPaste_40 = productRepository.findByName("치약40g");
+            Product gingerTea4 = productRepository.findByName("진만당4in1");
+            Product gingerTea2 = productRepository.findByName("진만당2in1");
+
+            mainList.add(new ProductResponseDto(toothPaste_200));
+            mainList.add(new ProductResponseDto(toothPaste_50));
+            mainList.add(new ProductResponseDto(toothPaste_250));
+            mainList.add(new ProductResponseDto(toothPaste_40));
+            mainList.add(new ProductResponseDto(gingerTea2));
+            mainList.add(new ProductResponseDto(gingerTea4));
+        }catch (NullPointerException e) {
+
+        }
+
+        return mainList;
     }
 
     @Transactional

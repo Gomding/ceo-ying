@@ -25,7 +25,7 @@ public class MemoSaveRequestDto {
 
     public Memo toEntity() {
         return Memo.builder()
-                .content(content)
+                .content(content.replaceAll("\n", "<br/>"))
                 .link(link)
                 .name(name)
                 .build();

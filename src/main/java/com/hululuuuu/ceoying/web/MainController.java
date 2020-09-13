@@ -45,8 +45,7 @@ public class MainController {
         }
         List<Buy> buyTop5 = buyService.findTop5();
         List<SellListResponseDto> sellTop3 = sellService.findTop3();
-        ProductResponseDto toothPaste = productService.findByProductName("치약");
-        ProductResponseDto smallToothPaste = productService.findByProductName("작은치약");
+        List<ProductResponseDto> productList = productService.findMainProduct();
         List<WalletListResponseDto> wallet = walletService.findTop5();
         Wallet walletMoney = walletService.nowWallet();
         int oneMonthProfit = sellService.sum1MonthProfit();
@@ -56,8 +55,7 @@ public class MainController {
         mav.addObject("oneMonthSpendMoney", oneMonthSpendMoney);
         mav.addObject("buyTop", buyTop5);
         mav.addObject("sellTop", sellTop3);
-        mav.addObject("toothPaste", toothPaste);
-        mav.addObject("smallToothPaste", smallToothPaste);
+        mav.addObject("product", productList);
         mav.addObject("nowWallet", walletMoney);
         mav.addObject("walletTop5", wallet);
         mav.setViewName("main");
