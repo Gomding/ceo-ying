@@ -3,9 +3,11 @@ package com.hululuuuu.ceoying.web;
 import com.hululuuuu.ceoying.config.auth.LoginUser;
 import com.hululuuuu.ceoying.config.auth.dto.SessionUser;
 import com.hululuuuu.ceoying.domain.Pages;
+import com.hululuuuu.ceoying.domain.product.Product;
 import com.hululuuuu.ceoying.service.product.ProductService;
 import com.hululuuuu.ceoying.service.sell.SellService;
 import com.hululuuuu.ceoying.service.wallet.WalletService;
+import com.hululuuuu.ceoying.web.dto.product.ProductResponseDto;
 import com.hululuuuu.ceoying.web.dto.sell.SellResponseDto;
 import com.hululuuuu.ceoying.web.dto.sell.SellSaveRequestDto;
 import com.hululuuuu.ceoying.web.dto.sell.SellUpdateRequestDto;
@@ -20,6 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpSession;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
@@ -71,6 +74,8 @@ public class SellRestController {
         if (user != null) {
             mav.addObject("userName", user.getName());
         }
+        List<ProductResponseDto> productNameList = productService.findProductList();
+        mav.addObject("productNameList", productNameList);
         mav.setViewName("sell/sell-save");
         return mav;
     }

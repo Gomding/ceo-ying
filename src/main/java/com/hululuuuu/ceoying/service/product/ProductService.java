@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -121,6 +122,12 @@ public class ProductService {
         pageable = PageableDefault.setPageable(pageable);
         Page<Product> list = productRepository.findByName(pageable, productName);
         return list.map(ProductResponseDto::new);
+    }
+
+    @Transactional(readOnly = true)
+    public List<ProductResponseDto> findProductList() {
+        List<Product> productList = productRepository.findAll();
+        return productList.stream().map(ProductResponseDto::new).collect(Collectors.toList());
     }
 
 }

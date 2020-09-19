@@ -15,7 +15,13 @@
                     </div>
                     <div class="form-group">
                         <label>판매한 상품</label>
-                        <input type="text" class="form-control" id="product" name="product" placeholder="상품명"/>
+                        <select class="form-control" id="product" name="product">
+                            <option value="">상품 선택</option>
+                            {{#productNameList}}
+                                <option value="{{price}}">{{name}}</option>
+                            {{/productNameList}}
+                        </select>
+                        <input type="hidden" id="selectedPrice" name="selectedPrice"/>
                     </div>
                     <div class="form-group">
                         <label>판매 수량</label>
@@ -113,6 +119,64 @@
         var deliver = $("#deliverPrice").val();
 
         if(!$("#methodOfPayment").val()) {
+            return;
+        }
+
+        var newVal = calcProfit(commission, price, deliver);
+
+        $("#profit").val(newVal);
+
+    });
+
+    $("#product").change(function() {
+
+        var productPrice = $(this).val();
+        var amount = $('#amount').val();
+
+        if(productPrice == "") {
+            $("#price").val(0);
+            return;
+        }
+
+        var calcPrice = Number(productPrice) * Number(amount);
+
+        $('#price').val(calcPrice);
+
+        var commission = $("#mofSelect :selected").val();
+
+        var price = $("#price").val();
+        var deliver = $("#deliverPrice").val();
+
+        if(!$("#methodOfPayment").val() || commission == "") {
+            return;
+        }
+
+        var newVal = calcProfit(commission, price, deliver);
+
+        $("#profit").val(newVal);
+
+
+    });
+
+    $("#amount").on("propertychange change keyup paste input", function() {
+
+        var productPrice = $("#product :selected").val();
+        var amount = $("#amount").val();
+
+        if(!$("#product").val()) {
+            return;
+        }
+
+        var calcPrice = Number(productPrice) * Number(amount);
+
+        $('#price').val(calcPrice);
+
+        var commission = $("#mofSelect :selected").val();
+
+        var price = $("#price").val();
+        var deliver = $("#deliverPrice").val();
+
+        if(!$("#methodOfPayment").val() || commission == "") {
             return;
         }
 
