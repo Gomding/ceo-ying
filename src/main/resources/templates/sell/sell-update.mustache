@@ -71,56 +71,52 @@
 {{>layout/footer}}
 
 <script>
-
     function calcProfit(commission, price, deliver) {
-
+        var selectedOfMof = $('#methodOfPayment').val();
         var pay_deliverPrice = $('#pay_deliver').val();
         var pay_commission = Number(commission);
         var price = Number(price);
         var deliver = Number(deliver);
         var deliverPrice = Number(pay_deliverPrice);
         var naverComm = Number(0);
-        if (commission !== "쿠팡판매") {
+        if (selectedOfMof != '쿠팡판매') {
             naverComm = Math.round((price / 100) * 2);
         }
         var mofComm = Math.round(((price + deliverPrice) / 100) * pay_commission);
         return price + deliverPrice - (naverComm + mofComm) - deliver;
     }
 
+    $(function() {
+        var mofSelected = $("#methodOfPayment").val();
+        $("select[id='mofSelect'] option:contains('"+mofSelected+"')").attr("selected", "selected");
+        var commission = $("#mofSelect :selected").val();
+        $("#commission").text(commission + "%");
+    });
+
     $("#mofSelect").change(function() {
-
         var commission = $(this).val();
-
         if(commission == "") {
             $("#commission").text("");
             $("#profit").val(0);
             return;
         }
-
         var price = $("#price").val();
         var deliver = $("#deliverPrice").val();
         $("#commission").text(commission + "%");
         $("#methodOfPayment").val($(this).find(":selected").text());
         var newVal = calcProfit(commission, price, deliver);
         $("#profit").val(newVal);
-
     });
 
     $("#price, #deliverPrice, #pay_deliver").on("propertychange change keyup paste input", function() {
-
         var commission = $("#mofSelect :selected").val();
-
         var price = $("#price").val();
         var deliver = $("#deliverPrice").val();
-
         if(!$("#methodOfPayment").val()) {
             return;
         }
-
         var newVal = calcProfit(commission, price, deliver);
-
         $("#profit").val(newVal);
-
     });
 
     $("#selectProduct").change(function() {
@@ -134,34 +130,52 @@
         }
 
         $('#product').val($(this).find(":selected").text());
+
         var calcPrice = Number(productPrice) * Number(amount);
+
         $('#price').val(calcPrice);
+
         var commission = $("#mofSelect :selected").val();
+
         var price = $("#price").val();
         var deliver = $("#deliverPrice").val();
+
         if(!$("#methodOfPayment").val() || commission == "") {
             return;
         }
+
         var newVal = calcProfit(commission, price, deliver);
+
         $("#profit").val(newVal);
+
+
     });
 
     $("#amount").on("propertychange change keyup paste input", function() {
+
         var productPrice = $("#selectProduct :selected").val();
         var amount = $("#amount").val();
+
         if(!$("#selectProduct").val()) {
             return;
         }
+
         var calcPrice = Number(productPrice) * Number(amount);
+
         $('#price').val(calcPrice);
+
         var commission = $("#mofSelect :selected").val();
         var price = $("#price").val();
         var deliver = $("#deliverPrice").val();
+
         if(!$("#methodOfPayment").val() || commission == "") {
             return;
         }
+
         var newVal = calcProfit(commission, price, deliver);
+
         $("#profit").val(newVal);
+
     });
 
 </script>
