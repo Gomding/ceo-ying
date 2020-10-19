@@ -15,13 +15,13 @@
                     </div>
                     <div class="form-group">
                         <label>판매한 상품</label>
-                        <select class="form-control" id="product" name="product">
+                        <select class="form-control" id="selectProduct" name="selectProduct">
                             <option value="">상품 선택</option>
                             {{#productNameList}}
                                 <option value="{{price}}">{{name}}</option>
                             {{/productNameList}}
                         </select>
-                        <input type="hidden" id="selectedPrice" name="selectedPrice"/>
+                        <input type="hidden" id="product" name="product"/>
                     </div>
                     <div class="form-group">
                         <label>판매 수량</label>
@@ -32,8 +32,15 @@
                         <input type="text" class="form-control" id="price" name="price" placeholder="판매 금액"/>
                     </div>
                     <div class="form-group">
-                        <label>배송비</label>
-                        <input type="text" class="form-control" id="deliverPrice" name="deliverPrice" placeholder="판매 금액"/>
+                        <input type="checkbox" id="deliver-check" name="deliver-check" value="해외배송"/> 해외배송
+                    </div>
+                    <div class="form-group">
+                        <label>쇼핑몰에서 결제된 배송비</label>
+                        <input type="text" class="form-control" id="pay_deliver" name="pay_deliver" placeholder="결제된 배송비"/>
+                    </div>
+                    <div class="form-group">
+                        <label>실제 배송비</label>
+                        <input type="text" class="form-control" id="deliverPrice" name="deliverPrice" placeholder="실제 배송비"/>
                     </div>
                     <div class="form-group">
                         <label>결제수단</label>
@@ -43,6 +50,7 @@
                             <option value="1.65">계좌이체</option>
                             <option value="1">무통장입금</option>
                             <option value="3.85">휴대폰결제</option>
+                            <option value="7.8">쿠팡판매</option>
                             <option value="3.74">기타</option>
                         </select>
                         <span id="commission"></span>
@@ -74,61 +82,61 @@
 <script>
 
     function calcProfit(commission, price, deliver) {
-
-        var commission = Number(commission);
+        var selectedOfMof = $('#methodOfPayment').val();
+        var pay_deliverPrice = $('#pay_deliver').val();
+        var pay_commission = Number(commission);
         var price = Number(price);
         var deliver = Number(deliver);
-        var deliverPrice = Number(3500);
-        var naverComm = Math.round((price / 100) * 2);
-
-        var mofComm = Math.round(((price + deliverPrice) / 100) * commission);
-
-        return price + 3500 - (naverComm + mofComm) - deliver;
-
+        var deliverPrice = Number(pay_deliverPrice);
+        var naverComm = Number(0);
+        if (selectedOfMof != '쿠팡판매') {
+            naverComm = Math.round((price / 100) * 2);
+        }
+        if ($('input:checkbox[id="deliver-check"]').is(':checked') !== true) {
+            deliver = deliver * -1;
+        }
+        var mofComm = Math.round(((price + deliverPrice) / 100) * pay_commission);
+        return price + deliverPrice - (naverComm + mofComm) + deliver;
     }
 
     $("#mofSelect").change(function() {
-
         var commission = $(this).val();
-
         if(commission == "") {
             $("#commission").text("");
             $("#profit").val(0);
             return;
         }
-
         var price = $("#price").val();
-
         var deliver = $("#deliverPrice").val();
-
         $("#commission").text(commission + "%");
-
         $("#methodOfPayment").val($(this).find(":selected").text());
-
         var newVal = calcProfit(commission, price, deliver);
-
         $("#profit").val(newVal);
-
     });
 
-    $("#price, #deliverPrice").on("propertychange change keyup paste input", function() {
-
+    $("#price, #deliverPrice, #pay_deliver").on("propertychange change keyup paste input", function() {
         var commission = $("#mofSelect :selected").val();
-
         var price = $("#price").val();
         var deliver = $("#deliverPrice").val();
-
         if(!$("#methodOfPayment").val()) {
             return;
         }
-
         var newVal = calcProfit(commission, price, deliver);
-
         $("#profit").val(newVal);
-
     });
 
-    $("#product").change(function() {
+    $('input:checkbox[id="deliver-check"]').change(function() {
+        var commission = $("#mofSelect :selected").val();
+        var price = $("#price").val();
+        var deliver = $("#deliverPrice").val();
+        if(!$("#methodOfPayment").val()) {
+            return;
+        }
+        var newVal = calcProfit(commission, price, deliver);
+        $("#profit").val(newVal);
+    });
+
+    $("#selectProduct").change(function() {
 
         var productPrice = $(this).val();
         var amount = $('#amount').val();
@@ -137,6 +145,8 @@
             $("#price").val(0);
             return;
         }
+
+        $('#product').val($(this).find(":selected").text());
 
         var calcPrice = Number(productPrice) * Number(amount);
 
@@ -160,10 +170,10 @@
 
     $("#amount").on("propertychange change keyup paste input", function() {
 
-        var productPrice = $("#product :selected").val();
+        var productPrice = $("#selectProduct :selected").val();
         var amount = $("#amount").val();
 
-        if(!$("#product").val()) {
+        if(!$("#selectProduct").val()) {
             return;
         }
 
@@ -172,7 +182,6 @@
         $('#price').val(calcPrice);
 
         var commission = $("#mofSelect :selected").val();
-
         var price = $("#price").val();
         var deliver = $("#deliverPrice").val();
 
