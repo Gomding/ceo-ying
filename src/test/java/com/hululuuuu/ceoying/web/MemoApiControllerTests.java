@@ -10,7 +10,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
@@ -35,9 +34,6 @@ public class MemoApiControllerTests {
     private int port;
 
     @Autowired
-    private TestRestTemplate restTemplate;
-
-    @Autowired
     private MemoRepository memoRepository;
 
     @Autowired
@@ -60,7 +56,7 @@ public class MemoApiControllerTests {
 
     @Test
     @WithMockUser(roles = "ADMIN")
-    public void 메모_등록된다() throws Exception{
+    public void 메모_등록된다() throws Exception {
 
         String link = "aa";
         String content = "aaa";
@@ -76,8 +72,8 @@ public class MemoApiControllerTests {
 
         //when
         mvc.perform(post(url)
-                .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .content(new ObjectMapper().writeValueAsString(requestDto)))
+                        .contentType(MediaType.APPLICATION_JSON_UTF8)
+                        .content(new ObjectMapper().writeValueAsString(requestDto)))
                 .andExpect(status().isOk());
 
         //then
@@ -87,7 +83,6 @@ public class MemoApiControllerTests {
         assertThat(memo.getContent()).isEqualTo(content);
         assertThat(memo.getLink()).isEqualTo(link);
         assertThat(memo.getName()).isEqualTo(name);
-
     }
 
     @Test
@@ -99,10 +94,10 @@ public class MemoApiControllerTests {
         String name = "김씨";
 
         Memo memo = memoRepository.save(Memo.builder()
-        .link(link)
-        .content(content)
-        .name(name)
-        .build());
+                .link(link)
+                .content(content)
+                .name(name)
+                .build());
 
         Long savedId = memo.getId();
 
@@ -110,15 +105,12 @@ public class MemoApiControllerTests {
 
         //when
         mvc.perform(delete(url)
-                .contentType(MediaType.APPLICATION_JSON_UTF8))
+                        .contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk());
 
         //then
         List<Memo> memoList = memoRepository.findAll();
 
         assertThat(memoList.size()).isEqualTo(0);
-
     }
-
-
 }

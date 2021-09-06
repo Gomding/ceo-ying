@@ -39,7 +39,7 @@ public class MemoRestController {
     }
 
     @DeleteMapping("/manage/memo/{id}")
-    public Long deleteMemo(@PathVariable("id")Long id) {
+    public Long deleteMemo(@PathVariable("id") Long id) {
         memoService.deleteMemo(id);
         return id;
     }

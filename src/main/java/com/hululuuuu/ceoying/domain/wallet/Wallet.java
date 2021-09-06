@@ -42,6 +42,4 @@ public class Wallet extends BaseTimeEntity {
     }
 
 
-
-
 }

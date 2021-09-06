@@ -8,7 +8,7 @@ import java.time.LocalDate;
 
 @NoArgsConstructor
 @Getter
-public class WalletListResponseDto {
+public class WalletResponseDto {
 
     private Long id;
     private int money;
@@ -16,7 +16,7 @@ public class WalletListResponseDto {
     private String statement;
     private LocalDate statementDate;
 
-    public WalletListResponseDto(Wallet entity) {
+    public WalletResponseDto(Wallet entity) {
         this.id = entity.getId();
         this.money = entity.getMoney();
         this.record = entity.getRecord();

@@ -2,7 +2,7 @@ package com.hululuuuu.ceoying.myComponent;
 
 import java.util.List;
 
-public interface EntityMapper <D, E> {
+public interface EntityMapper<D, E> {
 
     E toEntity(D dto);
 

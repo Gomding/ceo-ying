@@ -9,15 +9,13 @@ import com.hululuuuu.ceoying.service.product.ProductService;
 import com.hululuuuu.ceoying.service.sell.SellService;
 import com.hululuuuu.ceoying.service.wallet.WalletService;
 import com.hululuuuu.ceoying.web.dto.product.ProductResponseDto;
-import com.hululuuuu.ceoying.web.dto.sell.SellListResponseDto;
-import com.hululuuuu.ceoying.web.dto.wallet.WalletListResponseDto;
-import com.hululuuuu.ceoying.web.dto.wallet.WalletSaveRequestDto;
+import com.hululuuuu.ceoying.web.dto.sell.SellResponseDto;
+import com.hululuuuu.ceoying.web.dto.wallet.WalletResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -44,9 +42,9 @@ public class MainController {
             mav.addObject("userName", user.getName());
         }
         List<Buy> buyTop5 = buyService.findTop5();
-        List<SellListResponseDto> sellTop3 = sellService.findTop3();
+        List<SellResponseDto> sellTop3 = sellService.findTop3();
         List<ProductResponseDto> productList = productService.findMainProduct();
-        List<WalletListResponseDto> wallet = walletService.findTop5();
+        List<WalletResponseDto> wallet = walletService.findTop5();
         Wallet walletMoney = walletService.nowWallet();
         int oneMonthProfit = sellService.sum1MonthProfit();
         int oneMonthSpendMoney = buyService.lastMonthSpendMoney();
@@ -61,7 +59,6 @@ public class MainController {
         mav.setViewName("main");
         return mav;
     }
-
 
 
 }

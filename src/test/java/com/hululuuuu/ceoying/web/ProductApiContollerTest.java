@@ -11,22 +11,21 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
-import org.springframework.http.*;
+import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import java.time.LocalDate;
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
-import java.time.LocalDate;
-import java.util.List;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -34,9 +33,6 @@ public class ProductApiContollerTest {
 
     @LocalServerPort
     private int port;
-
-    @Autowired
-    private TestRestTemplate restTemplate;
 
     @Autowired
     private ProductRepository productRepository;
@@ -61,7 +57,7 @@ public class ProductApiContollerTest {
 
     @Test
     @WithMockUser(roles = "ADMIN")
-    public void 상품_저장된다() throws Exception{
+    public void 상품_저장된다() throws Exception {
 
 
         //given
@@ -83,8 +79,8 @@ public class ProductApiContollerTest {
 
         //when
         mvc.perform(post(url)
-                .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .content(new ObjectMapper().writeValueAsString(requestDto)))
+                        .contentType(MediaType.APPLICATION_JSON_UTF8)
+                        .content(new ObjectMapper().writeValueAsString(requestDto)))
                 .andExpect(status().isOk());
 
         List<Product> productList = productRepository.findAll();
@@ -96,7 +92,7 @@ public class ProductApiContollerTest {
 
     @Test
     @WithMockUser(roles = "ADMIN")
-    public void 상품_수정된다() throws Exception{
+    public void 상품_수정된다() throws Exception {
 
         //given
         String name = "김씨";
@@ -131,8 +127,8 @@ public class ProductApiContollerTest {
 
         //when
         mvc.perform(put(url)
-            .contentType(MediaType.APPLICATION_JSON_UTF8)
-            .content(new ObjectMapper().writeValueAsString(requestDto)))
+                        .contentType(MediaType.APPLICATION_JSON_UTF8)
+                        .content(new ObjectMapper().writeValueAsString(requestDto)))
                 .andExpect(status().isOk());
 
         //then
@@ -168,7 +164,7 @@ public class ProductApiContollerTest {
 
         //when
         mvc.perform(delete(url)
-        .contentType(MediaType.APPLICATION_JSON_UTF8))
+                        .contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk());
 
         List<Product> productList = productRepository.findAll();

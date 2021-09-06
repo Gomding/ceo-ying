@@ -1,5 +1,5 @@
 var main = {
-    init : function () {
+    init: function () {
         var _this = this;
         $('#btn-saveProduct').on('click', function () {
             _this.save();
@@ -14,11 +14,11 @@ var main = {
             _this.delete(id);
         });
 
-        $('#searchProduct').on('click', function() {
+        $('#searchProduct').on('click', function () {
             _this.search();
         });
     },
-    save : function () {
+    save: function () {
         var data = {
             name: $('#name').val(),
             amount: $('#amount').val(),
@@ -31,9 +31,9 @@ var main = {
             type: 'POST',
             url: '/manage/products',
             dataType: 'json',
-            contentType:'application/json; charset=utf-8',
+            contentType: 'application/json; charset=utf-8',
             data: JSON.stringify(data)
-        }).done(function() {
+        }).done(function () {
             alert('상품이 등록되었습니다.');
             window.location.href = '/productList';
         }).fail(function (error) {
@@ -41,7 +41,7 @@ var main = {
         });
     },
 
-    update : function () {
+    update: function () {
         var data = {
             name: $('#name').val(),
             amount: $('#amount').val(),
@@ -54,11 +54,11 @@ var main = {
 
         $.ajax({
             type: 'PUT',
-            url: '/manage/products/'+id,
+            url: '/manage/products/' + id,
             dataType: 'json',
-            contentType:'application/json; charset=utf-8',
+            contentType: 'application/json; charset=utf-8',
             data: JSON.stringify(data)
-        }).done(function() {
+        }).done(function () {
             alert('상품이 수정되었습니다.');
             window.location.href = '/productList';
         }).fail(function (error) {
@@ -66,22 +66,22 @@ var main = {
         });
     },
 
-    delete : function (id) {
+    delete: function (id) {
 
         $.ajax({
             type: 'DELETE',
             url: '/manage/products/' + id,
             dataType: 'json',
             contentType: 'application/json; charset=utf-8'
-        }).done(function() {
+        }).done(function () {
             alert('상품이 삭제되었습니다.');
-            window.location.href='/productList';
+            window.location.href = '/productList';
         }).fail(function (error) {
             alert(JSON.stringify(error));
         });
     },
 
-    search : function() {
+    search: function () {
         var productName = $('#inputName').val();
 
         location.href = "/products/search?productName=" + productName;

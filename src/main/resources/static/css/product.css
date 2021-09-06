@@ -1,8 +1,14 @@
-body {padding-bottom: 0 !important; background: #f8f8f8;}
+body {
+    padding-bottom: 0 !important;
+    background: #f8f8f8;
+}
 
 .product-container {
     margin-bottom: 66px;
 }
 
 
-footer {position: inherit; !important;}
+footer {
+    position: inherit;
+!important;
+}

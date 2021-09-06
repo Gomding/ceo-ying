@@ -1,12 +1,13 @@
 {{>layout/header}}
-<link rel="stylesheet" href="/css/main.css" />
+<link rel="stylesheet" href="/css/main.css"/>
 <div class="container pb-69">
     <div class="row">
         <div class="col-md-offset-1 col-md-10 link-pd">
             <a href="https://smartstore.naver.com/hulululu">
                 <div class="col-md-12">
                     <div class="col-md-2 pd-0">
-                        <img class="pull-left" src="/images/hululuuuu.jpeg" width="120" height="120" alt="후루루" title="후루루"/>
+                        <img class="pull-left" src="/images/hululuuuu.jpeg" width="120" height="120" alt="후루루"
+                             title="후루루"/>
                     </div>
                     <div class="col-md-8 link-title text-center" id="link-title"><b>Hululuuuu</b></div>
                 </div>
@@ -27,7 +28,7 @@
                     </thead>
                     <tbody>
                     {{#product}}
-                        <tr >
+                        <tr>
                             <td style="border: none; padding-top: 17px;">{{name}}</td>
                             <td style="border: none; color: #337ab7; font-size: 20px; padding-top: 12px;">{{amount}}
                                 <span style="color: #776677; font-size: 14px;">개</span></td>
@@ -35,7 +36,8 @@
                         </tr>
                     {{/product}}
                     </tbody>
-                </table><br>
+                </table>
+                <br>
             </div>
         </div>
         <div class="bdgreen col-xs-10 col-md-5 pull-right mg-br">
@@ -79,7 +81,8 @@
             </div>
             <div>
                 <span><h4>최근 한달 수익 : <a>{{oneMonthProfit}} 원</a></h4></span>
-            </div><br/>
+            </div>
+            <br/>
             <div>
                 <table class="table table-hover">
                     <thead>
@@ -90,7 +93,7 @@
                     </thead>
                     <tbody>
                     {{#sellTop}}
-                        <tr >
+                        <tr>
                             <td>상품명 : {{product}}</td>
                             <td>{{profit}} 원</td>
                         </tr>
@@ -105,10 +108,12 @@
                 <a href="/buyList">
                     <i class="fa fa-plus-square-o fa-2x" aria-hidden="true"></i>
                 </a>
-            </div><br/>
+            </div>
+            <br/>
             <div>
                 <span class="text-center"><h4>최근 한달 지출 : <a>{{oneMonthSpendMoney}} 원</a></h4></span>
-            </div><br/>
+            </div>
+            <br/>
             <div>
                 <table class="table table-hover">
                     <thead>
@@ -149,4 +154,4 @@
 
 {{>layout/footer}}
 
-<link rel="stylesheet" href="/css/main.css" />
+<link rel="stylesheet" href="/css/main.css"/>

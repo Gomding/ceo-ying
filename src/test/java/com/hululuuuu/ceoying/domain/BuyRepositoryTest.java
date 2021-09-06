@@ -36,12 +36,12 @@ public class BuyRepositoryTest {
         LocalDate buydate = LocalDate.now();
 
         buyRepository.save(Buy.builder()
-        .name(name)
-        .price(price)
-        .amount(amount)
-        .content(content)
-        .buydate(buydate)
-        .build());
+                .name(name)
+                .price(price)
+                .amount(amount)
+                .content(content)
+                .buydate(buydate)
+                .build());
 
         //when
         List<Buy> buyList = buyRepository.findAll();
@@ -50,8 +50,5 @@ public class BuyRepositoryTest {
         Buy buy = buyList.get(0);
         assertThat(buy.getName()).isEqualTo(name);
         assertThat(buy.getAmount()).isEqualTo(amount);
-
-
     }
-
 }

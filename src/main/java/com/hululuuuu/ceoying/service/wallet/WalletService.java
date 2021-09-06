@@ -1,17 +1,19 @@
 package com.hululuuuu.ceoying.service.wallet;
 
 
+import com.hululuuuu.ceoying.NumberUtil;
 import com.hululuuuu.ceoying.domain.sell.Sell;
 import com.hululuuuu.ceoying.domain.sell.SellRepository;
 import com.hululuuuu.ceoying.domain.wallet.Wallet;
 import com.hululuuuu.ceoying.domain.wallet.WalletRepository;
 import com.hululuuuu.ceoying.domain.yiying.Buy;
 import com.hululuuuu.ceoying.domain.yiying.BuyRepository;
+import com.hululuuuu.ceoying.exception.NotFoundException;
 import com.hululuuuu.ceoying.web.dto.buy.BuySaveRequestDto;
 import com.hululuuuu.ceoying.web.dto.buy.BuyUpdateRequestDto;
 import com.hululuuuu.ceoying.web.dto.sell.SellSaveRequestDto;
 import com.hululuuuu.ceoying.web.dto.sell.SellUpdateRequestDto;
-import com.hululuuuu.ceoying.web.dto.wallet.WalletListResponseDto;
+import com.hululuuuu.ceoying.web.dto.wallet.WalletResponseDto;
 import com.hululuuuu.ceoying.web.dto.wallet.WalletSaveRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -29,9 +31,9 @@ public class WalletService {
     private final SellRepository sellRepository;
 
     @Transactional(readOnly = true)
-    public List<WalletListResponseDto> findTop5() {
+    public List<WalletResponseDto> findTop5() {
         return walletRepository.findTop5().stream()
-                .map(WalletListResponseDto::new)
+                .map(WalletResponseDto::new)
                 .collect(Collectors.toList());
     }
 
@@ -51,11 +53,11 @@ public class WalletService {
         int sellMoney = requestDto.getProfit();
         walletRepository.save(
                 Wallet.builder()
-                .money(nowWalletMoney + sellMoney)
-                .record(requestDto.getProduct())
-                .statement("+ " + sellMoney + "원")
-                .statementDate(requestDto.getSelldate())
-                .build()
+                        .money(nowWalletMoney + sellMoney)
+                        .record(requestDto.getProduct())
+                        .statement("+ " + sellMoney + "원")
+                        .statementDate(requestDto.getSelldate())
+                        .build()
         );
     }
 
@@ -72,7 +74,7 @@ public class WalletService {
                     Wallet.builder()
                             .money(nowWalletMoney + diffMoney)
                             .record(requestDto.getProduct() + " 판매 수정")
-                            .statement(diffMoney + " (" + oldSellMoney + " - > " + newSellMoney + " 수정됨)")
+                            .statement(NumberUtil.parseStringToSignedNumber(diffMoney) + " (" + oldSellMoney + " - > " + newSellMoney + " 수정됨)")
                             .statementDate(requestDto.getSelldate())
                             .build()
             );
@@ -101,17 +103,16 @@ public class WalletService {
         int buyMoney = requestDto.getPrice();
         walletRepository.save(
                 Wallet.builder()
-                .money(nowWalletMoney - buyMoney)
-                .record(requestDto.getName() + " 구매")
-                .statement("- " + buyMoney + "원")
-                .statementDate(requestDto.getBuydate())
-                .build()
+                        .money(nowWalletMoney - buyMoney)
+                        .record(requestDto.getName() + " 구매")
+                        .statement("- " + buyMoney + "원")
+                        .statementDate(requestDto.getBuydate())
+                        .build()
         );
     }
 
     @Transactional
     public void whenDeleteBuy(Long id) {
-
         Buy buy = buyRepository.getOne(id);
         int nowWalletMoney = walletRepository.findTop1ByOrderByIdDesc().getMoney();
         int buyMoney = buy.getPrice();
@@ -128,22 +129,20 @@ public class WalletService {
     @Transactional
     public void whenUpdateBuy(BuyUpdateRequestDto requestDto, Long id) {
         int nowWalletMoney = walletRepository.findTop1ByOrderByIdDesc().getMoney();
-        int oldBuyMoney = buyRepository.getOne(id).getPrice();
+        Buy buy = buyRepository.findById(id).orElseThrow(() -> new NotFoundException("존재하지 않는 구매내역 입니다."));
+        int oldBuyMoney = buy.getPrice();
         int newBuyMoney = requestDto.getPrice();
-        int diffMoney = newBuyMoney - oldBuyMoney;
+        int diffMoney = oldBuyMoney - newBuyMoney;
 
         if (diffMoney != 0) {
-
             walletRepository.save(
                     Wallet.builder()
                             .money(nowWalletMoney + diffMoney)
                             .record(requestDto.getName() + " 구매 수정")
-                            .statement(diffMoney + " (" + oldBuyMoney + " - > " + newBuyMoney + " 수정됨)")
+                            .statement(NumberUtil.parseStringToSignedNumber(diffMoney) + " (" + oldBuyMoney + " - > " + newBuyMoney + " 수정됨)")
                             .statementDate(requestDto.getBuydate())
                             .build()
             );
         }
     }
-
-
 }

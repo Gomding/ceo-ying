@@ -39,16 +39,15 @@ public class BuyRestController {
     }
 
     @GetMapping({"/buy/search", "/buy/search/"})
-    public ModelAndView searchBuyList(@RequestParam(value = "start")String start,
-                                      @RequestParam(value = "end")String end,
+    public ModelAndView searchBuyList(@RequestParam(value = "start") String start,
+                                      @RequestParam(value = "end") String end,
                                       @PageableDefault Pageable pageable) {
         LocalDate startDate = LocalDate.parse(start, DateTimeFormatter.ISO_DATE);
         LocalDate endDate = LocalDate.parse(end, DateTimeFormatter.ISO_DATE);
         ModelAndView mav = new ModelAndView();
         if (start.isEmpty() || start.equals("") || end.isEmpty() || end.equals("")) {
             mav.setViewName("redirect:/buyList");
-        }
-        else {
+        } else {
             Page<BuyResponseDto> buyList = buyService.findBuySearchList(pageable, startDate, endDate);
             mav.addObject("buyList", buyList);
             mav.addObject("pages", new Pages(buyList));

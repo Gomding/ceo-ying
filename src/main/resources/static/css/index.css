@@ -1,8 +1,8 @@
 .login-container {
     position: absolute;
     width: 262px;
-    left:60%;
-    top:17%;
+    left: 60%;
+    top: 17%;
 }
 
 .main-img {
@@ -29,14 +29,14 @@
 }
 
 .btn-container {
-    margin-top:5px;
+    margin-top: 5px;
 }
 
 .google {
-    float:right;
-    width:130px;
+    float: right;
+    width: 130px;
 }
 
 .naver {
-    width:130px;
+    width: 130px;
 }

@@ -3,8 +3,8 @@ package com.hululuuuu.ceoying.service.sell;
 
 import com.hululuuuu.ceoying.domain.sell.Sell;
 import com.hululuuuu.ceoying.domain.sell.SellRepository;
+import com.hululuuuu.ceoying.exception.NotFoundException;
 import com.hululuuuu.ceoying.myComponent.PageableDefault;
-import com.hululuuuu.ceoying.web.dto.sell.SellListResponseDto;
 import com.hululuuuu.ceoying.web.dto.sell.SellResponseDto;
 import com.hululuuuu.ceoying.web.dto.sell.SellSaveRequestDto;
 import com.hululuuuu.ceoying.web.dto.sell.SellUpdateRequestDto;
@@ -28,22 +28,21 @@ public class SellService {
     @Transactional(readOnly = true)
     public Page<SellResponseDto> findSellList(Pageable pageable) {
         pageable = PageableDefault.setPageable(pageable);
-        Page<Sell> list =  sellRepository.findAllDateDesc(pageable);
+        Page<Sell> list = sellRepository.findAllDateDesc(pageable);
         return list.map(SellResponseDto::new);
     }
 
     // 판매 생성 메서드
     @Transactional
     public Long createSell(SellSaveRequestDto requestDto) {
-
         return sellRepository.save(requestDto.toEntity()).getId();
-
     }
 
     // 판매내용 최근 3가지 검색 메서드
-    public List<SellListResponseDto> findTop3() {
+    @Transactional(readOnly = true)
+    public List<SellResponseDto> findTop3() {
         return sellRepository.findTop3ByOrderBySelldateDesc().stream()
-                .map(SellListResponseDto::new)
+                .map(SellResponseDto::new)
                 .collect(Collectors.toList());
     }
 
@@ -51,7 +50,7 @@ public class SellService {
     // 판매 수정하는 메서드
     @Transactional
     public void updateSell(SellUpdateRequestDto requestDto, Long id) {
-        Sell persistSell = sellRepository.getOne(id);
+        Sell persistSell = sellRepository.findById(id).orElseThrow(() -> new NotFoundException("존재하지 않는 판매 id 입니다."));
         persistSell.update(requestDto.getName(),
                 requestDto.getProduct(),
                 requestDto.getAmount(),

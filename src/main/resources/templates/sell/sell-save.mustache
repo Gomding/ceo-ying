@@ -33,11 +33,13 @@
                     </div>
                     <div class="form-group">
                         <label>쇼핑몰에서 결제된 배송비</label>
-                        <input type="text" class="form-control" id="pay_deliver" name="pay_deliver" placeholder="결제된 배송비"/>
+                        <input type="text" class="form-control" id="pay_deliver" name="pay_deliver"
+                               placeholder="결제된 배송비"/>
                     </div>
                     <div class="form-group">
                         <label>실제 배송비</label>
-                        <input type="text" class="form-control" id="deliverPrice" name="deliverPrice" placeholder="실제 배송비"/>
+                        <input type="text" class="form-control" id="deliverPrice" name="deliverPrice"
+                               placeholder="실제 배송비"/>
                     </div>
                     <div class="form-group">
                         <label>결제수단</label>
@@ -92,9 +94,9 @@
         return price + deliverPrice - (naverComm + mofComm) - deliver;
     }
 
-    $("#mofSelect").change(function() {
+    $("#mofSelect").change(function () {
         var commission = $(this).val();
-        if(commission == "") {
+        if (commission == "") {
             $("#commission").text("");
             $("#profit").val(0);
             return;
@@ -107,23 +109,23 @@
         $("#profit").val(newVal);
     });
 
-    $("#price, #deliverPrice, #pay_deliver").on("propertychange change keyup paste input", function() {
+    $("#price, #deliverPrice, #pay_deliver").on("propertychange change keyup paste input", function () {
         var commission = $("#mofSelect :selected").val();
         var price = $("#price").val();
         var deliver = $("#deliverPrice").val();
-        if(!$("#methodOfPayment").val()) {
+        if (!$("#methodOfPayment").val()) {
             return;
         }
         var newVal = calcProfit(commission, price, deliver);
         $("#profit").val(newVal);
     });
 
-    $("#selectProduct").change(function() {
+    $("#selectProduct").change(function () {
 
         var productPrice = $(this).val();
         var amount = $('#amount').val();
 
-        if(productPrice == "") {
+        if (productPrice == "") {
             $("#price").val(0);
             return;
         }
@@ -139,7 +141,7 @@
         var price = $("#price").val();
         var deliver = $("#deliverPrice").val();
 
-        if(!$("#methodOfPayment").val() || commission == "") {
+        if (!$("#methodOfPayment").val() || commission == "") {
             return;
         }
 
@@ -150,12 +152,12 @@
 
     });
 
-    $("#amount").on("propertychange change keyup paste input", function() {
+    $("#amount").on("propertychange change keyup paste input", function () {
 
         var productPrice = $("#selectProduct :selected").val();
         var amount = $("#amount").val();
 
-        if(!$("#selectProduct").val()) {
+        if (!$("#selectProduct").val()) {
             return;
         }
 
@@ -167,7 +169,7 @@
         var price = $("#price").val();
         var deliver = $("#deliverPrice").val();
 
-        if(!$("#methodOfPayment").val() || commission == "") {
+        if (!$("#methodOfPayment").val() || commission == "") {
             return;
         }
 
@@ -179,4 +181,4 @@
 
 </script>
 
-<link rel="stylesheet" href="/css/sell.css" />
+<link rel="stylesheet" href="/css/sell.css"/>

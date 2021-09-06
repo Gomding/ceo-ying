@@ -23,4 +23,7 @@
     margin-bottom: 20px;
 }
 
-footer {position: inherit; !important;}
+footer {
+    position: inherit;
+!important;
+}

@@ -17,48 +17,15 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @Service
+@Transactional
 public class BuyService {
 
     private final BuyRepository buyRepository;
 
-
-    @Transactional(readOnly = true)
-    public Page<BuyResponseDto> findBuyList(Pageable pageable) {
-        pageable = PageableDefault.setPageable(pageable);
-        Page<Buy> list = buyRepository.findAllByOrderByBuydateDesc(pageable);
-
-        return list.map(BuyResponseDto::new);
-    }
-
-
-    @Transactional(readOnly = true)
-    public List<Buy> findTop5() {
-        return buyRepository.findTop5ByOrderByBuydateDesc();
-    }
-
-
-    @Transactional
     public Long saveBuy(BuySaveRequestDto requestDto) {
-
         return buyRepository.save(requestDto.toEntity()).getId();
-
     }
 
-
-    @Transactional
-    public void deleteBuy(Long id) {
-        buyRepository.deleteById(id);
-    }
-
-
-    @Transactional(readOnly = true)
-    public BuyResponseDto findById(Long id) {
-        Buy entity = buyRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. id=" + id));
-        return new BuyResponseDto(entity);
-    }
-
-
-    @Transactional
     public Long updateBuy(BuyUpdateRequestDto requestDto, Long id) {
         Buy buy = buyRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. id=" + id));
         buy.update(requestDto.getName(),
@@ -69,6 +36,29 @@ public class BuyService {
         return id;
     }
 
+    public void deleteBuy(Long id) {
+        buyRepository.deleteById(id);
+    }
+
+    @Transactional(readOnly = true)
+    public Page<BuyResponseDto> findBuyList(Pageable pageable) {
+        pageable = PageableDefault.setPageable(pageable);
+        Page<Buy> list = buyRepository.findAllByOrderByBuydateDesc(pageable);
+
+        return list.map(BuyResponseDto::new);
+    }
+
+    @Transactional(readOnly = true)
+    public List<Buy> findTop5() {
+        return buyRepository.findTop5ByOrderByBuydateDesc();
+    }
+
+
+    @Transactional(readOnly = true)
+    public BuyResponseDto findById(Long id) {
+        Buy entity = buyRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. id=" + id));
+        return new BuyResponseDto(entity);
+    }
 
     @Transactional(readOnly = true)
     public int lastMonthSpendMoney() {
@@ -77,12 +67,10 @@ public class BuyService {
         return new Buy().lastMonthSpendMoney(oneMonthList);
     }
 
-
     @Transactional(readOnly = true)
     public Page<BuyResponseDto> findBuySearchList(Pageable pageable, LocalDate start, LocalDate end) {
         pageable = PageableDefault.setPageable(pageable);
         Page<Buy> list = buyRepository.findByBuydateBetween(pageable, start, end);
         return list.map(BuyResponseDto::new);
     }
-
 }

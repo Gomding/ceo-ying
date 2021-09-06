@@ -39,15 +39,14 @@ public class SellRepositoryTest {
         LocalDate selldate = LocalDate.now();
 
         sellRepository.save(Sell.builder()
-                    .name(name)
-                    .product(product)
-                    .price(price)
-                    .amount(amount)
-                    .methodOfPayment(methodOfPayment)
-                    .profit(profit)
-                    .selldate(selldate)
-                    .build());
-
+                .name(name)
+                .product(product)
+                .price(price)
+                .amount(amount)
+                .methodOfPayment(methodOfPayment)
+                .profit(profit)
+                .selldate(selldate)
+                .build());
 
         //when
         List<Sell> all = sellRepository.findAll();

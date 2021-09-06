@@ -15,7 +15,7 @@ public class Pages {
 
     public Pages(Page<?> page) {
         int currentPage = page.getNumber();
-        int startNumber = (int)(Math.floor(currentPage / 10) * 10 + 1);
+        int startNumber = (int) (Math.floor(currentPage / 10) * 10 + 1);
         int endNumber = page.getTotalPages() > startNumber + 9 ? startNumber + 9 : page.getTotalPages();
         prevPage = currentPage;
         nextPage = currentPage + 2;

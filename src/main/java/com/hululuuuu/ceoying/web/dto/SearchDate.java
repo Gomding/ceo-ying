@@ -8,9 +8,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class SearchDate {
-
     private String start;
     private String end;
-
-
 }

@@ -1,5 +1,5 @@
 var page = {
-    init : function () {
+    init: function () {
         var param = location.search.split('page=')[1];
         var lastPage = $("#lastPage").val();
 

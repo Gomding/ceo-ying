@@ -23,9 +23,13 @@
                     </div>
                     <div class="form-group">
                         <label>원가</label><br>
-                        <input type="text" class="form-control pull-left" id="costprice" name="costprice" style="width:80%;" placeholder="원가" readonly/>
-                        <button class="btn btn-primary pull-right" type="button" data-toggle="collapse" data-target="#mod-container" aria-expanded="false" aria-controls="mod-container">원가수정</button>
-                    </div><br/>
+                        <input type="text" class="form-control pull-left" id="costprice" name="costprice"
+                               style="width:80%;" placeholder="원가" readonly/>
+                        <button class="btn btn-primary pull-right" type="button" data-toggle="collapse"
+                                data-target="#mod-container" aria-expanded="false" aria-controls="mod-container">원가수정
+                        </button>
+                    </div>
+                    <br/>
                     <div class="mod-container collapse" id="mod-container">
                         <div class="pull-left col-md-6">
                             <label>새 상품가격</label>
@@ -42,7 +46,8 @@
                         <div class="pull-right col-md-6">
                             <label>배송비</label>
                             <input class="form-control" id="priceDeliver" type="text"/>
-                        </div><br/>
+                        </div>
+                        <br/>
                     </div>
                     <div class="form-group">
                         <label>유통기한</label>
@@ -64,7 +69,7 @@
 {{>layout/footer}}
 
 <script>
-    $('#amount').on("propertychange change keyup paste input", function() {
+    $('#amount').on("propertychange change keyup paste input", function () {
         $('#newAmount').val($('#amount').val());
     });
 </script>
@@ -78,13 +83,13 @@
         return Math.ceil((Number(newSum)) / Number(newAmount));
     }
 
-    $("#newPrice, #newAmount, #trans, #priceDeliver").on("propertychange change keyup paste input", function() {
+    $("#newPrice, #newAmount, #trans, #priceDeliver").on("propertychange change keyup paste input", function () {
         var newPrice = $("#newPrice").val();
         var newAmount = $("#newAmount").val();
         var trans = $("#trans").val();
         var priceDeliver = $("#priceDeliver").val();
 
-        if(!newPrice || !newAmount || !trans || !priceDeliver) {
+        if (!newPrice || !newAmount || !trans || !priceDeliver) {
             return;
         }
 
@@ -95,4 +100,4 @@
     });
 </script>
 
-<link rel="stylesheet" href="/css/product.css" />
+<link rel="stylesheet" href="/css/product.css"/>

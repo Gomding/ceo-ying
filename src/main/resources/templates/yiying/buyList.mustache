@@ -9,7 +9,8 @@
         <button id="searchBuy" type="button" class="btn btn-default">검색</button>
     </div>
     <div class="pull-right" style="margin:10px 0;">
-        <a href="/manage/buy/save" class="btn btn-success btn-block"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>구매내역 등록</a>
+        <a href="/manage/buy/save" class="btn btn-success btn-block"><i class="fa fa-pencil-square-o"
+                                                                        aria-hidden="true"></i>구매내역 등록</a>
     </div>
     <br/><br/><br/>
 
@@ -27,19 +28,20 @@
             </thead>
             <tbody>
             {{#buyList}}
-            <tr class="text-center">
-                <td class="bl-none">{{id}}</td>
-                <td><a href="/manage/buy/read/{{id}}">{{name}}</a></td>
-                <td>{{amount}}</td>
-                <td>{{price}}</td>
-                <td>{{buydate}}</td>
-                <td class="br-none" style="padding: 12px 12px;">
-                    <button type="button" id="btn-deleteBuy" class="btn-deleteBuy deleteBtn btn btn-default" aria-label="deleteBtn">
-                        <input id="id" class="id" value="{{id}}" type="hidden"/>
-                        <span class="fa fa-remove"></span>
-                    </button>
-                </td>
-            </tr>
+                <tr class="text-center">
+                    <td class="bl-none">{{id}}</td>
+                    <td><a href="/manage/buy/read/{{id}}">{{name}}</a></td>
+                    <td>{{amount}}</td>
+                    <td>{{price}}</td>
+                    <td>{{buydate}}</td>
+                    <td class="br-none" style="padding: 12px 12px;">
+                        <button type="button" id="btn-deleteBuy" class="btn-deleteBuy deleteBtn btn btn-default"
+                                aria-label="deleteBtn">
+                            <input id="id" class="id" value="{{id}}" type="hidden"/>
+                            <span class="fa fa-remove"></span>
+                        </button>
+                    </td>
+                </tr>
             {{/buyList}}
             </tbody>
         </table>
@@ -53,11 +55,11 @@
                 <a href="/buyList?page={{pages.prevPage}}">&lsaquo;</a>
             </li>
             {{#pages.pageNums}}
-            <li id="page{{page}}" class="">
-                <a href="/buyList?page={{page}}">{{page}}
+                <li id="page{{page}}" class="">
+                    <a href="/buyList?page={{page}}">{{page}}
                     <span class="sr-only"></span>
-                </a>
-            </li>
+                    </a>
+                </li>
             {{/pages.pageNums}}
             <li class="nextPage">
                 <a href="/buyList?page={{pages.nextPage}}">&rsaquo;</a>

@@ -6,7 +6,6 @@ import com.hululuuuu.ceoying.domain.sell.Sell;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 

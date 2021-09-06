@@ -1,5 +1,5 @@
 var main = {
-    init : function () {
+    init: function () {
         var _this = this;
         $('#btn-saveMemo').on('click', function () {
             _this.save();
@@ -10,7 +10,7 @@ var main = {
             _this.delete(id);
         });
     },
-    save : function () {
+    save: function () {
         var data = {
             content: $('#content').val(),
             link: $('#link').val(),
@@ -20,9 +20,9 @@ var main = {
             type: 'POST',
             url: '/manage/memo',
             dataType: 'json',
-            contentType:'application/json; charset=utf-8',
+            contentType: 'application/json; charset=utf-8',
             data: JSON.stringify(data)
-        }).done(function() {
+        }).done(function () {
             alert('글이 등록되었습니다.');
             window.location.href = '/memoList';
         }).fail(function (error) {
@@ -31,16 +31,16 @@ var main = {
     },
 
 
-    delete : function (id) {
+    delete: function (id) {
 
         $.ajax({
             type: 'DELETE',
             url: '/manage/memo/' + id,
             dataType: 'json',
             contentType: 'application/json; charset=utf-8'
-        }).done(function() {
+        }).done(function () {
             alert('글이 삭제되었습니다.');
-            window.location.href='/memoList';
+            window.location.href = '/memoList';
         }).fail(function (error) {
             alert(JSON.stringify(error));
         });

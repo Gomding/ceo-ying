@@ -17,7 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
-import org.springframework.http.*;
+import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
@@ -95,7 +95,7 @@ public class SellApiControllerTest {
 
     @Test
     @WithMockUser(roles = "ADMIN")
-    public void 판매내역_저장된다() throws Exception{
+    public void 판매내역_저장된다() throws Exception {
         //given
         String name = "김씨";
         String product = "치약";
@@ -119,8 +119,8 @@ public class SellApiControllerTest {
 
         //when
         mvc.perform(post(url)
-        .contentType(MediaType.APPLICATION_JSON_UTF8)
-        .content(new ObjectMapper().writeValueAsString(requestDto)))
+                        .contentType(MediaType.APPLICATION_JSON_UTF8)
+                        .content(new ObjectMapper().writeValueAsString(requestDto)))
                 .andExpect(status().isOk());
 
 
@@ -138,7 +138,7 @@ public class SellApiControllerTest {
 
     @Test
     @WithMockUser(roles = "ADMIN")
-    public void 판매내역_수정된다() throws Exception{
+    public void 판매내역_수정된다() throws Exception {
         //given
         String name = "김씨";
         String product = "치약";
@@ -178,8 +178,8 @@ public class SellApiControllerTest {
 
         //when
         mvc.perform(put(url)
-        .contentType(MediaType.APPLICATION_JSON_UTF8)
-        .content(new ObjectMapper().writeValueAsString(requestDto)))
+                        .contentType(MediaType.APPLICATION_JSON_UTF8)
+                        .content(new ObjectMapper().writeValueAsString(requestDto)))
                 .andExpect(status().isOk());
 
         //then
@@ -191,8 +191,6 @@ public class SellApiControllerTest {
         assertThat(sell.getMethodOfPayment()).isEqualTo(expertedMethodOfPayment);
         assertThat(wallet.getStatementDate()).isEqualTo(LocalDate.now());
         assertThat(wallet.getRecord()).isEqualTo(product + " 판매 수정");
-
-
     }
 
     @Test
@@ -223,14 +221,13 @@ public class SellApiControllerTest {
 
         //when
         mvc.perform(delete(url)
-        .contentType(MediaType.APPLICATION_JSON_UTF8))
+                        .contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk());
 
         //then
         List<Sell> sellList = sellRepository.findAll();
 
         assertThat(sellList.size()).isEqualTo(0);
-
     }
 
 }

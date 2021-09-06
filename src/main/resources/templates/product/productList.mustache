@@ -6,10 +6,13 @@
     </div>
     <div class="pull-left searchList" style="position: relative; top:13px;">
         <input type="text" class="inputSearch" id="inputName" name="inputName" placeholder="상품이름으로 검색"/>
-        <a id="searchProduct" type="button" class="btn btn-default" style="padding: 2px 6px;border: none;position: relative;right: 38px;"><i class="fa fa-search searchIcon" style="font-size: 22px;"></i></a>
+        <a id="searchProduct" type="button" class="btn btn-default"
+           style="padding: 2px 6px;border: none;position: relative;right: 38px;"><i class="fa fa-search searchIcon"
+                                                                                    style="font-size: 22px;"></i></a>
     </div>
     <div class="pull-right" style="width: 100px; margin:10px 0;">
-        <a href="/manage/products/save" class="btn btn-success btn-block"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>상품 등록</a>
+        <a href="/manage/products/save" class="btn btn-success btn-block"><i class="fa fa-pencil-square-o"
+                                                                             aria-hidden="true"></i>상품 등록</a>
     </div>
     <br/><br/><br/>
 
@@ -28,20 +31,21 @@
             </thead>
             <tbody>
             {{#productList}}
-            <tr class="text-center">
-                <td class="bl-none">{{id}}</td>
-                <td><a href="/manage/products/{{id}}">{{name}}</a></td>
-                <td>{{amount}}</td>
-                <td>{{price}}</td>
-                <td>{{costprice}}</td>
-                <td>{{sellByDate}}</td>
-                <td class="br-none" style="padding: 12px 12px !important;">
-                    <button type="button" id="btn-deleteProduct" class="btn-deleteProduct deleteBtn btn btn-default" aria-label="deleteBtn">
-                        <input id="id" class="id" name="id" value="{{id}}" type="hidden"/>
-                        <span class="fa fa-remove"></span>
-                    </button>
-                </td>
-            </tr>
+                <tr class="text-center">
+                    <td class="bl-none">{{id}}</td>
+                    <td><a href="/manage/products/{{id}}">{{name}}</a></td>
+                    <td>{{amount}}</td>
+                    <td>{{price}}</td>
+                    <td>{{costprice}}</td>
+                    <td>{{sellByDate}}</td>
+                    <td class="br-none" style="padding: 12px 12px !important;">
+                        <button type="button" id="btn-deleteProduct" class="btn-deleteProduct deleteBtn btn btn-default"
+                                aria-label="deleteBtn">
+                            <input id="id" class="id" name="id" value="{{id}}" type="hidden"/>
+                            <span class="fa fa-remove"></span>
+                        </button>
+                    </td>
+                </tr>
             {{/productList}}
             </tbody>
         </table>

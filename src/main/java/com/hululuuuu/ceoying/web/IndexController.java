@@ -21,12 +21,11 @@ public class IndexController {
             redirectView.setUrl("/main");
             redirectView.setExposeModelAttributes(false);
             mav.setView(redirectView);
-        }else {
+        } else {
             mav.setViewName("index");
         }
         return mav;
     }
-
 
 
 }

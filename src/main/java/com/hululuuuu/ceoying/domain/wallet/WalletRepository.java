@@ -9,6 +9,6 @@ public interface WalletRepository extends JpaRepository<Wallet, Long> {
 
     Wallet findTop1ByOrderByIdDesc();
 
-    @Query(nativeQuery=true, value = "select * from Wallet order by id desc limit 5")
+    @Query(nativeQuery = true, value = "select * from Wallet order by id desc limit 5")
     List<Wallet> findTop5();
 }

@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
 @Service
+@Transactional
 public class MemoService {
 
     private final MemoRepository memoRepository;
@@ -22,7 +23,6 @@ public class MemoService {
         return memoRepository.save(requestDto.toEntity()).getId();
     }
 
-
     @Transactional(readOnly = true)
     public Page<MemoResponseDto> findMemoList(Pageable pageable) {
         pageable = PageableDefault.setPageableIdDesc(pageable);
@@ -30,9 +30,7 @@ public class MemoService {
         return list.map(MemoResponseDto::new);
     }
 
-    @Transactional
     public void deleteMemo(Long id) {
         memoRepository.deleteById(id);
     }
-
 }

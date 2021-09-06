@@ -3,7 +3,6 @@ package com.hululuuuu.ceoying.web.dto.buy;
 import com.hululuuuu.ceoying.domain.yiying.Buy;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;

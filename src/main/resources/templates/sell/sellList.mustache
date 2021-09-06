@@ -10,7 +10,8 @@
         <button id="searchSell" type="button" class="btn btn-default">검색</button>
     </div>
     <div class="pull-right" style="margin:10px 0;">
-        <a href="/manage/sells/save" class="btn btn-success btn-block"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>판매내역 등록</a>
+        <a href="/manage/sells/save" class="btn btn-success btn-block"><i class="fa fa-pencil-square-o"
+                                                                          aria-hidden="true"></i>판매내역 등록</a>
     </div>
     <br/><br/><br/>
 
@@ -31,22 +32,23 @@
             </thead>
             <tbody>
             {{#sellList}}
-            <tr class="text-center">
-                <td class="bl-none">{{id}}</td>
-                <td><a href="/manage/sells/{{id}}">{{name}}</a></td>
-                <td>{{product}}</td>
-                <td>{{price}}</td>
-                <td>{{profit}}</td>
-                <td>{{amount}}</td>
-                <td>{{methodOfPayment}}</td>
-                <td>{{selldate}}</td>
-                <td class="br-none" style="padding: 12px 12px !important;">
-                    <button type="button" id="btn-deleteSell" class="btn-deleteSell deleteBtn btn btn-default" aria-label="deleteBtn">
-                        <input id="id" class="id" name="id" value="{{id}}" type="hidden"/>
-                        <span class="fa fa-remove"></span>
-                    </button>
-                </td>
-            </tr>
+                <tr class="text-center">
+                    <td class="bl-none">{{id}}</td>
+                    <td><a href="/manage/sells/{{id}}">{{name}}</a></td>
+                    <td>{{product}}</td>
+                    <td>{{price}}</td>
+                    <td>{{profit}}</td>
+                    <td>{{amount}}</td>
+                    <td>{{methodOfPayment}}</td>
+                    <td>{{selldate}}</td>
+                    <td class="br-none" style="padding: 12px 12px !important;">
+                        <button type="button" id="btn-deleteSell" class="btn-deleteSell deleteBtn btn btn-default"
+                                aria-label="deleteBtn">
+                            <input id="id" class="id" name="id" value="{{id}}" type="hidden"/>
+                            <span class="fa fa-remove"></span>
+                        </button>
+                    </td>
+                </tr>
             {{/sellList}}
             </tbody>
         </table>

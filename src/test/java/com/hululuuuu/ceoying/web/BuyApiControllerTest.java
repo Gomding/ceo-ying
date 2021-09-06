@@ -51,11 +51,11 @@ public class BuyApiControllerTest {
     @Before
     public void saveMoney() throws Exception {
         walletRepository.save(Wallet.builder()
-        .money(1000)
-        .record("+1000")
-        .statement("입금")
-        .statementDate(LocalDate.now())
-        .build());
+                .money(1000)
+                .record("+1000")
+                .statement("입금")
+                .statementDate(LocalDate.now())
+                .build());
     }
 
     @Before
@@ -74,7 +74,7 @@ public class BuyApiControllerTest {
 
     @Test
     @WithMockUser(roles = "ADMIN")
-    public void buy_등록된다() throws Exception{
+    public void buy_등록된다() throws Exception {
         //given
         String name = "김씨";
         int price = 1000;
@@ -94,8 +94,8 @@ public class BuyApiControllerTest {
 
         //when
         mvc.perform(post(url)
-                .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .content(new ObjectMapper().writeValueAsString(requestDto)))
+                        .contentType(MediaType.APPLICATION_JSON_UTF8)
+                        .content(new ObjectMapper().writeValueAsString(requestDto)))
                 .andExpect(status().isOk());
 
 
@@ -121,12 +121,12 @@ public class BuyApiControllerTest {
         LocalDate buydate = LocalDate.now();
 
         Buy savedBuy = buyRepository.save(Buy.builder()
-        .name(name)
-        .price(price)
-        .amount(amount)
-        .content(content)
-        .buydate(buydate)
-        .build());
+                .name(name)
+                .price(price)
+                .amount(amount)
+                .content(content)
+                .buydate(buydate)
+                .build());
 
         Long savedId = savedBuy.getId();
 
@@ -147,8 +147,8 @@ public class BuyApiControllerTest {
 
         //when
         mvc.perform(put(url)
-                .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .content(new ObjectMapper().writeValueAsString(requestDto)))
+                        .contentType(MediaType.APPLICATION_JSON_UTF8)
+                        .content(new ObjectMapper().writeValueAsString(requestDto)))
                 .andExpect(status().isOk());
 
         //then
@@ -165,7 +165,7 @@ public class BuyApiControllerTest {
 
     @Test
     @WithMockUser(roles = "ADMIN")
-    public void buy_삭제된다() throws Exception{
+    public void buy_삭제된다() throws Exception {
         //give
         String name = "김씨";
         int price = 1000;
@@ -188,7 +188,7 @@ public class BuyApiControllerTest {
         //when
         mvc.perform(delete(url)
                         .contentType(MediaType.APPLICATION_JSON_UTF8))
-                        .andExpect(status().isOk());
+                .andExpect(status().isOk());
 
         //then
         List<Buy> buyList = buyRepository.findAll();
@@ -199,14 +199,14 @@ public class BuyApiControllerTest {
     @Test
     public void BaseTimeEntity_등록() {
         //given
-        LocalDateTime now = LocalDateTime.of(2020,8, 6, 0, 0, 0);
+        LocalDateTime now = LocalDateTime.of(2020, 8, 6, 0, 0, 0);
         buyRepository.save(Buy.builder()
-        .name("김씨")
-        .price(1000)
-        .amount(5)
-        .content("내용")
-        .buydate(LocalDate.now())
-        .build());
+                .name("김씨")
+                .price(1000)
+                .amount(5)
+                .content("내용")
+                .buydate(LocalDate.now())
+                .build());
 
         //when
         List<Buy> buyList = buyRepository.findAll();
