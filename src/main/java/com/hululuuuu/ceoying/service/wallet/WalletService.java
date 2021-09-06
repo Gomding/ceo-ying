@@ -24,6 +24,7 @@ import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
+@Transactional
 public class WalletService {
 
     private final WalletRepository walletRepository;
@@ -42,12 +43,10 @@ public class WalletService {
         return walletRepository.findTop1ByOrderByIdDesc();
     }
 
-    @Transactional
     public Long saveWallet(WalletSaveRequestDto requestDto) {
         return walletRepository.save(requestDto.toEntity()).getId();
     }
 
-    @Transactional
     public void whenSaveSell(SellSaveRequestDto requestDto) {
         int nowWalletMoney = walletRepository.findTop1ByOrderByIdDesc().getMoney();
         int sellMoney = requestDto.getProfit();
@@ -61,7 +60,6 @@ public class WalletService {
         );
     }
 
-    @Transactional
     public void whenUpdateSell(SellUpdateRequestDto requestDto, Long id) {
         int nowWalletMoney = walletRepository.findTop1ByOrderByIdDesc().getMoney();
         int oldSellMoney = sellRepository.getOne(id).getProfit();
@@ -81,7 +79,6 @@ public class WalletService {
         }
     }
 
-    @Transactional
     public void whenDeleteSell(Long id) {
 
         Sell sell = sellRepository.getOne(id);
@@ -111,7 +108,6 @@ public class WalletService {
         );
     }
 
-    @Transactional
     public void whenDeleteBuy(Long id) {
         Buy buy = buyRepository.getOne(id);
         int nowWalletMoney = walletRepository.findTop1ByOrderByIdDesc().getMoney();
@@ -126,7 +122,6 @@ public class WalletService {
         );
     }
 
-    @Transactional
     public void whenUpdateBuy(BuyUpdateRequestDto requestDto, Long id) {
         int nowWalletMoney = walletRepository.findTop1ByOrderByIdDesc().getMoney();
         Buy buy = buyRepository.findById(id).orElseThrow(() -> new NotFoundException("존재하지 않는 구매내역 입니다."));

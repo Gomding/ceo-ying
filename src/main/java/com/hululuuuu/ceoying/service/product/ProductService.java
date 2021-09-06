@@ -33,7 +33,7 @@ public class ProductService {
 
     public Long updateProduct(ProductUpdateRequestDto requestDto, Long id) {
         Product product = productRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. id=" + id));
+                .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. id = " + id));
         product.update(requestDto.getName(),
                 requestDto.getAmount(),
                 requestDto.getPrice(),
@@ -41,6 +41,12 @@ public class ProductService {
                 requestDto.getSellByDate());
 
         return id;
+    }
+
+    public void deleteProduct(Long id) {
+        Product product = productRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. id=" + id));
+        productRepository.delete(product);
+
     }
 
     @Transactional(readOnly = true)
@@ -54,13 +60,6 @@ public class ProductService {
     public ProductResponseDto findById(Long id) {
         Product entity = productRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. id=" + id));
         return new ProductResponseDto(entity);
-    }
-
-    @Transactional
-    public void deleteProduct(Long id) {
-        Product product = productRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. id=" + id));
-        productRepository.delete(product);
-
     }
 
     @Transactional(readOnly = true)
@@ -88,19 +87,16 @@ public class ProductService {
         return mainList;
     }
 
-    @Transactional
     public void updateAmountSaveSell(SellSaveRequestDto requestDto) {
         Product product = productRepository.findByName(requestDto.getProduct());
         product.updateProductAmount(requestDto.getAmount() - 1);
     }
 
-    @Transactional
     public void updateAmountDeleteSell(SellResponseDto responseDto) {
         Product product = productRepository.findByName(responseDto.getProduct());
         product.updateProductAmount(responseDto.getAmount());
     }
 
-    @Transactional
     public void updateAmountUpdateSell(SellUpdateRequestDto requestDto, int oldAmount) {
         Product product = productRepository.findByName(requestDto.getProduct());
         product.updateProductAmount(oldAmount - requestDto.getAmount());

@@ -20,6 +20,7 @@ import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
+@Transactional
 public class SellService {
 
     private final SellRepository sellRepository;
@@ -48,7 +49,6 @@ public class SellService {
 
 
     // 판매 수정하는 메서드
-    @Transactional
     public void updateSell(SellUpdateRequestDto requestDto, Long id) {
         Sell persistSell = sellRepository.findById(id).orElseThrow(() -> new NotFoundException("존재하지 않는 판매 id 입니다."));
         persistSell.update(requestDto.getName(),
@@ -61,7 +61,6 @@ public class SellService {
     }
 
     // 판매 내용 삭제
-    @Transactional
     public void deleteSell(Long id) {
         sellRepository.deleteById(id);
     }
